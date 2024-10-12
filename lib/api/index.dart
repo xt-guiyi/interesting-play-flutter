@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import '../store/index.dart';
 final dio = Dio(
   BaseOptions(
-    baseUrl: 'https://api.pub.dev',
+    baseUrl: 'http://192.168.2.78:3000',
     connectTimeout: const Duration(seconds: 5),
     receiveTimeout: const Duration(seconds: 3),
   ),
@@ -33,12 +33,6 @@ class CacheInterceptor extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     _cache[response.requestOptions.uri] = response;
     super.onResponse(response, handler);
-  }
-
-  @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
-    if (kDebugMode) {  debugPrint('缓存拦截器错误: $err');}
-    super.onError(err, handler);
   }
 }
 
@@ -71,33 +65,15 @@ class AuthInterceptor extends Interceptor {
 class ErrorInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    // 在这里处理错误
+    // 这里处理错误,为http不为2xx的异常
     if (err.response != null) {
       // 响应错误（例如 404、500 等）
       debugPrint('Error status: ${err.response?.statusCode}');
       debugPrint('Error data: ${err.response?.data}');
     }
 
-    // 根据具体的错误类型进行分类处理
-    switch (err.type) {
-      case DioExceptionType.connectionTimeout:
-        debugPrint('Connection timeout');
-        break;
-      case DioExceptionType.sendTimeout:
-        debugPrint('Send timeout');
-        break;
-      case DioExceptionType.receiveTimeout:
-        debugPrint('Receive timeout');
-        break;
-      case DioExceptionType.cancel:
-        debugPrint('Request to API was cancelled');
-        break;
-      default:
-        debugPrint('Unexpected error: ${err.message}');
-        break;
-    }
-    // 继续处理错误
-    super.onError(err, handler);
+    // 根据具体的错误类型进行分类处理，这里为没有收到响应
+    debugPrint('http异常: \n类型为 ${err.type}  \n原因为 ${err.message}  \n堆栈为 ${err.stackTrace}');
   }
 }
 

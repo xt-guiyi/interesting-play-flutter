@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:interesting_play_flutter/pages/home/index.dart';
 import 'package:interesting_play_flutter/pages/tabs/index.dart';
-import 'api/index.dart';
 
+import 'api/index.dart';
 
 void main() {
   initApi();
@@ -19,6 +18,9 @@ class MyApp extends StatelessWidget {
       title: '趣玩Flutter版本',
       theme: ThemeData(
         useMaterial3: true,
+        tabBarTheme: const TabBarTheme(
+          tabAlignment: TabAlignment.start,
+        ),
         splashFactory: NoSplash.splashFactory, // 全局移除水波纹效果
         highlightColor: Colors.transparent, // 全局移除点击高亮效果
       ),
@@ -26,5 +28,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

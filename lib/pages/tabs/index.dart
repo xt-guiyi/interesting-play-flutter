@@ -15,7 +15,7 @@ class TabPage extends StatefulWidget {
 
 class _TabPageState extends State  {
 
-  var _position = 1;
+  var _position = 0;
   final Map<String,String> iconsMap = {
     "首页": 'lib/assets/content.png',
     "发现": 'lib/assets/topic.png',
@@ -74,7 +74,7 @@ class _TabPageState extends State  {
           setState(() => _position = position);
         },
         children: const <Widget>[
-          MyHomePage(title: "哈哈哈",),
+          HomePage(),
           DiscoverPage(),
           MePage(),
           // TopicPage(),
