@@ -36,8 +36,8 @@ class _TabBarViewType1State extends State<TabBarViewType1>
   }
 
   void _getCommentList() async {
-    final s = await getCommentList(1,10);
-    debugPrint(s.toString());
+    final result = await getCommentList(1,10);
+    debugPrint(result.data?.data[0].username);
   }
 
   @override

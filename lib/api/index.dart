@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-
+import 'package:interesting_play_flutter/constants/app.dart';
+import '../constants/httpError.dart';
 import '../store/index.dart';
+
 final dio = Dio(
   BaseOptions(
     baseUrl: 'http://192.168.2.78:3000',
@@ -10,31 +12,6 @@ final dio = Dio(
   ),
 );
 
-/// 缓存拦截器
-class CacheInterceptor extends Interceptor {
-  CacheInterceptor();
-
-  final _cache = <Uri, Response>{};
-
-  @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final response = _cache[options.uri];
-    if (options.extra['refresh'] == true) {
-      if (kDebugMode) { debugPrint('${options.uri}: 强制刷新, 忽略! \n');}
-      return handler.next(options);
-    } else if (response != null) {
-      if (kDebugMode) {  debugPrint('缓存注入: ${options.uri} \n');}
-      return handler.resolve(response);
-    }
-    super.onRequest(options, handler);
-  }
-
-  @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
-    _cache[response.requestOptions.uri] = response;
-    super.onResponse(response, handler);
-  }
-}
 
 /// 权限校验拦截器
 class AuthInterceptor extends Interceptor {
@@ -42,19 +19,20 @@ class AuthInterceptor extends Interceptor {
 
   @override
   Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    final accessToken =  await asyncPrefs.getString('access_token');
-    debugPrint("token为：$accessToken");
-    if(accessToken != null) {
-      options.headers['authorization'] = accessToken;
+    // 添加token
+    final token =  await asyncPrefs.getString(authorization);
+    if(token != null) {
+      options.headers[authorization] = token;
     }
     handler.next(options);
   }
 
   @override
   Future<void> onResponse(Response response, ResponseInterceptorHandler handler) async {
-    final isRefresh =  await asyncPrefs.getString('access_token');
-    if(isRefresh != null) {
-      await asyncPrefs.setString('access_token',isRefresh);
+    // 刷新token
+    final token =  response.headers.value(refreshToken);
+    if(token != null) {
+      await asyncPrefs.setString(authorization,token);
     }
     handler.next(response);
   }
@@ -65,15 +43,15 @@ class AuthInterceptor extends Interceptor {
 class ErrorInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    // 这里处理错误,为http不为2xx的异常
+    // 这里处理错误,为http不为2xx的异常,如 404、500 等
     if (err.response != null) {
-      // 响应错误（例如 404、500 等）
-      debugPrint('Error status: ${err.response?.statusCode}');
-      debugPrint('Error data: ${err.response?.data}');
+      final message = handlerErrorCode(err.response!.statusCode!);
+      debugPrint(message);
+      // DOT: toast
+    }else {
+      // 根据具体的错误类型进行分类处理，这里为没有收到响应
+      debugPrint('dio异常: \n错误类型为 ${err.type}  \n原因为 ${err.message}  \n堆栈为 ${err.stackTrace}');
     }
-
-    // 根据具体的错误类型进行分类处理，这里为没有收到响应
-    debugPrint('http异常: \n类型为 ${err.type}  \n原因为 ${err.message}  \n堆栈为 ${err.stackTrace}');
   }
 }
 
@@ -81,7 +59,6 @@ class ErrorInterceptor extends Interceptor {
 /// 初始化网络请求
 void initApi() {
   dio.interceptors.add(AuthInterceptor());
-  dio.interceptors.add(CacheInterceptor());
   dio.interceptors.add(ErrorInterceptor());
   dio.interceptors.add(LogInterceptor(logPrint: (o) => debugPrint(o.toString()), responseBody: false));
 }
