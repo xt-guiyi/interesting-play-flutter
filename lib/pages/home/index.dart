@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:interesting_play_flutter/contants/appColors.dart';
+import 'package:interesting_play_flutter/constants/appColors.dart';
 import 'package:interesting_play_flutter/pages/home/components/tabBarViewType1.dart';
 
 class HomePage extends StatefulWidget {
