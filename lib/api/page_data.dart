@@ -1,10 +1,9 @@
-
 import 'package:json_annotation/json_annotation.dart';
-part 'pageData.g.dart';
+
+part 'page_data.g.dart';
 
 @JsonSerializable(genericArgumentFactories: true)
 class PageData<T> {
-
   PageData({
     required this.page,
     required this.pageSize,
@@ -17,6 +16,9 @@ class PageData<T> {
   int total;
   T data;
   //不同的类使用不同的mixin即可
-  factory PageData.fromJson(Map<String, dynamic> json, T Function(Object? json) fromJsonT) => _$PageDataFromJson(json, fromJsonT);
-  Map<String, dynamic> toJson(Object Function(T value) toJsonT) => _$PageDataToJson(this, toJsonT);
+  factory PageData.fromJson(
+          Map<String, dynamic> json, T Function(Object? json) fromJsonT) =>
+      _$PageDataFromJson(json, fromJsonT);
+  Map<String, dynamic> toJson(Object Function(T value) toJsonT) =>
+      _$PageDataToJson(this, toJsonT);
 }

@@ -1,16 +1,16 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ownerInfo.dart';
+part of 'owner_info.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
 OwnerInfo _$OwnerInfoFromJson(Map<String, dynamic> json) => OwnerInfo(
-      (json['mid'] as num).toDouble(),
+      (json['mid'] as num).toInt(),
       json['name'] as String,
-      (json['fans'] as num).toDouble(),
-      (json['videos'] as num).toDouble(),
+      (json['fans'] as num).toInt(),
+      (json['videos'] as num).toInt(),
       json['face'] as String,
     );
 

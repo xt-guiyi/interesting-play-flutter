@@ -18,9 +18,9 @@ class MyApp extends StatelessWidget {
       title: '趣玩Flutter版本',
       theme: ThemeData(
         useMaterial3: true,
-        tabBarTheme: const TabBarTheme(
-          tabAlignment: TabAlignment.start,
-        ),
+        // tabBarTheme: const TabBarTheme(
+        //   tabAlignment: TabAlignment.start,
+        // ),
         splashFactory: NoSplash.splashFactory, // 全局移除水波纹效果
         highlightColor: Colors.transparent, // 全局移除点击高亮效果
       ),

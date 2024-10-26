@@ -1,19 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'commentInfo.dart';
+part of 'comment_info.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
 CommentInfo _$CommentInfoFromJson(Map<String, dynamic> json) => CommentInfo(
-      id: (json['id'] as num?)?.toDouble(),
+      id: (json['id'] as num?)?.toInt(),
       username: json['username'] as String?,
-      pubDate: (json['pubDate'] as num?)?.toDouble(),
+      pubDate: (json['pubDate'] as num?)?.toInt(),
       ipAddress: json['ipAddress'] as String?,
       content: json['content'] as String?,
       avatar: json['avatar'] as String?,
-      like: (json['like'] as num?)?.toDouble(),
+      like: (json['like'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$CommentInfoToJson(CommentInfo instance) =>

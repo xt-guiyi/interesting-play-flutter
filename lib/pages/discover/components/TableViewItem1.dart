@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../widgets/DropdownMenu/DropdownMenuController.dart';
-
 import '../../../widgets/DropdownMenu/DropdownMenu.dart' as custom_dropdown_menu;
+import '../../../widgets/DropdownMenu/DropdownMenuController.dart';
 import '../../../widgets/DropdownMenu/DropdownMenuHeader.dart';
 
 class TableViewItem1 extends StatefulWidget {
@@ -15,11 +13,8 @@ class TableViewItem1 extends StatefulWidget {
   State<StatefulWidget> createState() => _TableviewItem1State();
 }
 
-class _TableviewItem1State extends State<TableViewItem1>
-    with AutomaticKeepAliveClientMixin {
+class _TableviewItem1State extends State<TableViewItem1> with AutomaticKeepAliveClientMixin {
   var data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-  
 
   Widget _listItem(int index) {
     double mb = 0;
@@ -42,23 +37,18 @@ class _TableviewItem1State extends State<TableViewItem1>
                   height: 80,
                   width: 100,
                   fit: BoxFit.fill,
-                  frameBuilder: (BuildContext context, Widget child, int? frame,
-                      bool wasSynchronouslyLoaded) {
+                  frameBuilder: (BuildContext context, Widget child, int? frame, bool wasSynchronouslyLoaded) {
                     if (wasSynchronouslyLoaded) {
                       return child; // 如果是同步加载，直接返回图片
                     }
                     if (frame == null) {
                       // 加载中，返回红色盒子
-                      return Container(
-                          height: 80,
-                          width: 100,
-                          color: const Color(0xff5B5B5B));
+                      return Container(height: 80, width: 100, color: const Color(0xff5B5B5B));
                     }
 
                     return child; // 图片加载完成时显示图片
                   },
-                  errorBuilder: (BuildContext context, Object error,
-                      StackTrace? stackTrace) {
+                  errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
                     return Container(
                       color: const Color(0xff5B5B5B), // 设置为灰色
                       height: 80,
@@ -91,34 +81,24 @@ class _TableviewItem1State extends State<TableViewItem1>
                           children: [
                             Text(
                               "记者:",
-                              style: TextStyle(
-                                  fontSize: 10, color: Color(0xff707070)),
+                              style: TextStyle(fontSize: 10, color: Color(0xff707070)),
                             ),
-                            Text("张三",
-                                style: TextStyle(
-                                    fontSize: 10, color: Color(0xff000000))),
+                            Text("张三", style: TextStyle(fontSize: 10, color: Color(0xff000000))),
                             SizedBox(
                               width: 16,
                             ),
-                            Text("编辑:",
-                                style: TextStyle(
-                                    fontSize: 10, color: Color(0xff707070))),
-                            Text("张山",
-                                style: TextStyle(
-                                    fontSize: 10, color: Color(0xff000000))),
+                            Text("编辑:", style: TextStyle(fontSize: 10, color: Color(0xff707070))),
+                            Text("张山", style: TextStyle(fontSize: 10, color: Color(0xff000000))),
                           ],
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 2, horizontal: 8),
+                          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                           height: 20,
-                          decoration: BoxDecoration(
-                              color: const Color(0xffEAF2FF),
-                              borderRadius: BorderRadius.circular(2)),
+                          decoration:
+                              BoxDecoration(color: const Color(0xffEAF2FF), borderRadius: BorderRadius.circular(2)),
                           child: const Text(
                             "时代新闻部",
-                            style: TextStyle(
-                                fontSize: 10, color: Color(0xff3481F5)),
+                            style: TextStyle(fontSize: 10, color: Color(0xff3481F5)),
                           ),
                         )
                       ],
@@ -146,7 +126,7 @@ class _TableviewItem1State extends State<TableViewItem1>
                   onPressed: () {},
                   // icon: const Icon(Icons.thumb_up,size: 12,color: Colors.white), // 图标
                   icon: const ImageIcon(
-                    AssetImage('images/submit.png'),
+                    AssetImage('lib/assets/submit.png'),
                     size: 12,
                     color: Colors.white,
                   ),
@@ -161,8 +141,7 @@ class _TableviewItem1State extends State<TableViewItem1>
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14), // 设置圆角半径
                     ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     textStyle: const TextStyle(fontSize: 18),
                     minimumSize: Size.zero,
                   ),
@@ -180,69 +159,68 @@ class _TableviewItem1State extends State<TableViewItem1>
     super.build(context);
     var menuController = DropdownMenuController();
     var time = 0;
-    return Column(
-        children: [
-          custom_dropdown_menu.DropdownMenu(
-            controller: menuController,
-            headerItems: [
-              DropdownMenuHeaderItem("全部日期",  iconSelect: Icons.keyboard_arrow_down,iconUnselect: Icons.keyboard_arrow_up, selectColor: Colors.blue, unselectColor: Colors.black),
-              DropdownMenuHeaderItem("全部部门",  iconSelect: Icons.keyboard_arrow_down,iconUnselect: Icons.keyboard_arrow_up, selectColor: Colors.blue, unselectColor: Colors.black),
-            ],
-            viewBuilders:  [
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: (){
-                      time = 0;
-                      menuController.hide();
-                    },
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("全部日期"),
-                        Icon(Icons.done)
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      time = 1;
-                      menuController.hide();
-                    },
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("最近24小时"),
-                        Icon(Icons.done)
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      time = 2;
-                      menuController.hide();
-                    },
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("最近一天"),
-                        Icon(Icons.done)
-                      ],
-                    ),
-                  ),
-                ],
+    return Column(children: [
+      custom_dropdown_menu.DropdownMenu(
+        controller: menuController,
+        headerItems: [
+          DropdownMenuHeaderItem("全部日期",
+              iconSelect: Icons.keyboard_arrow_down,
+              iconUnselect: Icons.keyboard_arrow_up,
+              selectColor: Colors.blue,
+              unselectColor: Colors.black),
+          DropdownMenuHeaderItem("全部部门",
+              iconSelect: Icons.keyboard_arrow_down,
+              iconUnselect: Icons.keyboard_arrow_up,
+              selectColor: Colors.blue,
+              unselectColor: Colors.black),
+        ],
+        viewBuilders: [
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  time = 0;
+                  menuController.hide();
+                },
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Text("全部日期"), Icon(Icons.done)],
+                ),
               ),
-              Column(children: [Text("第二项")]),
+              GestureDetector(
+                onTap: () {
+                  time = 1;
+                  menuController.hide();
+                },
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Text("最近24小时"), Icon(Icons.done)],
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  time = 2;
+                  menuController.hide();
+                },
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Text("最近一天"), Icon(Icons.done)],
+                ),
+              ),
             ],
           ),
-            Expanded(child: Container(
-                decoration: const BoxDecoration(color: Colors.black12),
-                child: ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (context, index) => _listItem(index),
-                )),)
-        ]
-    );
+          const Column(children: [Text("第二项")]),
+        ],
+      ),
+      Expanded(
+        child: Container(
+            decoration: const BoxDecoration(color: Colors.black12),
+            child: ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) => _listItem(index),
+            )),
+      )
+    ]);
   }
 
   @override

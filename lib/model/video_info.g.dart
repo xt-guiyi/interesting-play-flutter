@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'videoInfo.dart';
+part of 'video_info.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
 VideoInfo _$VideoInfoFromJson(Map<String, dynamic> json) => VideoInfo(
-      (json['id'] as num).toDouble(),
+      (json['id'] as num).toInt(),
       json['title'] as String,
-      (json['pubDate'] as num).toDouble(),
-      (json['duration'] as num).toDouble(),
+      (json['pubDate'] as num).toInt(),
+      (json['duration'] as num).toInt(),
       json['desc'] as String,
       json['pic'] as String,
       json['url'] as String,
-      (json['views'] as num).toDouble(),
-      (json['reply'] as num).toDouble(),
-      (json['favorite'] as num).toDouble(),
-      (json['coin'] as num).toDouble(),
-      (json['share'] as num).toDouble(),
-      (json['like'] as num).toDouble(),
-      (json['dislike'] as num).toDouble(),
-      (json['danmaku'] as num).toDouble(),
+      (json['views'] as num).toInt(),
+      (json['reply'] as num).toInt(),
+      (json['favorite'] as num).toInt(),
+      (json['coin'] as num).toInt(),
+      (json['share'] as num).toInt(),
+      (json['like'] as num).toInt(),
+      (json['dislike'] as num).toInt(),
+      (json['danmaku'] as num).toInt(),
       OwnerInfo.fromJson(json['owner'] as Map<String, dynamic>),
     );
 

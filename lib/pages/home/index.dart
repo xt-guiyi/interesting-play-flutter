@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:interesting_play_flutter/constants/appColors.dart';
-import 'package:interesting_play_flutter/pages/home/components/tabBarViewType1.dart';
+import 'package:interesting_play_flutter/constants/app_colors.dart';
+import 'package:interesting_play_flutter/pages/home/components/tab_bar_view_type_1.dart';
+
+import 'components/tab_bar_view_type_2.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,9 +14,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin ,AutomaticKeepAliveClientMixin {
-
+class _MyHomePageState extends State<HomePage> with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late Timer _timer;
   var _currentSearchText = '';
   final _searchTextList = [
@@ -27,7 +27,7 @@ class _MyHomePageState extends State<HomePage>
     "通往夏天的隧道",
     "安卓开发"
   ];
-  final _tabItems = ["推荐","小说","漫画","游戏","音乐","舞蹈","萌宠","其他"];
+  final _tabItems = ["推荐", "小说", "漫画", "游戏", "音乐", "舞蹈", "萌宠", "其他"];
   late TabController _tabController;
 
   @override
@@ -36,6 +36,7 @@ class _MyHomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
+    // 头部标题变化
     final random = Random();
     _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
       setState(() {
@@ -57,12 +58,12 @@ class _MyHomePageState extends State<HomePage>
     super.build(context);
     return SafeArea(
       child: Column(
-        children: [_buildHeader(),_buildTabs(),_buildTabContent()],
+        children: [_buildHeader(), _buildTabs(), _buildTabContent()],
       ),
     );
   }
 
-
+  /// 头部
   Widget _buildHeader() {
     return Container(
       width: double.infinity,
@@ -77,8 +78,7 @@ class _MyHomePageState extends State<HomePage>
             width: 36,
             height: 36,
             child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://images.cubox.pro/iw3rni/file/2024061800331149633/IMG_0021.JPG")),
+                backgroundImage: NetworkImage("https://images.cubox.pro/iw3rni/file/2024061800331149633/IMG_0021.JPG")),
           ),
           Expanded(
             flex: 1,
@@ -89,7 +89,7 @@ class _MyHomePageState extends State<HomePage>
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: AppColors.green_100,
+                  color: AppColors.sliver_100,
                   width: 1,
                 ),
               ),
@@ -104,12 +104,10 @@ class _MyHomePageState extends State<HomePage>
                   const SizedBox(
                     width: 2,
                   ),
-                  Expanded(child: Text(
+                  Expanded(
+                      child: Text(
                     _currentSearchText,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: AppColors.sliver_400
-                    ),
+                    style: const TextStyle(fontSize: 14, color: AppColors.sliver_400),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.start,
@@ -127,6 +125,7 @@ class _MyHomePageState extends State<HomePage>
     );
   }
 
+  /// tab栏
   Widget _buildTabs() {
     return Column(
       children: [
@@ -136,12 +135,13 @@ class _MyHomePageState extends State<HomePage>
           decoration: const BoxDecoration(color: Colors.white),
           child: TabBar(
             isScrollable: true,
+            tabAlignment: TabAlignment.start,
             dividerHeight: 0,
             controller: _tabController,
             indicatorColor: AppColors.green_300,
             labelColor: AppColors.green_300,
             unselectedLabelColor: const Color(0xFF3D3D3D),
-            labelStyle: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+            labelStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             unselectedLabelStyle: const TextStyle(fontSize: 14),
             tabs: _tabItems.map((e) => Tab(text: e)).toList(),
           ),
@@ -150,20 +150,23 @@ class _MyHomePageState extends State<HomePage>
     );
   }
 
+  /// 内容部分
   Widget _buildTabContent() {
-    return  Expanded(
+    return Expanded(
       flex: 1,
       child: Container(
         width: double.infinity,
         decoration: const BoxDecoration(color: AppColors.green_100),
         child: TabBarView(
             controller: _tabController,
-            children: _tabItems
-                .map((title) => TabBarViewType1(tabTitle: title))
-                .toList()),
+            children: _tabItems.map((title) {
+              if (title == "推荐") {
+                return TabBarViewType1(tabTitle: title);
+              } else {
+                return TabBarViewType2(tabTitle: title);
+              }
+            }).toList()),
       ),
     );
   }
-
 }
-

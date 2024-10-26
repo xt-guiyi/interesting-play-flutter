@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'bannerInfo.dart';
+part of 'banner_info.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
 BannerInfo _$BannerInfoFromJson(Map<String, dynamic> json) => BannerInfo(
-      (json['id'] as num).toDouble(),
+      (json['id'] as num).toInt(),
       json['url'] as String,
       json['jumpUrl'] as String,
     );
