@@ -4,16 +4,16 @@ import '../../../widgets/DropdownMenu/DropdownMenu.dart' as custom_dropdown_menu
 import '../../../widgets/DropdownMenu/DropdownMenuController.dart';
 import '../../../widgets/DropdownMenu/DropdownMenuHeader.dart';
 
-class TableViewItem1 extends StatefulWidget {
-  final String type; // table类型
+class TabBarViewType2 extends StatefulWidget {
+  const TabBarViewType2({super.key, required this.type});
 
-  const TableViewItem1({super.key, this.type = '草稿箱'});
+  final String type;
 
   @override
-  State<StatefulWidget> createState() => _TableviewItem1State();
+  State<StatefulWidget> createState() => _TabBarViewType2State();
 }
 
-class _TableviewItem1State extends State<TableViewItem1> with AutomaticKeepAliveClientMixin {
+class _TabBarViewType2State extends State<TabBarViewType2> with AutomaticKeepAliveClientMixin {
   var data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   Widget _listItem(int index) {

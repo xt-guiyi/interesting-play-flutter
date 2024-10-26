@@ -3,8 +3,6 @@ import 'package:interesting_play_flutter/pages/discover/index.dart';
 import 'package:interesting_play_flutter/pages/me/index.dart';
 
 import '../home/index.dart';
-// import 'package:flutter_application_list/pages/topic/TopicPage.dart';
-
 
 class TabPage extends StatefulWidget {
   const TabPage({super.key});
@@ -13,10 +11,9 @@ class TabPage extends StatefulWidget {
   State<StatefulWidget> createState() => _TabPageState();
 }
 
-class _TabPageState extends State  {
-
-  var _position = 0;
-  final Map<String,String> iconsMap = {
+class _TabPageState extends State {
+  var _position = 1;
+  final Map<String, String> iconsMap = {
     "首页": 'lib/assets/content.png',
     "发现": 'lib/assets/topic.png',
     "我的": 'lib/assets/topic.png',
@@ -27,7 +24,7 @@ class _TabPageState extends State  {
   @override
   void initState() {
     super.initState();
-    _pageController= PageController(initialPage: _position);
+    _pageController = PageController(initialPage: _position);
   }
 
   @override
@@ -44,30 +41,32 @@ class _TabPageState extends State  {
   }
 
   Widget _buildBottomNavigationBar() => BottomNavigationBar(
-    onTap: _onItemTapped,
-    currentIndex: _position,
-    elevation: 1,
-    backgroundColor: Colors.white,
-    iconSize: 25,
-    selectedItemColor: Colors.lightBlue,
-    unselectedItemColor: Colors.black54,
-    selectedFontSize:16,
-    unselectedFontSize: 16,
-    showUnselectedLabels: true,
-    showSelectedLabels: true,
-    type:BottomNavigationBarType.fixed,
-    items: iconsMap.keys
-        .map((key) => BottomNavigationBarItem(
-      label: key,
-      icon: ImageIcon(AssetImage(iconsMap[key]!),size: 24,),
-    ))
-        .toList(),
-  );
-
+        onTap: _onItemTapped,
+        currentIndex: _position,
+        elevation: 1,
+        backgroundColor: Colors.white,
+        iconSize: 25,
+        selectedItemColor: Colors.lightBlue,
+        unselectedItemColor: Colors.black54,
+        selectedFontSize: 16,
+        unselectedFontSize: 16,
+        showUnselectedLabels: true,
+        showSelectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        items: iconsMap.keys
+            .map((key) => BottomNavigationBarItem(
+                  label: key,
+                  icon: ImageIcon(
+                    AssetImage(iconsMap[key]!),
+                    size: 24,
+                  ),
+                ))
+            .toList(),
+      );
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       body: PageView(
         controller: _pageController,
         onPageChanged: (position) {
@@ -80,8 +79,7 @@ class _TabPageState extends State  {
           // TopicPage(),
         ],
       ),
-        bottomNavigationBar: _buildBottomNavigationBar(),
-      );
+      bottomNavigationBar: _buildBottomNavigationBar(),
+    );
   }
-
 }
