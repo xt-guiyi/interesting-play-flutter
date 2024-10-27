@@ -13,6 +13,9 @@ DiscoverInfo _$DiscoverInfoFromJson(Map<String, dynamic> json) => DiscoverInfo(
       reply: (json['reply'] as num?)?.toInt(),
       picW: (json['picW'] as num?)?.toInt(),
       picH: (json['picH'] as num?)?.toInt(),
+      owner: json['owner'] == null
+          ? null
+          : OwnerInfo.fromJson(json['owner'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$DiscoverInfoToJson(DiscoverInfo instance) =>
@@ -23,4 +26,5 @@ Map<String, dynamic> _$DiscoverInfoToJson(DiscoverInfo instance) =>
       'reply': instance.reply,
       'picW': instance.picW,
       'picH': instance.picH,
+      'owner': instance.owner,
     };

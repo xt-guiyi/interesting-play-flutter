@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../constants/app_colors.dart';
 import '../../../widgets/DropdownMenu/DropdownMenu.dart' as custom_dropdown_menu;
 import '../../../widgets/DropdownMenu/DropdownMenuController.dart';
 import '../../../widgets/DropdownMenu/DropdownMenuHeader.dart';
@@ -14,11 +15,108 @@ class TabBarViewType2 extends StatefulWidget {
 }
 
 class _TabBarViewType2State extends State<TabBarViewType2> with AutomaticKeepAliveClientMixin {
-  var data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  final _listData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  var menuController = DropdownMenuController();
 
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return Column(children: [
+      _headerBar(),
+      Expanded(
+        child: Container(
+            decoration: const BoxDecoration(color: AppColors.green_100),
+            child: ListView.builder(
+              itemCount: _listData.length,
+              itemBuilder: (context, index) => _listItem(index),
+            )),
+      )
+    ]);
+  }
+
+  /// 头部筛选栏，使用的封装组件写法，适合简化代码
+  Widget _headerBar() {
+    return custom_dropdown_menu.DropdownMenu(
+      controller: menuController,
+      headerItems: [
+        DropdownMenuHeaderItem("全部日期",
+            iconSelect: Icons.keyboard_arrow_down,
+            iconUnselect: Icons.keyboard_arrow_up,
+            selectColor: AppColors.green_300,
+            unselectColor: Colors.black),
+        DropdownMenuHeaderItem("全部部门",
+            iconSelect: Icons.keyboard_arrow_down,
+            iconUnselect: Icons.keyboard_arrow_up,
+            selectColor: AppColors.green_300,
+            unselectColor: Colors.black),
+        DropdownMenuHeaderItem("全部分类",
+            iconSelect: Icons.keyboard_arrow_down,
+            iconUnselect: Icons.keyboard_arrow_up,
+            selectColor: AppColors.green_300,
+            unselectColor: Colors.black),
+        DropdownMenuHeaderItem("全部标签",
+            iconSelect: Icons.keyboard_arrow_down,
+            iconUnselect: Icons.keyboard_arrow_up,
+            selectColor: AppColors.green_300,
+            unselectColor: Colors.black),
+      ],
+      viewHeight: 300,
+      headerHeight: 36,
+      headerCount: 3,
+      viewBuilders: [
+        Column(
+          children: [
+            const SizedBox(
+              height: 240,
+              child: Center(
+                child: Text(
+                  "内容",
+                  style: TextStyle(
+                    fontSize: 34,
+                    color: Colors.black,
+                    decoration: TextDecoration.none,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                menuController.hide();
+              },
+              child: Container(
+                alignment: AlignmentDirectional.center,
+                width: double.infinity,
+                height: 60,
+                decoration: const BoxDecoration(
+                  color: AppColors.green_300,
+                ),
+                child: const Text(
+                  "关闭",
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                    decoration: TextDecoration.none,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const Column(children: [
+          Text("第二项"),
+        ]),
+      ],
+    );
+  }
+
+  /// 列表项
   Widget _listItem(int index) {
     double mb = 0;
-    if (data.length - 1 == index) mb = 6;
+    if (_listData.length - 1 == index) mb = 6;
     return Container(
       decoration: const BoxDecoration(color: Colors.white),
       width: double.infinity,
@@ -69,7 +167,7 @@ class _TabBarViewType2State extends State<TabBarViewType2> with AutomaticKeepAli
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "新闻新闻新闻新新闻新闻新闻新新闻新闻新闻新新闻新闻新闻新新闻新闻新闻新新闻新闻新闻新新闻新闻新闻新新闻新闻新闻新",
+                      "附近消息附近消息附近消息附近消息附近消息附近消息附近消息附近消息附近消息附近消息附近消息附近消息附近消息附近消息附近消息",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 12),
@@ -88,17 +186,16 @@ class _TabBarViewType2State extends State<TabBarViewType2> with AutomaticKeepAli
                               width: 16,
                             ),
                             Text("编辑:", style: TextStyle(fontSize: 10, color: Color(0xff707070))),
-                            Text("张山", style: TextStyle(fontSize: 10, color: Color(0xff000000))),
+                            Text("李四", style: TextStyle(fontSize: 10, color: Color(0xff000000))),
                           ],
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                           height: 20,
-                          decoration:
-                              BoxDecoration(color: const Color(0xffEAF2FF), borderRadius: BorderRadius.circular(2)),
+                          decoration: BoxDecoration(color: AppColors.green_200, borderRadius: BorderRadius.circular(2)),
                           child: const Text(
                             "时代新闻部",
-                            style: TextStyle(fontSize: 10, color: Color(0xff3481F5)),
+                            style: TextStyle(fontSize: 10, color: AppColors.green_300),
                           ),
                         )
                       ],
@@ -122,9 +219,9 @@ class _TabBarViewType2State extends State<TabBarViewType2> with AutomaticKeepAli
                   "2021-09-9 12:00",
                   style: TextStyle(fontSize: 12, color: Color(0xff707070)),
                 ),
+                // 这里其实可以用container加上row布局实现，用ElevatedButton这种有一个问题就是内置了很多默认样式，需要重置，让人困扰
                 ElevatedButton.icon(
                   onPressed: () {},
-                  // icon: const Icon(Icons.thumb_up,size: 12,color: Colors.white), // 图标
                   icon: const ImageIcon(
                     AssetImage('lib/assets/submit.png'),
                     size: 12,
@@ -137,14 +234,13 @@ class _TabBarViewType2State extends State<TabBarViewType2> with AutomaticKeepAli
                   ),
                   // 文字
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14), // 设置圆角半径
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    textStyle: const TextStyle(fontSize: 18),
-                    minimumSize: Size.zero,
-                  ),
+                      backgroundColor: AppColors.green_300,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14), // 设置圆角半径
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      minimumSize: Size.zero,
+                      enableFeedback: true),
                 )
               ],
             ),
@@ -153,76 +249,4 @@ class _TabBarViewType2State extends State<TabBarViewType2> with AutomaticKeepAli
       ),
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    super.build(context);
-    var menuController = DropdownMenuController();
-    var time = 0;
-    return Column(children: [
-      custom_dropdown_menu.DropdownMenu(
-        controller: menuController,
-        headerItems: [
-          DropdownMenuHeaderItem("全部日期",
-              iconSelect: Icons.keyboard_arrow_down,
-              iconUnselect: Icons.keyboard_arrow_up,
-              selectColor: Colors.blue,
-              unselectColor: Colors.black),
-          DropdownMenuHeaderItem("全部部门",
-              iconSelect: Icons.keyboard_arrow_down,
-              iconUnselect: Icons.keyboard_arrow_up,
-              selectColor: Colors.blue,
-              unselectColor: Colors.black),
-        ],
-        viewBuilders: [
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  time = 0;
-                  menuController.hide();
-                },
-                child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text("全部日期"), Icon(Icons.done)],
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  time = 1;
-                  menuController.hide();
-                },
-                child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text("最近24小时"), Icon(Icons.done)],
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  time = 2;
-                  menuController.hide();
-                },
-                child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text("最近一天"), Icon(Icons.done)],
-                ),
-              ),
-            ],
-          ),
-          const Column(children: [Text("第二项")]),
-        ],
-      ),
-      Expanded(
-        child: Container(
-            decoration: const BoxDecoration(color: Colors.black12),
-            child: ListView.builder(
-              itemCount: data.length,
-              itemBuilder: (context, index) => _listItem(index),
-            )),
-      )
-    ]);
-  }
-
-  @override
-  bool get wantKeepAlive => true;
 }

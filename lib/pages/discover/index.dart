@@ -35,11 +35,14 @@ class _DiscoverPageState extends State<DiscoverPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return SafeArea(
-      child: Container(
-        decoration: const BoxDecoration(color: Colors.white),
-        child: Column(
-          children: [_buildTabBar(), Expanded(child: _buildTableBarView())],
+    return Container(
+      color: Colors.white,
+      child: SafeArea(
+        child: Container(
+          decoration: const BoxDecoration(color: Colors.white),
+          child: Column(
+            children: [_buildTabBar(), Expanded(child: _buildTableBarView())],
+          ),
         ),
       ),
     );

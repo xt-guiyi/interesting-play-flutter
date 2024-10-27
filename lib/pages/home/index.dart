@@ -56,9 +56,12 @@ class _MyHomePageState extends State<HomePage> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return SafeArea(
-      child: Column(
-        children: [_buildHeader(), _buildTabs(), _buildTabContent()],
+    return Container(
+      color: Colors.white,
+      child: SafeArea(
+        child: Column(
+          children: [_buildHeader(), _buildTabs(), _buildTabContent()],
+        ),
       ),
     );
   }

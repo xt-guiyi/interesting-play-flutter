@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:interesting_play_flutter/pages/discover/index.dart';
 import 'package:interesting_play_flutter/pages/me/index.dart';
 
+import '../../constants/app_colors.dart';
 import '../home/index.dart';
 
 class TabPage extends StatefulWidget {
@@ -12,11 +13,11 @@ class TabPage extends StatefulWidget {
 }
 
 class _TabPageState extends State {
-  var _position = 1;
+  var _position = 0;
   final Map<String, String> iconsMap = {
-    "首页": 'lib/assets/content.png',
-    "发现": 'lib/assets/topic.png',
-    "我的": 'lib/assets/topic.png',
+    "首页": 'lib/assets/home.png',
+    "发现": 'lib/assets/discover.png',
+    "我的": 'lib/assets/user.png',
   };
 
   late PageController _pageController;
@@ -46,7 +47,7 @@ class _TabPageState extends State {
         elevation: 1,
         backgroundColor: Colors.white,
         iconSize: 25,
-        selectedItemColor: Colors.lightBlue,
+        selectedItemColor: AppColors.green_300,
         unselectedItemColor: Colors.black54,
         selectedFontSize: 16,
         unselectedFontSize: 16,
@@ -68,6 +69,7 @@ class _TabPageState extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
+        physics: const ClampingScrollPhysics(),
         controller: _pageController,
         onPageChanged: (position) {
           setState(() => _position = position);

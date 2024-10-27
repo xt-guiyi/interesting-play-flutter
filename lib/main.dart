@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:interesting_play_flutter/pages/tabs/index.dart';
 
 import 'api/index.dart';
@@ -14,6 +15,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // 设置状态栏颜色
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // 设置状态栏背景色
+      statusBarIconBrightness: Brightness.dark, // 设置状态栏图标颜色为浅色
+    ));
     return MaterialApp(
       title: '趣玩Flutter版本',
       theme: ThemeData(

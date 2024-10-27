@@ -1,5 +1,6 @@
 import 'package:flutter/rendering.dart';
 
+/// 实现GridView固定高度
 class SliverGridDelegateWithFixedSize extends SliverGridDelegate {
   /// 宽
   final double width;
@@ -13,17 +14,14 @@ class SliverGridDelegateWithFixedSize extends SliverGridDelegate {
   /// 横轴间距
   final double crossAxisSpacing;
 
-  SliverGridDelegateWithFixedSize(this.width, this.height,
-      {this.mainAxisSpacing = 0.0, this.crossAxisSpacing = 0.0});
+  SliverGridDelegateWithFixedSize(this.width, this.height, {this.mainAxisSpacing = 0.0, this.crossAxisSpacing = 0.0});
 
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
     final crossAxisCount = constraints.crossAxisExtent ~/ width;
     final double crossAxisSpacing;
     if (this.crossAxisSpacing == 0.0) {
-      crossAxisSpacing =
-          (constraints.crossAxisExtent - width * crossAxisCount) /
-              (crossAxisCount - 1);
+      crossAxisSpacing = (constraints.crossAxisExtent - width * crossAxisCount) / (crossAxisCount - 1);
     } else {
       crossAxisSpacing = this.crossAxisSpacing;
     }
@@ -40,8 +38,6 @@ class SliverGridDelegateWithFixedSize extends SliverGridDelegate {
 
   @override
   bool shouldRelayout(SliverGridDelegateWithFixedSize oldDelegate) {
-    return oldDelegate.width != width ||
-        oldDelegate.height != height ||
-        oldDelegate.mainAxisSpacing != mainAxisSpacing;
+    return oldDelegate.width != width || oldDelegate.height != height || oldDelegate.mainAxisSpacing != mainAxisSpacing;
   }
 }

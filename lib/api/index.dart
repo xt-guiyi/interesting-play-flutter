@@ -49,6 +49,7 @@ class ErrorInterceptor extends Interceptor {
       final message = handlerErrorCode(err.response!.statusCode!);
       if (kIsWeb) {
         // Web 平台的代码
+        debugPrint(message);
       } else {
         // 原生（iOS/Android）平台的代码
         Fluttertoast.showToast(
@@ -71,5 +72,6 @@ class ErrorInterceptor extends Interceptor {
 void initApi() {
   dio.interceptors.add(AuthInterceptor());
   dio.interceptors.add(ErrorInterceptor());
-  dio.interceptors.add(LogInterceptor(logPrint: (o) => debugPrint(o.toString()), responseBody: false));
+  // 请求日志打印
+  // dio.interceptors.add(LogInterceptor(logPrint: (o) => debugPrint(o.toString()), responseBody: false));
 }
