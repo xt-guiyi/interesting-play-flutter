@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:interesting_play_flutter/model/user_info.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../constants/app_colors.dart';
+import '../../store/userInfoController.dart';
 
 class MePage extends StatefulWidget {
   const MePage({super.key});
@@ -12,6 +15,19 @@ class MePage extends StatefulWidget {
 }
 
 class _MePageState extends State<MePage> with AutomaticKeepAliveClientMixin {
+  UserInfo? _userInfo;
+
+  @override
+  void initState() {
+    super.initState();
+    final UserInfoController userInfoController = Get.find<UserInfoController>();
+    userInfoController.getUserInfo().then((value) {
+      setState(() {
+        _userInfo = value;
+      });
+    });
+  }
+
   @override
   bool get wantKeepAlive => true;
 
@@ -34,40 +50,38 @@ class _MePageState extends State<MePage> with AutomaticKeepAliveClientMixin {
       children: [
         Container(
           width: double.infinity,
-          height: 334,
+          height: 344,
           padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
           decoration: const BoxDecoration(color: AppColors.green_300),
-          child: const Column(
+          child: Column(
             children: [
               SizedBox(
                 width: 100,
                 height: 100,
-                child: CircleAvatar(
-                    backgroundImage:
-                        NetworkImage("https://images.cubox.pro/iw3rni/file/2024061800331149633/IMG_0021.JPG")),
+                child: CircleAvatar(backgroundImage: NetworkImage(_userInfo?.avatar ?? "")),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 2),
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 2),
                 child: Text(
-                  "xt_guiyi",
-                  style: TextStyle(fontSize: 26, color: Colors.white),
+                  _userInfo?.username ?? "-",
+                  style: const TextStyle(fontSize: 26, color: Colors.white),
                 ),
               ),
-              Text(
+              const Text(
                 "ip地址：广东",
                 style: TextStyle(fontSize: 14, color: Colors.white),
               ),
               Text(
-                "简介：我的灵魂深处有一缕阳光，里面飘着些尘埃",
-                style: TextStyle(fontSize: 12, color: Colors.white),
+                _userInfo?.introduction ?? "-",
+                style: const TextStyle(fontSize: 12, color: Colors.white),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
-              Row(
+              const Row(
                 children: [
                   Expanded(
                     flex: 1,

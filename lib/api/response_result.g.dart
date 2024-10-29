@@ -12,7 +12,7 @@ ResponseResult<T> _$ResponseResultFromJson<T>(
 ) =>
     ResponseResult<T>(
       code: (json['code'] as num).toInt(),
-      message: json['message'] as String,
+      message: json['message'] as String?,
       data: _$nullableGenericFromJson(json['data'], fromJsonT),
     );
 

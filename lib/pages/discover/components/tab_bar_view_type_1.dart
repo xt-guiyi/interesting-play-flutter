@@ -90,8 +90,9 @@ class _TabBarViewType1State extends State<TabBarViewType1> with AutomaticKeepAli
             onRefresh: _refreshData,
             child: Container(
               decoration: const BoxDecoration(color: AppColors.green_100),
-              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
               child: MasonryGridView.count(
+                padding: EdgeInsets.only(top: 8),
                 crossAxisCount: 2,
                 mainAxisSpacing: 8,
                 crossAxisSpacing: 8,

@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:interesting_play_flutter/constants/app.dart';
+import 'package:interesting_play_flutter/pages/auth/login.dart';
 
 import '../constants/http_error.dart';
+import '../main.dart';
 import '../store/index.dart';
 
 final dio = Dio(
@@ -22,9 +26,9 @@ class AuthInterceptor extends Interceptor {
   @override
   Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     // 添加token
-    final token = await asyncPrefs.getString(authorization);
-    if (token != null) {
-      options.headers[authorization] = token;
+    final token = await asyncPrefs.getString(App.authorization);
+    if (token != null && token != "") {
+      options.headers[App.authorization] = token;
     }
     handler.next(options);
   }
@@ -32,9 +36,9 @@ class AuthInterceptor extends Interceptor {
   @override
   Future<void> onResponse(Response response, ResponseInterceptorHandler handler) async {
     // 刷新token
-    final token = response.headers.value(refreshToken);
+    final token = response.headers.value(App.refreshToken);
     if (token != null) {
-      await asyncPrefs.setString(authorization, token);
+      await asyncPrefs.setString(App.authorization, token);
     }
     handler.next(response);
   }
@@ -47,19 +51,30 @@ class ErrorInterceptor extends Interceptor {
     // 这里处理错误,为http不为2xx的异常,如 404、500 等
     if (err.response != null) {
       final message = handlerErrorCode(err.response!.statusCode!);
-      if (kIsWeb) {
-        // Web 平台的代码
-        debugPrint(message);
-      } else {
-        // 原生（iOS/Android）平台的代码
-        Fluttertoast.showToast(
-            msg: message,
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.black,
-            textColor: Colors.white,
-            fontSize: 16.0);
+      Fluttertoast.showToast(
+          msg: message,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      if (err.response!.statusCode == 401) {
+        asyncPrefs.remove(App.authorization);
+        asyncPrefs.remove(App.userInfo);
+        Future.delayed(const Duration(seconds: 3), () {
+          navigatorKey.currentState?.push(
+            CupertinoPageRoute(
+              builder: (context) => const LoginPage(),
+              settings: const RouteSettings(),
+              fullscreenDialog: false,
+            ),
+          );
+          // Navigator.push(
+          //     navigatorKey.currentContext!,
+          //     CupertinoPageRoute(
+          //         builder: (context) => const LoginPage(), settings: const RouteSettings(), fullscreenDialog: false));
+        });
       }
     } else {
       // 根据具体的错误类型进行分类处理，这里为没有收到响应

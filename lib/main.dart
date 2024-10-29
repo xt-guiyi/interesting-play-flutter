@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:interesting_play_flutter/pages/auth/login.dart';
+import 'package:get/get.dart';
 import 'package:interesting_play_flutter/pages/tabs/index.dart';
+import 'package:interesting_play_flutter/store/userInfoController.dart';
 
 import 'api/index.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() {
   initApi();
+  Get.put(UserInfoController()); // 在应用启动时注册 UserController
   runApp(const MyApp());
 }
 
@@ -23,6 +26,7 @@ class MyApp extends StatelessWidget {
     ));
     return MaterialApp(
       title: '趣玩Flutter版本',
+      navigatorKey: navigatorKey,
       theme: ThemeData(
         useMaterial3: true,
         // tabBarTheme: const TabBarTheme(
@@ -31,8 +35,8 @@ class MyApp extends StatelessWidget {
         splashFactory: NoSplash.splashFactory, // 全局移除水波纹效果
         highlightColor: Colors.transparent, // 全局移除点击高亮效果
       ),
-      // home: const TabPage(),
-      home: const LoginPage(),
+      home: const TabPage(),
+      // home: const LoginPage(),
     );
   }
 }
