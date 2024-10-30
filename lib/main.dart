@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:interesting_play_flutter/pages/tabs/index.dart';
+import 'package:interesting_play_flutter/pages/auth/login.dart';
 import 'package:interesting_play_flutter/store/userInfoController.dart';
 
 import 'api/index.dart';
@@ -35,8 +35,8 @@ class MyApp extends StatelessWidget {
         splashFactory: NoSplash.splashFactory, // 全局移除水波纹效果
         highlightColor: Colors.transparent, // 全局移除点击高亮效果
       ),
-      home: const TabPage(),
-      // home: const LoginPage(),
+      // home: const TabPage(),
+      home: const LoginPage(),
     );
   }
 }

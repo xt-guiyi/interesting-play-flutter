@@ -44,6 +44,7 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0
   lottie: ^3.1.3
   get: ^4.6.6
+  flutter_launcher_icons: ^0.14.1
 
 dev_dependencies:
   flutter_test:
@@ -104,5 +105,15 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-
+# 图标生成器
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "lib/assets/splash.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "lib/assets/splash.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
 
