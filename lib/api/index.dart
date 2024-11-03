@@ -13,7 +13,8 @@ import '../store/index.dart';
 
 final dio = Dio(
   BaseOptions(
-    baseUrl: 'http://192.168.31.224:3000',
+    // baseUrl: 'http://192.168.31.224:3000',
+    baseUrl: 'https://interesting-play-service-nest.vercel.app/',
     connectTimeout: const Duration(seconds: 5),
     receiveTimeout: const Duration(seconds: 3),
   ),
@@ -59,6 +60,7 @@ class ErrorInterceptor extends Interceptor {
           backgroundColor: Colors.black,
           textColor: Colors.white,
           fontSize: 16.0);
+      // token无效
       if (err.response!.statusCode == 401) {
         asyncPrefs.remove(App.authorization);
         asyncPrefs.remove(App.userInfo);
@@ -78,6 +80,16 @@ class ErrorInterceptor extends Interceptor {
       }
     } else {
       // 根据具体的错误类型进行分类处理，这里为没有收到响应
+      if (err.type == DioExceptionType.connectionTimeout) {
+        Fluttertoast.showToast(
+            msg: "网络连接超时",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
       debugPrint('dio异常: \n错误类型为 ${err.type}  \n原因为 ${err.message}  \n堆栈为 ${err.stackTrace}');
     }
   }

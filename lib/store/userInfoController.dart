@@ -8,12 +8,10 @@ import 'index.dart';
 
 class UserInfoController extends GetxController {
   final _userInfo = Rxn<UserInfo>();
-  final _isLoggedIn = false.obs;
 
   void setUserInfo(UserInfo? userInfo) {
     _userInfo.value = userInfo;
     if (userInfo != null) {
-      _isLoggedIn.value = true;
       asyncPrefs.setString(App.userInfo, jsonEncode(userInfo.toJson()));
     }
   }
@@ -21,11 +19,8 @@ class UserInfoController extends GetxController {
   void removeUserInfo() {
     _userInfo.value = null;
     asyncPrefs.remove(App.userInfo);
-    _isLoggedIn.value = false;
   }
 
-  // 检查用户是否已登录
-  bool checkIfLoggedIn() => _isLoggedIn.value;
   Future<UserInfo?> getUserInfo() async {
     // 假设 _userInfo 是一个 GetX 的响应式变量
     if (_userInfo.value != null) return Future.value(_userInfo.value);

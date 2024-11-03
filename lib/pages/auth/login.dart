@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -41,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
     if (phoneRegex.hasMatch(phoneController.text)) {
       final loginResult = await _handleLogin();
       if (loginResult) {
-        Navigator.push(
+        Navigator.pushReplacement(
             context,
             CupertinoPageRoute(
                 builder: (context) => const TabPage(), settings: const RouteSettings(), fullscreenDialog: false));
@@ -125,10 +124,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _form() {
-    var offset = null;
-    if (!kIsWeb) {
-      offset = const EdgeInsets.symmetric(vertical: -10, horizontal: -10);
-    }
     return Container(
       width: 260,
       constraints: const BoxConstraints(maxWidth: 400),
@@ -148,9 +143,7 @@ class _LoginPageState extends State<LoginPage> {
               hintText: '请输入手机号',
               filled: true,
               fillColor: Colors.grey[200],
-              // 设置背景颜色
               // 以下两行可以设置文本居中对齐
-              contentPadding: offset,
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(6.0),
@@ -176,7 +169,6 @@ class _LoginPageState extends State<LoginPage> {
               fillColor: Colors.grey[200],
               // 设置背景颜色
               // 以下两行可以设置文本居中对齐
-              contentPadding: offset,
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(6.0),
