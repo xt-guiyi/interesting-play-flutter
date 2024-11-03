@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:interesting_play_flutter/constants/app_colors.dart';
-import 'package:interesting_play_flutter/model/login_model.dart';
+import 'package:interesting_play_flutter/dto/login_dto.dart';
 
 import '../../api/request/auth.dart';
 import '../../constants/app.dart';
@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<bool> _handleLogin() async {
-    final result = await login(LoginModel(phoneController.text, passwordController.text));
+    final result = await login(LoginDto(phoneController.text, passwordController.text));
     if (result.code == 200) {
       await asyncPrefs.setString(App.authorization, result.data ?? "");
       await _getUserInfo();

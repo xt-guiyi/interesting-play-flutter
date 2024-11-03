@@ -4,8 +4,11 @@ import 'package:get/get.dart';
 import 'package:interesting_play_flutter/model/user_info.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../constants/app.dart';
 import '../../constants/app_colors.dart';
+import '../../store/index.dart';
 import '../../store/userInfoController.dart';
+import '../auth/login.dart';
 
 class MePage extends StatefulWidget {
   const MePage({super.key});
@@ -147,90 +150,126 @@ class _MePageState extends State<MePage> with AutomaticKeepAliveClientMixin {
 
   /// 内容
   Widget _body() {
+    final itemWidth = (MediaQuery.sizeOf(context).width - 24) / 4;
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+      padding: const EdgeInsets.fromLTRB(12, 16, 12, 0),
       decoration: const BoxDecoration(color: Colors.white),
       child: Wrap(
         direction: Axis.horizontal,
         alignment: WrapAlignment.start,
         runAlignment: WrapAlignment.start,
-        spacing: 30,
-        runSpacing: 14,
+        spacing: 0,
+        runSpacing: 16,
         crossAxisAlignment: WrapCrossAlignment.start,
         children: [
-          GestureDetector(
-            onTap: () {
-              // _showDialog(context);
-              _showCustomDialog(context);
-            },
+          SizedBox(
+            width: itemWidth,
+            child: GestureDetector(
+              onTap: () {
+                // _showDialog(context);
+                _showCustomDialog(context);
+              },
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.inbox,
+                    size: 24,
+                  ),
+                  Text("弹框")
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            width: itemWidth,
+            child: GestureDetector(
+              onTap: () {
+                // _showDialog(context);
+                _showBottomSheet(context);
+              },
+              child: const Column(
+                children: [
+                  Icon(
+                    Icons.check_box_outline_blank,
+                    size: 24,
+                  ),
+                  Text("底部弹框")
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            width: itemWidth,
+            child: GestureDetector(
+              onTap: () {
+                _selectTime(context);
+              },
+              child: const Column(
+                children: [
+                  Icon(
+                    Icons.schedule,
+                    size: 24,
+                  ),
+                  Text("时间选择器")
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            width: itemWidth,
             child: const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.inbox,
+                  Icons.scanner,
                   size: 24,
                 ),
-                Text("弹框")
+                Text("扫一扫")
               ],
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              // _showDialog(context);
-              _showBottomSheet(context);
-            },
+          SizedBox(
+            width: itemWidth,
             child: const Column(
               children: [
                 Icon(
-                  Icons.check_box_outline_blank,
+                  Icons.telegram,
                   size: 24,
                 ),
-                Text("底部弹框")
+                Text("聊天")
               ],
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              _selectTime(context);
-            },
+          SizedBox(
+            width: itemWidth,
             child: const Column(
               children: [
                 Icon(
-                  Icons.schedule,
+                  Icons.settings,
                   size: 24,
                 ),
-                Text("时间选择器")
+                Text("设置")
               ],
             ),
           ),
-          const Column(
-            children: [
-              Icon(
-                Icons.scanner,
-                size: 24,
+          SizedBox(
+            width: itemWidth,
+            child: GestureDetector(
+              onTap: () {
+                _logOut(context);
+              },
+              child: const Column(
+                children: [
+                  Icon(
+                    Icons.group,
+                    size: 24,
+                  ),
+                  Text("注销")
+                ],
               ),
-              Text("扫一扫")
-            ],
-          ),
-          const Column(
-            children: [
-              Icon(
-                Icons.telegram,
-                size: 24,
-              ),
-              Text("聊天")
-            ],
-          ),
-          const Column(
-            children: [
-              Icon(
-                Icons.settings,
-                size: 24,
-              ),
-              Text("设置")
-            ],
-          ),
+            ),
+          )
         ],
       ),
     );
@@ -364,5 +403,14 @@ class _MePageState extends State<MePage> with AutomaticKeepAliveClientMixin {
         );
       },
     );
+  }
+
+  void _logOut(BuildContext context) {
+    asyncPrefs.remove(App.authorization);
+    asyncPrefs.remove(App.userInfo);
+    Navigator.push(
+        context,
+        CupertinoPageRoute(
+            builder: (context) => const LoginPage(), settings: const RouteSettings(), fullscreenDialog: false));
   }
 }

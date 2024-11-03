@@ -4,6 +4,7 @@ class AppColors {
   static const Color green_100 = Color(0xffF1F6F5);
   static const Color green_200 = Color(0xffD2F4E8);
   static const Color green_300 = Color(0xff04B578);
+  static const Color green_400 = Color(0xffE3F0E0);
   static const Color red_100 = Color(0xffFFE6E6);
   static const Color red_200 = Color(0xffFE3737);
   static const Color sliver_100 = Color(0xffB2B8BD);
@@ -16,4 +17,3 @@ class AppColors {
   static const Color yellow_200 = Color(0xffFF8B00);
   static const Color transparent = Color(0xff000000);
 }
-

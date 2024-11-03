@@ -13,8 +13,8 @@ import '../store/index.dart';
 
 final dio = Dio(
   BaseOptions(
-    // baseUrl: 'http://192.168.31.224:3000',
-    baseUrl: 'https://interesting-play-service-nest.vercel.app/',
+    baseUrl: 'http://192.168.31.224:3000',
+    // baseUrl: 'https://interesting-play-service-nest.vercel.app/',
     connectTimeout: const Duration(seconds: 5),
     receiveTimeout: const Duration(seconds: 3),
   ),
@@ -47,6 +47,7 @@ class AuthInterceptor extends Interceptor {
 
 /// http错误处理
 class ErrorInterceptor extends Interceptor {
+  var hasHandledUnauthorized = false;
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     // 这里处理错误,为http不为2xx的异常,如 404、500 等
@@ -61,7 +62,8 @@ class ErrorInterceptor extends Interceptor {
           textColor: Colors.white,
           fontSize: 16.0);
       // token无效
-      if (err.response!.statusCode == 401) {
+      if (err.response!.statusCode == 401 && !hasHandledUnauthorized) {
+        hasHandledUnauthorized = true;
         asyncPrefs.remove(App.authorization);
         asyncPrefs.remove(App.userInfo);
         Future.delayed(const Duration(seconds: 3), () {
@@ -72,6 +74,7 @@ class ErrorInterceptor extends Interceptor {
               fullscreenDialog: false,
             ),
           );
+          hasHandledUnauthorized = false;
           // Navigator.push(
           //     navigatorKey.currentContext!,
           //     CupertinoPageRoute(

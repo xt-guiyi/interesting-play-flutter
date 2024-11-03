@@ -77,7 +77,7 @@ class _TabBarViewType3State extends State<TabBarViewType3> with AutomaticKeepAli
     return Container(
         alignment: Alignment.center,
         decoration: const BoxDecoration(
-          color: AppColors.green_100,
+          color: AppColors.green_400,
         ),
         child: Column(
           children: [_headerBar(), Expanded(flex: 1, child: _content())],

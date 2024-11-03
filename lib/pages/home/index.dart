@@ -168,7 +168,7 @@ class _MyHomePageState extends State<HomePage> with SingleTickerProviderStateMix
       flex: 1,
       child: Container(
         width: double.infinity,
-        decoration: const BoxDecoration(color: AppColors.green_100),
+        decoration: const BoxDecoration(color: AppColors.green_400),
         child: TabBarView(
             controller: _tabController,
             children: _tabItems.map((title) {
