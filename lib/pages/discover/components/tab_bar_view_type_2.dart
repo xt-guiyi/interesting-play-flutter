@@ -28,7 +28,7 @@ class _TabBarViewType2State extends State<TabBarViewType2> with AutomaticKeepAli
       _headerBar(),
       Expanded(
         child: Container(
-            decoration: const BoxDecoration(color: AppColors.green_100),
+            decoration: const BoxDecoration(color: AppColors.green_400),
             child: ListView.builder(
               itemCount: _listData.length,
               itemBuilder: (context, index) => _listItem(index),

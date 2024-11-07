@@ -2,9 +2,12 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:interesting_play_flutter/constants/app_colors.dart';
 import 'package:interesting_play_flutter/pages/home/components/tab_bar_view_type_1.dart';
 
+import '../../model/user_info.dart';
+import '../../store/userInfoController.dart';
 import 'components/tab_bar_view_type_2.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,6 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<HomePage> with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  UserInfo? _userInfo;
   late Timer _timer;
   var _currentSearchText = '';
   final _searchTextList = [
@@ -44,6 +48,12 @@ class _MyHomePageState extends State<HomePage> with SingleTickerProviderStateMix
       });
     });
     _tabController = TabController(vsync: this, length: _tabItems.length);
+    final UserInfoController userInfoController = Get.find<UserInfoController>();
+    userInfoController.getUserInfo().then((value) {
+      setState(() {
+        _userInfo = value;
+      });
+    });
   }
 
   @override
@@ -77,11 +87,10 @@ class _MyHomePageState extends State<HomePage> with SingleTickerProviderStateMix
       ),
       child: Row(
         children: [
-          const SizedBox(
+          SizedBox(
             width: 36,
             height: 36,
-            child: CircleAvatar(
-                backgroundImage: NetworkImage("https://images.cubox.pro/iw3rni/file/2024061800331149633/IMG_0021.JPG")),
+            child: CircleAvatar(backgroundImage: NetworkImage(_userInfo?.avatar ?? "")),
           ),
           Expanded(
             flex: 1,
@@ -159,7 +168,7 @@ class _MyHomePageState extends State<HomePage> with SingleTickerProviderStateMix
       flex: 1,
       child: Container(
         width: double.infinity,
-        decoration: const BoxDecoration(color: AppColors.green_100),
+        decoration: const BoxDecoration(color: AppColors.green_400),
         child: TabBarView(
             controller: _tabController,
             children: _tabItems.map((title) {
