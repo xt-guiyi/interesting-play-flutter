@@ -20,7 +20,20 @@
 ## 项目结构
 
 ```
-io
+lib -- 主目录
+├── api -- 封装全局可用的网络请求类
+├── assets -- 静态文件，图片，字体等
+├── constants -- 全局app常量
+├── dto -- 数据传输类
+├── model -- 接口数据模型类
+├── store -- 全局状态管理
+├── pages --  所有界面
+└── utils -- 通用工具类，如时间工具类，图片加载类等
+└── widgets -- 全局自定义widget,可复用
+└── main.dart -- 入口文件
+```
+
+lip  主目录
  +- github
      +- xxyopen   
         +- novel
