@@ -72,3 +72,12 @@ lib -- 主目录
   <img src="https://images.cubox.pro/iw3rni/file/2024110523485339191/1730821730767.jpg" alt="Image 4" style="flex: 1;margin: 0 20px">
   <img src="https://images.cubox.pro/iw3rni/file/2024110523490012067/1730821738758.jpg" alt="Image 4" style="flex: 1;margin: 0 20px">
 </div>
+
+
+## 待实现功能
+
+- 视频播放
+- 相关视频推荐列表
+- 评论列表
+- 发送弹幕
+- 发送评论
