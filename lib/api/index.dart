@@ -13,8 +13,8 @@ import '../store/index.dart';
 
 final dio = Dio(
   BaseOptions(
-    baseUrl: 'http://192.168.31.224:3000',
-    // baseUrl: 'https://interesting-play-service-nest.vercel.app/',
+    // baseUrl: 'http://192.168.31.224:3000',
+    baseUrl: 'https://interesting-play-service-nest.vercel.app/',
     connectTimeout: const Duration(seconds: 5),
     receiveTimeout: const Duration(seconds: 3),
   ),

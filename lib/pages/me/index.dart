@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:interesting_play_flutter/model/user_info.dart';
+import 'package:interesting_play_flutter/pages/chatPage/chat_page.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../constants/app.dart';
@@ -231,14 +232,19 @@ class _MePageState extends State<MePage> with AutomaticKeepAliveClientMixin {
           ),
           SizedBox(
             width: itemWidth,
-            child: const Column(
-              children: [
-                Icon(
-                  Icons.telegram,
-                  size: 24,
-                ),
-                Text("聊天")
-              ],
+            child: GestureDetector(
+              onTap: () {
+                _jumpChatPage(context);
+              },
+              child: const Column(
+                children: [
+                  Icon(
+                    Icons.telegram,
+                    size: 24,
+                  ),
+                  Text("聊天")
+                ],
+              ),
             ),
           ),
           SizedBox(
@@ -403,6 +409,13 @@ class _MePageState extends State<MePage> with AutomaticKeepAliveClientMixin {
         );
       },
     );
+  }
+
+  void _jumpChatPage(BuildContext context) {
+    Navigator.push(
+        context,
+        CupertinoPageRoute(
+            builder: (context) => const ChatPage(), settings: const RouteSettings(), fullscreenDialog: false));
   }
 
   void _logOut(BuildContext context) {
