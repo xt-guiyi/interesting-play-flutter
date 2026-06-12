@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.4.3 <4.0.0'
+  sdk: '>=3.8.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -31,32 +31,36 @@ dependencies:
   flutter:
     sdk: flutter
 
-
-
-  dio: ^5.7.0
-  shared_preferences: ^2.3.2
-  carousel_slider: ^5.0.0
-  json_annotation: ^4.9.0
-  intl: ^0.19.0
+  flutter_riverpod: ^3.3.2
+  riverpod_annotation: ^4.0.3
+  go_router: ^17.3.0
+  dio: ^5.9.2
+  shared_preferences: ^2.5.5
+  carousel_slider: ^5.1.2
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.12.0
+  intl: ^0.20.2
   fluttertoast: ^9.1.0
   flutter_staggered_grid_view: ^0.7.0
-  lottie: ^3.1.3
-  get: ^4.6.6
-  flutter_launcher_icons: ^0.14.1
-  fl_chart: ^0.69.0
+  lottie: ^3.3.3
+  fl_chart: ^1.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  json_serializable: ^6.8.0
+  build_runner: ^2.15.0
+  riverpod_generator: ^4.0.4
+  freezed: ^3.2.5
+  json_serializable: ^6.14.0
+  flutter_launcher_icons: ^0.14.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
-  build_runner: ^2.4.11
+  flutter_lints: ^6.0.0
+  shared_preferences_platform_interface: ^2.4.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
