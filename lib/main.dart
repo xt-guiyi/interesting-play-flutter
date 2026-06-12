@@ -5,7 +5,6 @@ import 'package:interesting_play_flutter/pages/auth/index.dart';
 import 'package:interesting_play_flutter/store/userInfoController.dart';
 
 import 'api/index.dart';
-
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() {
   initApi();

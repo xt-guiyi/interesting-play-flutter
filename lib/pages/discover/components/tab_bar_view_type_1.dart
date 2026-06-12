@@ -92,7 +92,7 @@ class _TabBarViewType1State extends State<TabBarViewType1> with AutomaticKeepAli
               decoration: const BoxDecoration(color: AppColors.green_400),
               padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
               child: MasonryGridView.count(
-                padding: EdgeInsets.only(top: 8),
+                padding: const EdgeInsets.only(top: 8),
                 crossAxisCount: 2,
                 mainAxisSpacing: 8,
                 crossAxisSpacing: 8,
@@ -120,7 +120,7 @@ class _TabBarViewType1State extends State<TabBarViewType1> with AutomaticKeepAli
     return Container(
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(6), boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.1), // 阴影颜色
+          color: Colors.black.withValues(alpha: 0.1), // 阴影颜色
           spreadRadius: 0.3, // 扩散半径
           blurRadius: 0.3, // 模糊半径
           offset: const Offset(0, 1), // 偏移量（x, y）

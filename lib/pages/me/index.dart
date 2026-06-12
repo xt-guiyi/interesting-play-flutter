@@ -286,17 +286,17 @@ class _MePageState extends State<MePage> with AutomaticKeepAliveClientMixin {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('弹框标题'),
-          content: Text('这是弹框的内容。'),
+          title: const Text('弹框标题'),
+          content: const Text('这是弹框的内容。'),
           actions: <Widget>[
             TextButton(
-              child: Text('取消'),
+              child: const Text('取消'),
               onPressed: () {
                 Navigator.of(context).pop(); // 关闭弹框
               },
             ),
             TextButton(
-              child: Text('确认'),
+              child: const Text('确认'),
               onPressed: () {
                 // 处理确认逻辑
                 Navigator.of(context).pop(); // 关闭弹框

@@ -94,7 +94,7 @@ class _DropdownMenuSate extends State<DropdownMenu> {
       child: Container(
         width: MediaQuery.sizeOf(context).width,
         height: maskHeight,
-        color: Colors.black.withOpacity(0.3),
+        color: Colors.black.withValues(alpha: 0.3),
       ),
     );
   }

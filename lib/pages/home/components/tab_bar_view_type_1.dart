@@ -163,7 +163,7 @@ class _TabBarViewType1State extends State<TabBarViewType1> with AutomaticKeepAli
                       margin: const EdgeInsets.symmetric(horizontal: 0),
                       decoration: BoxDecoration(boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1), // 阴影颜色
+                          color: Colors.black.withValues(alpha: 0.1), // 阴影颜色
                           spreadRadius: 5, // 扩散半径
                           blurRadius: 10, // 模糊半径
                           offset: const Offset(4, 0), // 偏移量（x, y）
@@ -192,7 +192,7 @@ class _TabBarViewType1State extends State<TabBarViewType1> with AutomaticKeepAli
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black)
-                            .withOpacity(_current == entry.key ? 0.9 : 0.4)),
+                            .withValues(alpha: _current == entry.key ? 0.9 : 0.4)),
                   ),
                 );
               }).toList(),
@@ -216,7 +216,7 @@ class _TabBarViewType1State extends State<TabBarViewType1> with AutomaticKeepAli
       child: Container(
         decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(6), boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1), // 阴影颜色
+            color: Colors.black.withValues(alpha: 0.1), // 阴影颜色
             spreadRadius: 0.3, // 扩散半径
             blurRadius: 0.3, // 模糊半径
             offset: const Offset(0, 1), // 偏移量（x, y）
