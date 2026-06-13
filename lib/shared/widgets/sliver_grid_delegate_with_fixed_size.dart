@@ -47,6 +47,7 @@ class SliverGridDelegateWithFixedSize extends SliverGridDelegate {
   bool shouldRelayout(SliverGridDelegateWithFixedSize oldDelegate) {
     return oldDelegate.width != width ||
         oldDelegate.height != height ||
-        oldDelegate.mainAxisSpacing != mainAxisSpacing;
+        oldDelegate.mainAxisSpacing != mainAxisSpacing ||
+        oldDelegate.crossAxisSpacing != crossAxisSpacing;
   }
 }

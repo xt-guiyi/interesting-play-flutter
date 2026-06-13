@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'api_client.dart';
+part of 'api_public_client.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,24 +9,24 @@ part of 'api_client.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(dio)
-final dioProvider = DioProvider._();
+@ProviderFor(publicDio)
+final publicDioProvider = PublicDioProvider._();
 
-final class DioProvider extends $FunctionalProvider<Dio, Dio, Dio>
+final class PublicDioProvider extends $FunctionalProvider<Dio, Dio, Dio>
     with $Provider<Dio> {
-  DioProvider._()
+  PublicDioProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'dioProvider',
+        name: r'publicDioProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$dioHash();
+  String debugGetCreateSourceHash() => _$publicDioHash();
 
   @$internal
   @override
@@ -35,7 +35,7 @@ final class DioProvider extends $FunctionalProvider<Dio, Dio, Dio>
 
   @override
   Dio create(Ref ref) {
-    return dio(ref);
+    return publicDio(ref);
   }
 
   /// {@macro riverpod.override_with_value}
@@ -47,4 +47,4 @@ final class DioProvider extends $FunctionalProvider<Dio, Dio, Dio>
   }
 }
 
-String _$dioHash() => r'035c1aa1e2fc840e3f8b092f4558f27ab92cc451';
+String _$publicDioHash() => r'efc95b8c15e2b02c2f851b9ac8e4c8ac206313ef';

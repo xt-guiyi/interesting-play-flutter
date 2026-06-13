@@ -3,24 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../constants/api_base_urls.dart';
 import '../constants/app_constants.dart';
 import '../storage/local_storage.dart';
 import 'api_exception.dart';
 
 part 'api_client.g.dart';
 
-const _baseUrl = 'https://interesting-play-service-nest.vercel.app/';
-
 @riverpod
 Dio dio(Ref ref) {
   final localStorage = ref.watch(localStorageServiceProvider);
-  return createDio(localStorage);
+  return createAppDio(localStorage);
 }
 
-Dio createDio(LocalStorageService localStorage) {
+Dio createAppDio(LocalStorageService localStorage) {
   final dio = Dio(
     BaseOptions(
-      baseUrl: _baseUrl,
+      baseUrl: ApiBaseUrls.app,
       connectTimeout: const Duration(seconds: 5),
       receiveTimeout: const Duration(seconds: 3),
     ),
