@@ -2,107 +2,139 @@ import 'package:flutter/material.dart';
 
 import 'dropdown_menu_controller.dart';
 import 'dropdown_menu_header.dart';
-import 'dropdown_menu_view.dart';
 
-class DropdownMenu extends StatefulWidget {
+class FilterDropdownMenu extends StatefulWidget {
+  final double? headerWidth;
   final List<DropdownMenuHeaderItem> headerItems;
-  final List<Widget> viewBuilders;
-  final double viewHeight;
+  final List<Widget> menuViews;
   final double headerHeight;
-  final int headerCount;
+  final int visibleHeaderCount;
   final DropdownMenuController controller;
 
-  const DropdownMenu({
+  const FilterDropdownMenu({
     super.key,
-    required this.viewBuilders,
+    this.headerWidth,
+    required this.menuViews,
     required this.controller,
     required this.headerItems,
-    required this.viewHeight,
     required this.headerHeight,
-    this.headerCount = 3,
-  });
+    this.visibleHeaderCount = 3,
+  }) : assert(headerItems.length == menuViews.length, '菜单头和菜单内容数量必须一致'),
+       assert(visibleHeaderCount > 0, 'visibleHeaderCount 必须大于 0');
 
   @override
-  State<StatefulWidget> createState() => _DropdownMenuSate();
+  State<FilterDropdownMenu> createState() => _FilterDropdownMenuState();
 }
 
-class _DropdownMenuSate extends State<DropdownMenu> {
-  OverlayEntry? _overlayEntry;
-  late OverlayState _overlayState;
+class _FilterDropdownMenuState extends State<FilterDropdownMenu> {
+  final LayerLink _layerLink = LayerLink();
+  final OverlayPortalController _overlayController = OverlayPortalController();
 
   @override
   void initState() {
     super.initState();
-    _overlayState = Overlay.of(context);
-    widget.controller.addListener(_dropDownListener);
+    widget.controller.addListener(_handleControllerChanged);
+    _syncOverlay();
   }
 
-  void _dropDownListener() {
-    _removeOverlay();
-    if (widget.controller.isShow) {
-      final menuIndex = widget.controller.menuIndex;
-      final top = widget.controller.top;
-      final maskHeight = MediaQuery.sizeOf(context).height - top;
-      if (menuIndex > widget.viewBuilders.length - 1) {
-        throw ArgumentError("菜单项索引：$menuIndex大于菜单主体数");
-      }
-      _overlayEntry = OverlayEntry(
-        builder: (context) {
-          return Positioned(
-            top: top,
-            child: Material(
-              color: Colors.transparent,
-              child: Column(children: [_view(menuIndex), _mask(maskHeight)]),
-            ),
-          );
-        },
-      );
-      _overlayState.insert(_overlayEntry!);
+  @override
+  void didUpdateWidget(covariant FilterDropdownMenu oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller.removeListener(_handleControllerChanged);
+      widget.controller.addListener(_handleControllerChanged);
+      _syncOverlay();
     }
   }
 
-  void _removeOverlay() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
+  @override
+  void dispose() {
+    widget.controller.removeListener(_handleControllerChanged);
+    if (_overlayController.isShowing) {
+      _overlayController.hide();
+    }
+    super.dispose();
   }
 
-  Widget _view(int currentIndex) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: widget.viewHeight,
-      color: Colors.white,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: IndexedStack(
-          index: currentIndex,
-          children: widget.viewBuilders.map((e) {
-            return DropdownMenuView(controller: widget.controller, child: e);
-          }).toList(),
+  void _handleControllerChanged() {
+    _syncOverlay();
+    if (mounted) setState(() {});
+  }
+
+  void _syncOverlay() {
+    if (widget.controller.isOpen) {
+      if (!_overlayController.isShowing) {
+        _overlayController.show();
+      }
+    } else if (_overlayController.isShowing) {
+      _overlayController.hide();
+    }
+  }
+
+  Widget _overlayBuilder(BuildContext context) {
+    final currentIndex = widget.controller.activeIndex;
+    if (currentIndex == null) return const SizedBox.shrink();
+
+    return Positioned.fill(
+      child: CompositedTransformFollower(
+        link: _layerLink,
+        targetAnchor: Alignment.bottomLeft,
+        followerAnchor: Alignment.topLeft,
+        showWhenUnlinked: false,
+        child: Material(
+          color: Colors.transparent,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [_view(currentIndex), _mask()],
+          ),
         ),
       ),
     );
   }
 
-  Widget _mask(double maskHeight) {
-    return GestureDetector(
-      onTap: () {
-        widget.controller.hide();
-      },
-      child: Container(
-        width: MediaQuery.sizeOf(context).width,
-        height: maskHeight,
-        color: Colors.black.withValues(alpha: 0.3),
+  Widget _view(int currentIndex) {
+    return Container(
+      width: MediaQuery.sizeOf(context).width,
+      color: Colors.white,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: widget.menuViews[currentIndex],
+      ),
+    );
+  }
+
+  Widget _mask() {
+    return Expanded(
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: widget.controller.hide,
+        child: Container(
+          key: const ValueKey('filter_dropdown_menu_mask'),
+          width: MediaQuery.sizeOf(context).width,
+          color: Colors.black.withValues(alpha: 0.3),
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return DropdownMenuHeader(
-      items: widget.headerItems,
-      height: widget.headerHeight,
-      headerCount: widget.headerCount,
-      controller: widget.controller,
+    final child = CompositedTransformTarget(
+      link: _layerLink,
+      child: DropdownMenuHeader(
+        items: widget.headerItems,
+        height: widget.headerHeight,
+        visibleItemCount: widget.visibleHeaderCount,
+        controller: widget.controller,
+      ),
+    );
+
+    return OverlayPortal(
+      controller: _overlayController,
+      overlayChildBuilder: _overlayBuilder,
+      child: widget.headerWidth == null
+          ? child
+          : SizedBox(width: widget.headerWidth, child: child),
     );
   }
 }

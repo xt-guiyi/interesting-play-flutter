@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:interesting_play_flutter/core/theme/app_colors.dart';
-import 'package:interesting_play_flutter/shared/widgets/dropdown_menu/dropdown_menu.dart'
-    as custom_dropdown_menu;
+import 'package:interesting_play_flutter/shared/widgets/dropdown_menu/dropdown_menu.dart';
 import 'package:interesting_play_flutter/shared/widgets/dropdown_menu/dropdown_menu_controller.dart';
 import 'package:interesting_play_flutter/shared/widgets/dropdown_menu/dropdown_menu_header.dart';
 
@@ -17,10 +16,16 @@ class TabBarViewType2 extends StatefulWidget {
 class _TabBarViewType2State extends State<TabBarViewType2>
     with AutomaticKeepAliveClientMixin {
   final _listData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  var menuController = DropdownMenuController();
+  final menuController = DropdownMenuController();
 
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void dispose() {
+    menuController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +48,7 @@ class _TabBarViewType2State extends State<TabBarViewType2>
 
   /// 头部筛选栏，使用的封装组件写法，适合简化代码
   Widget _headerBar() {
-    return custom_dropdown_menu.DropdownMenu(
+    return FilterDropdownMenu(
       controller: menuController,
       headerItems: [
         DropdownMenuHeaderItem(
@@ -75,48 +80,52 @@ class _TabBarViewType2State extends State<TabBarViewType2>
           unselectColor: Colors.black,
         ),
       ],
-      viewHeight: 300,
       headerHeight: 36,
-      headerCount: 3,
-      viewBuilders: [
-        Column(
-          children: [
-            const SizedBox(
-              height: 240,
-              child: Center(
-                child: Text(
-                  "内容",
-                  style: TextStyle(
-                    fontSize: 34,
-                    color: Colors.black,
-                    decoration: TextDecoration.none,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                menuController.hide();
-              },
-              child: Container(
-                alignment: AlignmentDirectional.center,
-                width: double.infinity,
-                height: 60,
-                decoration: const BoxDecoration(color: AppColors.green_300),
-                child: const Text(
-                  "关闭",
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
-                    decoration: TextDecoration.none,
+      visibleHeaderCount: 3,
+      menuViews: [
+        SizedBox(
+          height: 300,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 240,
+                child: Center(
+                  child: Text(
+                    "内容",
+                    style: TextStyle(
+                      fontSize: 34,
+                      color: Colors.black,
+                      decoration: TextDecoration.none,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
-            ),
-          ],
+              GestureDetector(
+                onTap: () {
+                  menuController.hide();
+                },
+                child: Container(
+                  alignment: AlignmentDirectional.center,
+                  width: double.infinity,
+                  height: 60,
+                  decoration: const BoxDecoration(color: AppColors.green_300),
+                  child: const Text(
+                    "关闭",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-        const Column(children: [Text("第二项")]),
+        const SizedBox(height: 300, child: Column(children: [Text("第二项")])),
+        const Column(children: [Text("第三项")]),
+        const SizedBox(height: 300, child: Column(children: [Text("第四项")])),
       ],
     );
   }

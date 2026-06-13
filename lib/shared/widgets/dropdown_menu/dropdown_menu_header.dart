@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'dropdown_menu_controller.dart';
 
-class DropdownMenuHeader extends StatefulWidget {
+class DropdownMenuHeader extends StatelessWidget {
   final double height;
-  final int headerCount;
+  final int visibleItemCount;
   final Color bgColor;
   final List<DropdownMenuHeaderItem> items;
   final DropdownMenuController controller;
@@ -12,70 +12,51 @@ class DropdownMenuHeader extends StatefulWidget {
   const DropdownMenuHeader({
     super.key,
     this.height = 36,
-    this.headerCount = 3,
+    this.visibleItemCount = 3,
     required this.items,
     this.bgColor = Colors.white,
     required this.controller,
   });
 
   @override
-  State<StatefulWidget> createState() => _DropdownMenuHeaderState();
-}
-
-class _DropdownMenuHeaderState extends State<DropdownMenuHeader> {
-  late double _screenWidth;
-  late double _itemWidth;
-  final GlobalKey _widgetKey = GlobalKey();
-  var _isShow = false;
-
-  @override
-  void initState() {
-    super.initState();
-    widget.controller.addListener(_dropDownListener);
-  }
-
-  void _dropDownListener() {
-    setState(() {
-      _isShow = widget.controller.isShow;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    _screenWidth = MediaQuery.sizeOf(context).width;
-    _itemWidth = _screenWidth / widget.headerCount;
-    return Container(
-      key: _widgetKey,
-      decoration: BoxDecoration(color: widget.bgColor),
-      width: double.infinity,
-      height: widget.height,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: widget.items.asMap().entries.map((item) {
-            return _headerItem(item.key, item.value);
-          }).toList(),
-        ),
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final headerWidth = constraints.hasBoundedWidth
+            ? constraints.maxWidth
+            : MediaQuery.sizeOf(context).width;
+        final itemWidth = headerWidth / visibleItemCount;
+        return AnimatedBuilder(
+          animation: controller,
+          builder: (context, _) {
+            return Container(
+              decoration: BoxDecoration(color: bgColor),
+              width: headerWidth,
+              height: height,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: items.asMap().entries.map((item) {
+                    return _headerItem(item.key, item.value, itemWidth);
+                  }).toList(),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
-  Widget _headerItem(int index, DropdownMenuHeaderItem item) {
-    var isSelected = _isShow && index == widget.controller.menuIndex;
+  Widget _headerItem(int index, DropdownMenuHeaderItem item, double itemWidth) {
+    final isSelected = controller.isOpen && index == controller.activeIndex;
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () {
-        if (_widgetKey.currentContext != null) {
-          final renderBox =
-              _widgetKey.currentContext!.findRenderObject() as RenderBox;
-          final position = renderBox.localToGlobal(Offset.zero);
-          final size = renderBox.size;
-          widget.controller.top = size.height + position.dy;
-          widget.controller.show(index);
-          debugPrint('按钮被点击了，当前项:$index ');
-        }
+        controller.toggle(index);
       },
       child: SizedBox(
-        width: _itemWidth,
+        width: itemWidth,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
