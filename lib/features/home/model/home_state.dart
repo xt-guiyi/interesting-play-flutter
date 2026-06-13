@@ -9,6 +9,20 @@ part 'home_state.freezed.dart';
 @freezed
 abstract class HomeState with _$HomeState {
   const factory HomeState({
+    @Default([
+      "拜登把泽连斯基叫成普京",
+      "原神肯德基套餐上线",
+      "macBook air13寸和15寸差别多大",
+      "绝区零KDA双厨狂喜",
+      "北伐是什么梗",
+      "神偷奶爸今日上映",
+      "通往夏天的隧道",
+      "安卓开发",
+    ])
+    List<String> searchTextList,
+    @Default('') String currentSearchText,
+    @Default(["推荐", "小说", "漫画", "游戏", "音乐", "舞蹈", "萌宠", "其他"])
+    List<String> tabItems,
     @Default([]) List<VideoInfo> videos,
     @Default([]) List<BannerInfo> banners,
     @Default([]) List<CommentInfo> comments,

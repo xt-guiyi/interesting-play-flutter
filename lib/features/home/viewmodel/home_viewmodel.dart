@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:interesting_play_flutter/features/home/data/home_repository.dart';
 import 'package:interesting_play_flutter/features/home/model/home_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -6,9 +8,19 @@ part 'home_viewmodel.g.dart';
 
 @riverpod
 class HomeViewModel extends _$HomeViewModel {
+  final _random = Random();
+
   @override
   HomeState build() {
     return const HomeState();
+  }
+
+  void rotateSearchText() {
+    final searchTextList = state.searchTextList;
+    if (searchTextList.isEmpty) return;
+    state = state.copyWith(
+      currentSearchText: searchTextList[_random.nextInt(searchTextList.length)],
+    );
   }
 
   Future<void> loadInitial() async {

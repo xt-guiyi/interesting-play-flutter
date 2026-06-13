@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,18 +18,6 @@ class HomePage extends ConsumerStatefulWidget {
 class _MyHomePageState extends ConsumerState<HomePage>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late Timer _timer;
-  var _currentSearchText = '';
-  final _searchTextList = [
-    "拜登把泽连斯基叫成普京",
-    "原神肯德基套餐上线",
-    "macBook air13寸和15寸差别多大",
-    "绝区零KDA双厨狂喜",
-    "北伐是什么梗",
-    "神偷奶爸今日上映",
-    "通往夏天的隧道",
-    "安卓开发",
-  ];
-  final _tabItems = ["推荐", "小说", "漫画", "游戏", "音乐", "舞蹈", "萌宠", "其他"];
   late TabController _tabController;
 
   @override
@@ -40,15 +27,11 @@ class _MyHomePageState extends ConsumerState<HomePage>
   void initState() {
     super.initState();
     // 头部标题变化
-    final random = Random();
+    final tabItems = ref.read(homeViewModelProvider).tabItems;
     _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
-      if (!mounted) return;
-      setState(() {
-        _currentSearchText =
-            _searchTextList[random.nextInt(_searchTextList.length)];
-      });
+      ref.read(homeViewModelProvider.notifier).rotateSearchText();
     });
-    _tabController = TabController(vsync: this, length: _tabItems.length);
+    _tabController = TabController(vsync: this, length: tabItems.length);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final state = ref.read(homeViewModelProvider);
       if (state.videos.isEmpty && !state.isLoading) {
@@ -63,7 +46,6 @@ class _MyHomePageState extends ConsumerState<HomePage>
     _tabController.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +64,9 @@ class _MyHomePageState extends ConsumerState<HomePage>
   Widget _buildHeader() {
     final userInfo = ref.watch(
       homeViewModelProvider.select((state) => state.currentUser),
+    );
+    final currentSearchText = ref.watch(
+      homeViewModelProvider.select((state) => state.currentSearchText),
     );
     return Container(
       width: double.infinity,
@@ -120,7 +105,7 @@ class _MyHomePageState extends ConsumerState<HomePage>
                   const SizedBox(width: 2),
                   Expanded(
                     child: Text(
-                      _currentSearchText,
+                      currentSearchText,
                       style: const TextStyle(
                         fontSize: 14,
                         color: AppColors.sliver_400,
@@ -142,6 +127,9 @@ class _MyHomePageState extends ConsumerState<HomePage>
 
   /// tab栏
   Widget _buildTabs() {
+    final tabItems = ref.watch(
+      homeViewModelProvider.select((state) => state.tabItems),
+    );
     return Column(
       children: [
         Container(
@@ -161,16 +149,20 @@ class _MyHomePageState extends ConsumerState<HomePage>
               fontWeight: FontWeight.bold,
             ),
             unselectedLabelStyle: const TextStyle(fontSize: 14),
-            tabs: _tabItems.map((e) => Tab(text: e)).toList(),
+            overlayColor: WidgetStateProperty.all(Colors.transparent),
+            splashFactory: NoSplash.splashFactory,
+            tabs: tabItems.map((e) => Tab(text: e)).toList(),
           ),
         ),
       ],
     );
   }
 
-
   /// 内容部分
   Widget _buildTabContent() {
+    final tabItems = ref.watch(
+      homeViewModelProvider.select((state) => state.tabItems),
+    );
     return Expanded(
       flex: 1,
       child: Container(
@@ -178,7 +170,7 @@ class _MyHomePageState extends ConsumerState<HomePage>
         decoration: const BoxDecoration(color: AppColors.green_400),
         child: TabBarView(
           controller: _tabController,
-          children: _tabItems.map((title) {
+          children: tabItems.map((title) {
             if (title == "推荐") {
               return TabBarViewType1(tabTitle: title);
             } else {

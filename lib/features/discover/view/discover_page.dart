@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:interesting_play_flutter/core/theme/app_colors.dart';
+import 'package:interesting_play_flutter/shared/widgets/dropdown_menu/dropdown_menu_controller.dart';
 import 'components/tab_bar_view_type_1.dart';
 import 'components/tab_bar_view_type_2.dart';
 import 'components/tab_bar_view_type_3.dart';
@@ -15,6 +16,7 @@ class DiscoverPage extends StatefulWidget {
 class _DiscoverPageState extends State<DiscoverPage>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   final List<String> _tabs = const ["附近", "同城", "关注"];
+  final _cityDropdownMenuController = DropdownMenuController();
   late TabController _tabController;
 
   @override
@@ -24,12 +26,21 @@ class _DiscoverPageState extends State<DiscoverPage>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: _tabs.length);
+    _tabController.addListener(_handleTabChanged);
   }
 
   @override
   void dispose() {
+    _tabController.removeListener(_handleTabChanged);
     _tabController.dispose();
+    _cityDropdownMenuController.dispose();
     super.dispose();
+  }
+
+  void _handleTabChanged() {
+    if (_tabController.indexIsChanging || _tabs[_tabController.index] != "同城") {
+      _cityDropdownMenuController.hide();
+    }
   }
 
   @override
@@ -64,6 +75,9 @@ class _DiscoverPageState extends State<DiscoverPage>
       unselectedLabelColor: const Color(0xFF3D3D3D),
       labelStyle: const TextStyle(fontSize: 15),
       unselectedLabelStyle: const TextStyle(fontSize: 14),
+      overlayColor: WidgetStateProperty.all(Colors.transparent),
+      splashFactory: NoSplash.splashFactory,
+      onTap: (_) => _cityDropdownMenuController.hide(),
       tabs: _tabs.map((e) => Tab(text: e)).toList(),
     ),
   );
@@ -74,7 +88,10 @@ class _DiscoverPageState extends State<DiscoverPage>
       if (title == "附近") {
         return TabBarViewType1(type: title);
       } else if (title == "同城") {
-        return TabBarViewType2(type: title);
+        return TabBarViewType2(
+          type: title,
+          menuController: _cityDropdownMenuController,
+        );
       } else {
         return TabBarViewType3(type: title);
       }

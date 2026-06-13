@@ -5,9 +5,14 @@ import 'package:interesting_play_flutter/shared/widgets/dropdown_menu/dropdown_m
 import 'package:interesting_play_flutter/shared/widgets/dropdown_menu/dropdown_menu_header.dart';
 
 class TabBarViewType2 extends StatefulWidget {
-  const TabBarViewType2({super.key, required this.type});
+  const TabBarViewType2({
+    super.key,
+    required this.type,
+    required this.menuController,
+  });
 
   final String type;
+  final DropdownMenuController menuController;
 
   @override
   State<StatefulWidget> createState() => _TabBarViewType2State();
@@ -16,16 +21,9 @@ class TabBarViewType2 extends StatefulWidget {
 class _TabBarViewType2State extends State<TabBarViewType2>
     with AutomaticKeepAliveClientMixin {
   final _listData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  final menuController = DropdownMenuController();
 
   @override
   bool get wantKeepAlive => true;
-
-  @override
-  void dispose() {
-    menuController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +47,7 @@ class _TabBarViewType2State extends State<TabBarViewType2>
   /// 头部筛选栏，使用的封装组件写法，适合简化代码
   Widget _headerBar() {
     return FilterDropdownMenu(
-      controller: menuController,
+      controller: widget.menuController,
       headerItems: [
         DropdownMenuHeaderItem(
           "全部日期",
@@ -103,7 +101,7 @@ class _TabBarViewType2State extends State<TabBarViewType2>
               ),
               GestureDetector(
                 onTap: () {
-                  menuController.hide();
+                  widget.menuController.hide();
                 },
                 child: Container(
                   alignment: AlignmentDirectional.center,
