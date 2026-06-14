@@ -24,9 +24,7 @@ class ProfileViewModel extends _$ProfileViewModel {
   }
 
   Future<void> logout() async {
-    final repository = ref.read(profileRepositoryProvider);
-    await repository.logout();
-    ref.invalidate(authViewModelProvider);
+    await ref.read(authViewModelProvider.notifier).logout();
     state = const ProfileState();
   }
 }

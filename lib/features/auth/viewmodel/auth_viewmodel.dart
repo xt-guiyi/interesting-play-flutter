@@ -14,6 +14,26 @@ class AuthViewModel extends _$AuthViewModel {
     return currentUser != null;
   }
 
+  Future<void> login(
+    String username,
+    String password, {
+    bool showGlobalErrorToast = true,
+  }) async {
+    state = const AsyncLoading();
+    try {
+      final authRepository = ref.read(authRepositoryProvider);
+      await authRepository.login(
+        username,
+        password,
+        showGlobalErrorToast: showGlobalErrorToast,
+      );
+      state = const AsyncData(true);
+    } catch (error, stackTrace) {
+      state = AsyncError(error, stackTrace);
+      rethrow;
+    }
+  }
+
   Future<void> logout() async {
     final authRepository = ref.read(authRepositoryProvider);
     await authRepository.logout();

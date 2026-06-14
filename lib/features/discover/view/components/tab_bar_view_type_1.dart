@@ -62,9 +62,12 @@ class _TabBarViewType1State extends ConsumerState<TabBarViewType1>
           child: Container(
             decoration: const BoxDecoration(color: AppColors.green_400),
             padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-            child: MasonryGridView.count(
+            child: MasonryGridView.builder(
               padding: const EdgeInsets.only(top: 8),
-              crossAxisCount: 2,
+              gridDelegate:
+                  const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
               mainAxisSpacing: 8,
               crossAxisSpacing: 8,
               itemCount: listData.length,
@@ -83,12 +86,16 @@ class _TabBarViewType1State extends ConsumerState<TabBarViewType1>
     // 瀑布流布局，图片最好能够知道提前知道高度，然后手动设置imageView的高度，这样能够避免滚动时，动态计算高度导致发生item位置变化动画，
     //  获取高度方式有两种一种是服务器接口直接告诉图片宽高信息(最优解)，一种是已同步方式先下载图片，拿到图片宽高信息后才设置imageView的高度(慢，费流量)
     // https://juejin.cn/post/7125615887784083469
-    final itemWidth = (MediaQuery.sizeOf(context).width / 2) - 12;
-    var itemHeight = 200.0;
-    if (discoverInfo.picH != null && discoverInfo.picW != null) {
-      final rate = discoverInfo.picW! / discoverInfo.picH!.toDouble();
-      itemHeight = itemWidth / rate;
-    }
+    const horizontalPadding = 16.0;
+    const crossAxisSpacing = 8.0;
+    final itemWidth =
+        (MediaQuery.sizeOf(context).width -
+            horizontalPadding -
+            crossAxisSpacing) /
+        2;
+    final itemHeight = _calculateImageHeight(discoverInfo, itemWidth);
+    final imageUrl = discoverInfo.pic;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -111,12 +118,7 @@ class _TabBarViewType1State extends ConsumerState<TabBarViewType1>
               topLeft: Radius.circular(6),
               topRight: Radius.circular(6),
             ),
-            child: Image.network(
-              discoverInfo.pic ?? "",
-              width: itemWidth,
-              height: itemHeight,
-              fit: BoxFit.fill,
-            ),
+            child: _buildImage(imageUrl, itemWidth, itemHeight),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
@@ -156,6 +158,54 @@ class _TabBarViewType1State extends ConsumerState<TabBarViewType1>
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  double _calculateImageHeight(DiscoverInfo discoverInfo, double itemWidth) {
+    final picW = discoverInfo.picW;
+    final picH = discoverInfo.picH;
+    if (picW == null || picH == null || picW <= 0 || picH <= 0) {
+      return 200;
+    }
+
+    return itemWidth * picH / picW;
+  }
+
+  Widget _buildImage(String? imageUrl, double width, double height) {
+    if (imageUrl == null || imageUrl.isEmpty) {
+      return _ImagePlaceholder(width: width, height: height);
+    }
+
+    return Image.network(
+      imageUrl,
+      width: width,
+      height: height,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        return _ImagePlaceholder(width: width, height: height);
+      },
+    );
+  }
+}
+
+class _ImagePlaceholder extends StatelessWidget {
+  const _ImagePlaceholder({required this.width, required this.height});
+
+  final double width;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: height,
+      alignment: Alignment.center,
+      color: AppColors.sliver_100,
+      child: const Icon(
+        Icons.image_not_supported_outlined,
+        size: 28,
+        color: AppColors.sliver_400,
       ),
     );
   }

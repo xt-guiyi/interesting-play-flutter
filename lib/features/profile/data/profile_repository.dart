@@ -17,8 +17,4 @@ class ProfileRepository {
   Future<UserInfo?> getCurrentUser() {
     return _authRepository.getCurrentUser();
   }
-
-  Future<void> logout() {
-    return _authRepository.logout();
-  }
 }

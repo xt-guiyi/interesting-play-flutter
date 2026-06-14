@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'response_result.dart';
+part of 'api_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_ResponseResult<T> _$ResponseResultFromJson<T>(
+_ApiResponse<T> _$ApiResponseFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
-) => _ResponseResult<T>(
+) => _ApiResponse<T>(
   code: (json['code'] as num).toInt(),
   message: json['message'] as String?,
   data: _$nullableGenericFromJson(json['data'], fromJsonT),
 );
 
-Map<String, dynamic> _$ResponseResultToJson<T>(
-  _ResponseResult<T> instance,
+Map<String, dynamic> _$ApiResponseToJson<T>(
+  _ApiResponse<T> instance,
   Object? Function(T value) toJsonT,
 ) => <String, dynamic>{
   'code': instance.code,

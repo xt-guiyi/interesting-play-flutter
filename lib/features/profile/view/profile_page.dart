@@ -16,6 +16,8 @@ class ProfilePage extends ConsumerStatefulWidget {
 
 class _ProfilePageState extends ConsumerState<ProfilePage>
     with AutomaticKeepAliveClientMixin {
+  DateTime _selectedDateTime = DateTime.now();
+
   @override
   void initState() {
     super.initState();
@@ -249,7 +251,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
             width: itemWidth,
             child: GestureDetector(
               onTap: () {
-                _logOut(context);
+                _logOut();
               },
               child: const Column(
                 children: [Icon(Icons.group, size: 24), Text("注销")],
@@ -352,21 +354,66 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
   }
 
   void _selectTime(BuildContext context) {
-    showCupertinoModalPopup(
+    var selectedDateTime = _selectedDateTime;
+
+    showCupertinoModalPopup<void>(
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          height: 300,
-          color: Colors.white,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.dateAndTime,
-            use24hFormat: true,
-            initialDateTime: DateTime.now(),
-            onDateTimeChanged: (DateTime newTime) {
-              setState(() {
-                // 设置时间
-              });
-            },
+        return Localizations.override(
+          context: context,
+          locale: const Locale('zh', 'CN'),
+          child: SafeArea(
+            top: false,
+            child: Container(
+              height: 320,
+              color: Colors.white,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 48,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CupertinoButton(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: const Text('取消'),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                        const Text(
+                          '选择时间',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                            decoration: TextDecoration.none,
+                          ),
+                        ),
+                        CupertinoButton(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: const Text('确定'),
+                          onPressed: () {
+                            setState(() {
+                              _selectedDateTime = selectedDateTime;
+                            });
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: CupertinoDatePicker(
+                      mode: CupertinoDatePickerMode.dateAndTime,
+                      use24hFormat: true,
+                      initialDateTime: _selectedDateTime,
+                      onDateTimeChanged: (DateTime newTime) {
+                        selectedDateTime = newTime;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         );
       },
@@ -377,9 +424,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
     context.push('/chat');
   }
 
-  Future<void> _logOut(BuildContext context) async {
+  Future<void> _logOut() async {
     await ref.read(profileViewModelProvider.notifier).logout();
-    if (!context.mounted) return;
-    context.go('/login');
   }
 }

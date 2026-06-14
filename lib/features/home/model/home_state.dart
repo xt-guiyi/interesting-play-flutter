@@ -8,6 +8,8 @@ part 'home_state.freezed.dart';
 
 @freezed
 abstract class HomeState with _$HomeState {
+  const HomeState._();
+
   const factory HomeState({
     @Default([
       "拜登把泽连斯基叫成普京",
@@ -27,10 +29,34 @@ abstract class HomeState with _$HomeState {
     @Default([]) List<BannerInfo> banners,
     @Default([]) List<CommentInfo> comments,
     UserInfo? currentUser,
+    String? userError,
+    String? bannerError,
+    String? videoError,
+    @Default(false) bool isRefreshing,
+    @Default(false) bool isLoadingMore,
+    String? loadMoreError,
     @Default(1) int page,
     @Default(20) int pageSize,
     @Default(true) bool hasMore,
-    @Default(false) bool isLoading,
-    String? error,
   }) = _HomeState;
+
+  bool get hasStartedInitialLoad =>
+      isRefreshing ||
+      currentUser != null ||
+      userError != null ||
+      banners.isNotEmpty ||
+      bannerError != null ||
+      videos.isNotEmpty ||
+      videoError != null;
+
+  bool get shouldShowBannerError => bannerError != null && banners.isEmpty;
+
+  bool get shouldShowVideoError => videoError != null && videos.isEmpty;
+
+  bool get canLoadMoreVideos =>
+      videos.isNotEmpty &&
+      hasMore &&
+      !isLoadingMore &&
+      !isRefreshing &&
+      loadMoreError == null;
 }

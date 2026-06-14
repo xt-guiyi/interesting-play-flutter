@@ -30,6 +30,22 @@ Dio createAppDio(LocalStorageService localStorage) {
   return dio;
 }
 
+abstract final class ApiRequestOptions {
+  static const _showGlobalErrorToastKey = 'showGlobalErrorToast';
+
+  static Options noGlobalErrorToast() {
+    return Options(extra: {_showGlobalErrorToastKey: false});
+  }
+
+  static Options? globalErrorToast({bool enabled = true}) {
+    return enabled ? null : noGlobalErrorToast();
+  }
+
+  static bool shouldShowGlobalErrorToast(RequestOptions options) {
+    return options.extra[_showGlobalErrorToastKey] as bool? ?? true;
+  }
+}
+
 class AuthInterceptor extends Interceptor {
   AuthInterceptor(this._localStorage);
 
@@ -71,37 +87,40 @@ class ErrorInterceptor extends Interceptor {
     ErrorInterceptorHandler handler,
   ) async {
     final statusCode = err.response?.statusCode;
+    final shouldShowToast = ApiRequestOptions.shouldShowGlobalErrorToast(
+      err.requestOptions,
+    );
 
     if (statusCode != null) {
       final message = handleHttpErrorCode(statusCode);
-      Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.black,
-        textColor: Colors.white,
-        fontSize: 16,
-      );
+      if (shouldShowToast) {
+        _showErrorToast(message);
+      }
 
       if (statusCode == 401) {
         await _localStorage.clearAuthState();
       }
     } else if (err.type == DioExceptionType.connectionTimeout) {
-      Fluttertoast.showToast(
-        msg: '网络连接超时',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.black,
-        textColor: Colors.white,
-        fontSize: 16,
-      );
+      if (shouldShowToast) {
+        _showErrorToast('网络连接超时');
+      }
     }
 
     debugPrint(
       'dio异常: \n错误类型为 ${err.type}  \n原因为 ${err.message}  \n堆栈为 ${err.stackTrace}',
     );
     handler.next(err);
+  }
+
+  void _showErrorToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16,
+    );
   }
 }

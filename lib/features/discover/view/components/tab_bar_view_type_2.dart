@@ -131,13 +131,29 @@ class _TabBarViewType2State extends State<TabBarViewType2>
   /// 列表项
   Widget _listItem(int index) {
     double mb = 0;
-    if (_listData.length - 1 == index) mb = 6;
+    if (_listData.length - 1 == index) mb = 8;
     return Container(
-      decoration: const BoxDecoration(color: Colors.white),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.06),
+            blurRadius: 16,
+            spreadRadius: -2,
+            offset: const Offset(0, 8),
+          ),
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 4,
+            spreadRadius: 0,
+            offset: const Offset(0, 1),
+          ),
+        ],
+      ),
       width: double.infinity,
       height: 150,
-      margin: EdgeInsets.only(left: 6, right: 6, top: 6, bottom: mb),
-      padding: const EdgeInsets.only(left: 6, right: 6, top: 12, bottom: 0),
+      margin: EdgeInsets.only(left: 8, right: 8, top: 8, bottom: mb),
+      padding: const EdgeInsets.only(left: 8, right: 8, top: 16, bottom: 0),
       child: Column(
         children: [
           Container(

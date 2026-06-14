@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'response_result.dart';
+part of 'api_response.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,22 +13,22 @@ part of 'response_result.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$ResponseResult<T> {
+mixin _$ApiResponse<T> {
 
  int get code; String? get message; T? get data;
-/// Create a copy of ResponseResult
+/// Create a copy of ApiResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$ResponseResultCopyWith<T, ResponseResult<T>> get copyWith => _$ResponseResultCopyWithImpl<T, ResponseResult<T>>(this as ResponseResult<T>, _$identity);
+$ApiResponseCopyWith<T, ApiResponse<T>> get copyWith => _$ApiResponseCopyWithImpl<T, ApiResponse<T>>(this as ApiResponse<T>, _$identity);
 
-  /// Serializes this ResponseResult to a JSON map.
+  /// Serializes this ApiResponse to a JSON map.
   Map<String, dynamic> toJson(Object? Function(T) toJsonT);
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ResponseResult<T>&&(identical(other.code, code) || other.code == code)&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other.data, data));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ApiResponse<T>&&(identical(other.code, code) || other.code == code)&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other.data, data));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,15 +37,15 @@ int get hashCode => Object.hash(runtimeType,code,message,const DeepCollectionEqu
 
 @override
 String toString() {
-  return 'ResponseResult<$T>(code: $code, message: $message, data: $data)';
+  return 'ApiResponse<$T>(code: $code, message: $message, data: $data)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $ResponseResultCopyWith<T,$Res>  {
-  factory $ResponseResultCopyWith(ResponseResult<T> value, $Res Function(ResponseResult<T>) _then) = _$ResponseResultCopyWithImpl;
+abstract mixin class $ApiResponseCopyWith<T,$Res>  {
+  factory $ApiResponseCopyWith(ApiResponse<T> value, $Res Function(ApiResponse<T>) _then) = _$ApiResponseCopyWithImpl;
 @useResult
 $Res call({
  int code, String? message, T? data
@@ -56,14 +56,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$ResponseResultCopyWithImpl<T,$Res>
-    implements $ResponseResultCopyWith<T, $Res> {
-  _$ResponseResultCopyWithImpl(this._self, this._then);
+class _$ApiResponseCopyWithImpl<T,$Res>
+    implements $ApiResponseCopyWith<T, $Res> {
+  _$ApiResponseCopyWithImpl(this._self, this._then);
 
-  final ResponseResult<T> _self;
-  final $Res Function(ResponseResult<T>) _then;
+  final ApiResponse<T> _self;
+  final $Res Function(ApiResponse<T>) _then;
 
-/// Create a copy of ResponseResult
+/// Create a copy of ApiResponse
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? code = null,Object? message = freezed,Object? data = freezed,}) {
   return _then(_self.copyWith(
@@ -77,8 +77,8 @@ as T?,
 }
 
 
-/// Adds pattern-matching-related methods to [ResponseResult].
-extension ResponseResultPatterns<T> on ResponseResult<T> {
+/// Adds pattern-matching-related methods to [ApiResponse].
+extension ApiResponsePatterns<T> on ApiResponse<T> {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -91,10 +91,10 @@ extension ResponseResultPatterns<T> on ResponseResult<T> {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ResponseResult<T> value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ApiResponse<T> value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _ResponseResult() when $default != null:
+case _ApiResponse() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -113,10 +113,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ResponseResult<T> value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ApiResponse<T> value)  $default,){
 final _that = this;
 switch (_that) {
-case _ResponseResult():
+case _ApiResponse():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -134,10 +134,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ResponseResult<T> value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ApiResponse<T> value)?  $default,){
 final _that = this;
 switch (_that) {
-case _ResponseResult() when $default != null:
+case _ApiResponse() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -157,7 +157,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int code,  String? message,  T? data)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _ResponseResult() when $default != null:
+case _ApiResponse() when $default != null:
 return $default(_that.code,_that.message,_that.data);case _:
   return orElse();
 
@@ -178,7 +178,7 @@ return $default(_that.code,_that.message,_that.data);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int code,  String? message,  T? data)  $default,) {final _that = this;
 switch (_that) {
-case _ResponseResult():
+case _ApiResponse():
 return $default(_that.code,_that.message,_that.data);case _:
   throw StateError('Unexpected subclass');
 
@@ -198,7 +198,7 @@ return $default(_that.code,_that.message,_that.data);case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int code,  String? message,  T? data)?  $default,) {final _that = this;
 switch (_that) {
-case _ResponseResult() when $default != null:
+case _ApiResponse() when $default != null:
 return $default(_that.code,_that.message,_that.data);case _:
   return null;
 
@@ -210,28 +210,28 @@ return $default(_that.code,_that.message,_that.data);case _:
 /// @nodoc
 @JsonSerializable(genericArgumentFactories: true)
 
-class _ResponseResult<T> implements ResponseResult<T> {
-  const _ResponseResult({required this.code, this.message, this.data});
-  factory _ResponseResult.fromJson(Map<String, dynamic> json,T Function(Object?) fromJsonT) => _$ResponseResultFromJson(json,fromJsonT);
+class _ApiResponse<T> implements ApiResponse<T> {
+  const _ApiResponse({required this.code, this.message, this.data});
+  factory _ApiResponse.fromJson(Map<String, dynamic> json,T Function(Object?) fromJsonT) => _$ApiResponseFromJson(json,fromJsonT);
 
 @override final  int code;
 @override final  String? message;
 @override final  T? data;
 
-/// Create a copy of ResponseResult
+/// Create a copy of ApiResponse
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ResponseResultCopyWith<T, _ResponseResult<T>> get copyWith => __$ResponseResultCopyWithImpl<T, _ResponseResult<T>>(this, _$identity);
+_$ApiResponseCopyWith<T, _ApiResponse<T>> get copyWith => __$ApiResponseCopyWithImpl<T, _ApiResponse<T>>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson(Object? Function(T) toJsonT) {
-  return _$ResponseResultToJson<T>(this, toJsonT);
+  return _$ApiResponseToJson<T>(this, toJsonT);
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ResponseResult<T>&&(identical(other.code, code) || other.code == code)&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other.data, data));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ApiResponse<T>&&(identical(other.code, code) || other.code == code)&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other.data, data));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -240,15 +240,15 @@ int get hashCode => Object.hash(runtimeType,code,message,const DeepCollectionEqu
 
 @override
 String toString() {
-  return 'ResponseResult<$T>(code: $code, message: $message, data: $data)';
+  return 'ApiResponse<$T>(code: $code, message: $message, data: $data)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$ResponseResultCopyWith<T,$Res> implements $ResponseResultCopyWith<T, $Res> {
-  factory _$ResponseResultCopyWith(_ResponseResult<T> value, $Res Function(_ResponseResult<T>) _then) = __$ResponseResultCopyWithImpl;
+abstract mixin class _$ApiResponseCopyWith<T,$Res> implements $ApiResponseCopyWith<T, $Res> {
+  factory _$ApiResponseCopyWith(_ApiResponse<T> value, $Res Function(_ApiResponse<T>) _then) = __$ApiResponseCopyWithImpl;
 @override @useResult
 $Res call({
  int code, String? message, T? data
@@ -259,17 +259,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$ResponseResultCopyWithImpl<T,$Res>
-    implements _$ResponseResultCopyWith<T, $Res> {
-  __$ResponseResultCopyWithImpl(this._self, this._then);
+class __$ApiResponseCopyWithImpl<T,$Res>
+    implements _$ApiResponseCopyWith<T, $Res> {
+  __$ApiResponseCopyWithImpl(this._self, this._then);
 
-  final _ResponseResult<T> _self;
-  final $Res Function(_ResponseResult<T>) _then;
+  final _ApiResponse<T> _self;
+  final $Res Function(_ApiResponse<T>) _then;
 
-/// Create a copy of ResponseResult
+/// Create a copy of ApiResponse
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? code = null,Object? message = freezed,Object? data = freezed,}) {
-  return _then(_ResponseResult<T>(
+  return _then(_ApiResponse<T>(
 code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as int,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String?,data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable

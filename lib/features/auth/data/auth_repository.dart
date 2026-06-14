@@ -1,4 +1,4 @@
-import 'package:interesting_play_flutter/core/network/api_exception.dart';
+import 'package:interesting_play_flutter/core/network/api_response.dart';
 import 'package:interesting_play_flutter/core/storage/local_storage.dart';
 import 'package:interesting_play_flutter/features/auth/data/auth_service.dart';
 import 'package:interesting_play_flutter/features/auth/model/login_dto.dart';
@@ -16,40 +16,39 @@ AuthRepository authRepository(Ref ref) {
 }
 
 class AuthRepository {
-  AuthRepository({required this.authService, required this.localStorage});
+  AuthRepository({
+    required AuthService authService,
+    required LocalStorageService localStorage,
+  }) : _authService = authService,
+       _localStorage = localStorage;
 
-  final AuthService authService;
-  final LocalStorageService localStorage;
+  final AuthService _authService;
+  final LocalStorageService _localStorage;
 
   Future<UserInfo?> getCurrentUser() {
-    return localStorage.getUserInfo();
+    return _localStorage.getUserInfo();
   }
 
-  Future<UserInfo> login(String username, String password) async {
-    final loginResult = await authService.login(
+  Future<UserInfo> login(
+    String username,
+    String password, {
+    bool showGlobalErrorToast = true,
+  }) async {
+    final loginResult = await _authService.login(
       LoginDto(username: username, password: password),
+      showGlobalErrorToast: showGlobalErrorToast,
     );
-    if (loginResult.code != 200 || loginResult.data == null) {
-      throw ApiException(
-        message: loginResult.message ?? '登录失败',
-        statusCode: loginResult.code,
-      );
-    }
-
-    await localStorage.setAuthorization(loginResult.data!);
-    final userResult = await authService.getUserInfo();
-    if (userResult.code != 200 || userResult.data == null) {
-      throw ApiException(
-        message: userResult.message ?? '获取用户信息失败',
-        statusCode: userResult.code,
-      );
-    }
-
-    await localStorage.setUserInfo(userResult.data);
-    return userResult.data!;
+    final token = unwrapApiResponse(loginResult, '登录失败');
+    await _localStorage.setAuthorization(token);
+    final userResult = await _authService.getUserInfo(
+      showGlobalErrorToast: showGlobalErrorToast,
+    );
+    final userInfo = unwrapApiResponse(userResult, '获取用户信息失败');
+    await _localStorage.setUserInfo(userInfo);
+    return userInfo;
   }
 
   Future<void> logout() {
-    return localStorage.clearAuthState();
+    return _localStorage.clearAuthState();
   }
 }

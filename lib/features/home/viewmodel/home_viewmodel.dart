@@ -23,48 +23,101 @@ class HomeViewModel extends _$HomeViewModel {
     );
   }
 
-  Future<void> loadInitial() async {
-    state = state.copyWith(isLoading: true, error: null, page: 1);
-    try {
-      final repository = ref.read(homeRepositoryProvider);
-      final user = await repository.getCurrentUser();
-      final banners = await repository.getBanners();
-      final videoPage = await repository.getVideoList(1, state.pageSize);
-      state = state.copyWith(
-        currentUser: user,
-        banners: banners,
-        videos: videoPage.data,
-        page: 2,
-        hasMore: videoPage.total > videoPage.data.length,
-        isLoading: false,
-      );
-    } catch (error) {
-      state = state.copyWith(isLoading: false, error: error.toString());
-    }
-  }
+  Future<void> refresh() async {
+    if (state.isRefreshing) return;
 
-  Future<void> refresh() {
-    return loadInitial();
+    state = state.copyWith(
+      isRefreshing: true,
+      userError: null,
+      bannerError: null,
+      videoError: null,
+      loadMoreError: null,
+    );
+    try {
+      await Future.wait<void>([
+        _loadCurrentUser(),
+        _loadBanners(),
+        _loadFirstPageVideos(),
+      ]);
+    } finally {
+      state = state.copyWith(isRefreshing: false);
+    }
   }
 
   Future<void> loadMore() async {
-    if (state.isLoading || !state.hasMore) return;
-    state = state.copyWith(isLoading: true, error: null);
+    if (!state.canLoadMoreVideos) return;
+
+    final nextPage = state.page;
+    state = state.copyWith(isLoadingMore: true, loadMoreError: null);
     try {
       final repository = ref.read(homeRepositoryProvider);
-      final videoPage = await repository.getVideoList(
-        state.page,
-        state.pageSize,
-      );
+      final videoPage = await repository.getVideoList(nextPage, state.pageSize);
       final videos = [...state.videos, ...videoPage.data];
       state = state.copyWith(
         videos: videos,
-        page: state.page + 1,
+        page: nextPage + 1,
         hasMore: videoPage.total > videos.length,
-        isLoading: false,
+        isLoadingMore: false,
       );
     } catch (error) {
-      state = state.copyWith(isLoading: false, error: error.toString());
+      state = state.copyWith(
+        isLoadingMore: false,
+        loadMoreError: _errorMessage(error),
+      );
     }
+  }
+
+  Future<void> retryVideos() {
+    return _loadFirstPageVideos();
+  }
+
+  Future<void> retryBanners() {
+    return _loadBanners();
+  }
+
+  Future<void> retryLoadMore() {
+    state = state.copyWith(loadMoreError: null);
+    return loadMore();
+  }
+
+  Future<void> _loadCurrentUser() async {
+    try {
+      final repository = ref.read(homeRepositoryProvider);
+      final user = await repository.getCurrentUser();
+      state = state.copyWith(currentUser: user, userError: null);
+    } catch (error) {
+      state = state.copyWith(userError: _errorMessage(error));
+    }
+  }
+
+  Future<void> _loadBanners() async {
+    try {
+      final repository = ref.read(homeRepositoryProvider);
+      final banners = await repository.getBanners();
+      state = state.copyWith(banners: banners, bannerError: null);
+    } catch (error) {
+      state = state.copyWith(bannerError: _errorMessage(error));
+    }
+  }
+
+  Future<void> _loadFirstPageVideos() async {
+    try {
+      final repository = ref.read(homeRepositoryProvider);
+      final videoPage = await repository.getVideoList(1, state.pageSize);
+      state = state.copyWith(
+        videos: videoPage.data,
+        page: 2,
+        hasMore: videoPage.total > videoPage.data.length,
+        videoError: null,
+        loadMoreError: null,
+      );
+    } catch (error) {
+      state = state.copyWith(videoError: _errorMessage(error));
+    }
+  }
+
+  String _errorMessage(Object error) {
+    // return error.toString();
+    return "网络错误，请稍后再试吧";
   }
 }

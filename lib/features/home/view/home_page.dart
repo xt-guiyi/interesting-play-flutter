@@ -37,12 +37,6 @@ class _MyHomePageState extends ConsumerState<HomePage>
       ref.read(homeViewModelProvider.notifier).rotateSearchText();
     });
     _tabController = TabController(vsync: this, length: tabItems.length);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final state = ref.read(homeViewModelProvider);
-      if (state.videos.isEmpty && !state.isLoading) {
-        ref.read(homeViewModelProvider.notifier).loadInitial();
-      }
-    });
   }
 
   @override

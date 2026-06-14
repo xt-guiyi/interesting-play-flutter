@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:interesting_play_flutter/core/constants/api_base_urls.dart';
 import 'package:interesting_play_flutter/core/network/api_client.dart';
@@ -37,5 +38,25 @@ void main() {
 
     expect(dio.interceptors.whereType<AuthInterceptor>(), isEmpty);
     expect(dio.interceptors.whereType<ErrorInterceptor>(), isEmpty);
+  });
+
+  test('global error toast is enabled by default and can be disabled', () {
+    final defaultRequestOptions = RequestOptions(path: '/mock');
+
+    expect(
+      ApiRequestOptions.shouldShowGlobalErrorToast(defaultRequestOptions),
+      isTrue,
+    );
+
+    final silentOptions = ApiRequestOptions.noGlobalErrorToast();
+    final silentRequestOptions = RequestOptions(
+      path: '/mock',
+      extra: silentOptions.extra,
+    );
+
+    expect(
+      ApiRequestOptions.shouldShowGlobalErrorToast(silentRequestOptions),
+      isFalse,
+    );
   });
 }

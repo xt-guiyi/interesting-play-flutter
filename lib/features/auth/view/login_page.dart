@@ -16,7 +16,7 @@ class LoginPage extends ConsumerStatefulWidget {
 class _LoginPageState extends ConsumerState<LoginPage> {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
-  final RegExp phoneRegex = RegExp(r'^(1[3-9]\d{9})$');
+
   @override
   void initState() {
     super.initState();
@@ -30,22 +30,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   void _submit() {
-    // 简单的手机号正则表达式（中国大陆）
-    if (phoneRegex.hasMatch(phoneController.text)) {
-      ref
-          .read(loginViewModelProvider.notifier)
-          .login(phoneController.text, passwordController.text);
-    } else {
-      Fluttertoast.showToast(
-        msg: "手机号格式错误",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.black,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-    }
+    ref
+        .read(loginViewModelProvider.notifier)
+        .login(phoneController.text.trim(), passwordController.text);
   }
 
   @override
