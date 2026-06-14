@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:interesting_play_flutter/core/theme/app_colors.dart';
 import 'package:interesting_play_flutter/features/profile/viewmodel/profile_viewmodel.dart';
 import 'package:lottie/lottie.dart';
-
-import 'package:interesting_play_flutter/core/theme/app_colors.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
@@ -16,8 +14,6 @@ class ProfilePage extends ConsumerStatefulWidget {
 
 class _ProfilePageState extends ConsumerState<ProfilePage>
     with AutomaticKeepAliveClientMixin {
-  DateTime _selectedDateTime = DateTime.now();
-
   @override
   void initState() {
     super.initState();
@@ -185,243 +181,40 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
         runSpacing: 16,
         crossAxisAlignment: WrapCrossAlignment.start,
         children: [
-          SizedBox(
+          _actionItem(
             width: itemWidth,
-            child: GestureDetector(
-              onTap: () {
-                // _showDialog(context);
-                _showCustomDialog(context);
-              },
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Icon(Icons.inbox, size: 24), Text("弹框")],
-              ),
-            ),
+            icon: Icons.science,
+            title: "实践",
+            onTap: () => context.push('/practice'),
           ),
-          SizedBox(
+          _actionItem(
             width: itemWidth,
-            child: GestureDetector(
-              onTap: () {
-                // _showDialog(context);
-                _showBottomSheet(context);
-              },
-              child: const Column(
-                children: [
-                  Icon(Icons.check_box_outline_blank, size: 24),
-                  Text("底部弹框"),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            width: itemWidth,
-            child: GestureDetector(
-              onTap: () {
-                _selectTime(context);
-              },
-              child: const Column(
-                children: [Icon(Icons.schedule, size: 24), Text("时间选择器")],
-              ),
-            ),
-          ),
-          SizedBox(
-            width: itemWidth,
-            child: const Column(
-              children: [Icon(Icons.scanner, size: 24), Text("扫一扫")],
-            ),
-          ),
-          SizedBox(
-            width: itemWidth,
-            child: GestureDetector(
-              onTap: () {
-                _jumpChatPage(context);
-              },
-              child: const Column(
-                children: [Icon(Icons.telegram, size: 24), Text("聊天")],
-              ),
-            ),
-          ),
-          SizedBox(
-            width: itemWidth,
-            child: const Column(
-              children: [Icon(Icons.settings, size: 24), Text("设置")],
-            ),
-          ),
-          SizedBox(
-            width: itemWidth,
-            child: GestureDetector(
-              onTap: () {
-                _logOut();
-              },
-              child: const Column(
-                children: [Icon(Icons.group, size: 24), Text("注销")],
-              ),
-            ),
+            icon: Icons.logout,
+            title: "注销",
+            onTap: _logOut,
           ),
         ],
       ),
     );
   }
 
-  void _showCustomDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          backgroundColor: AppColors.green_100,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0), // 设置圆角
-          ),
-          child: Container(
-            padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
-            // height: 300, // 自定义高度
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const Text(
-                  '自定义对话框',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 12),
-                const Text(
-                  '这是一个自定义的对话框，你可以在这里放置任何内容。这是一个自定义的对话框，你可以在这里放置任何内容。',
-                  style: TextStyle(fontSize: 14),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    TextButton(
-                      child: const Text(
-                        '取消',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: AppColors.red_200,
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop(); // 关闭对话框
-                      },
-                    ),
-                    TextButton(
-                      child: const Text(
-                        '确认',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: AppColors.green_300,
-                        ),
-                      ),
-                      onPressed: () {
-                        // 处理确认逻辑
-                        Navigator.of(context).pop(); // 关闭对话框
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+  Widget _actionItem({
+    required double width,
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return SizedBox(
+      width: width,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [Icon(icon, size: 24), Text(title)],
+        ),
+      ),
     );
-  }
-
-  void _showBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          height: 360,
-          color: Colors.white,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('这是一个底部菜单'),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context); // 关闭 Bottom Sheet
-                  },
-                  child: const Text('关闭'),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  void _selectTime(BuildContext context) {
-    var selectedDateTime = _selectedDateTime;
-
-    showCupertinoModalPopup<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return Localizations.override(
-          context: context,
-          locale: const Locale('zh', 'CN'),
-          child: SafeArea(
-            top: false,
-            child: Container(
-              height: 320,
-              color: Colors.white,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 48,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CupertinoButton(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: const Text('取消'),
-                          onPressed: () => Navigator.of(context).pop(),
-                        ),
-                        const Text(
-                          '选择时间',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                            decoration: TextDecoration.none,
-                          ),
-                        ),
-                        CupertinoButton(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: const Text('确定'),
-                          onPressed: () {
-                            setState(() {
-                              _selectedDateTime = selectedDateTime;
-                            });
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: CupertinoDatePicker(
-                      mode: CupertinoDatePickerMode.dateAndTime,
-                      use24hFormat: true,
-                      initialDateTime: _selectedDateTime,
-                      onDateTimeChanged: (DateTime newTime) {
-                        selectedDateTime = newTime;
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  void _jumpChatPage(BuildContext context) {
-    context.push('/chat');
   }
 
   Future<void> _logOut() async {

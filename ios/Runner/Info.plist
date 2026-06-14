@@ -24,6 +24,14 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>用于扫一扫和拍照选择图片。</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>用于从相册选择图片。</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>用于保存或处理选择的图片。</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>用于获取当前位置并展示经纬度。</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIApplicationSceneManifest</key>

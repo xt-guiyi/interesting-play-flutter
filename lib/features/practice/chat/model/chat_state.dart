@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:interesting_play_flutter/features/chat/model/message_item.dart';
+import 'package:interesting_play_flutter/features/practice/chat/model/message_item.dart';
 
 part 'chat_state.freezed.dart';
 

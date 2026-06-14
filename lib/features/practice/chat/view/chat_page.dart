@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:interesting_play_flutter/core/theme/app_colors.dart';
-import 'package:interesting_play_flutter/features/chat/viewmodel/chat_viewmodel.dart';
+import 'package:interesting_play_flutter/features/practice/chat/viewmodel/chat_viewmodel.dart';
 
 import 'components/chat_item_1.dart';
 import 'components/chat_item_2.dart';
