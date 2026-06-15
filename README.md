@@ -11,15 +11,26 @@
 
 ## 技术栈
 
-| 类型 | 技术 | 说明 |
-| --- | --- | --- |
-| 状态管理 / DI | `flutter_riverpod`、`riverpod_annotation`、`riverpod_generator` | 使用 `@riverpod` 代码生成风格管理状态和依赖 |
-| 路由 | `go_router` | 统一声明式路由表，支持登录守卫和底部 Tab shell |
-| 模型 | `freezed`、`freezed_annotation`、`json_serializable`、`json_annotation` | 不可变模型、`copyWith`、JSON 序列化 |
-| 网络 | `dio` | 统一 Dio 实例、请求头注入、错误映射 |
-| 本地存储 | `shared_preferences` | 通过 `LocalStorageService` 封装 token 和用户信息缓存 |
-| UI 组件 | `carousel_slider`、`flutter_staggered_grid_view`、`lottie`、`fl_chart`、`fluttertoast` | 轮播、瀑布流、动画、图表、Toast |
-| 基础规范 | `flutter_lints` | 使用 Flutter 官方 lint 规则保持基础代码质量 |
+| 类型 | 技术 | 版本 | 说明 |
+| --- | --- | --- | --- |
+| 状态管理 / DI | `flutter_riverpod`、`riverpod_annotation`、`riverpod_generator` | `^3.3.2` / `^4.0.3` / `^4.0.4` | 使用 `@riverpod` 代码生成风格管理状态和依赖 |
+| 路由 | `go_router` | `^17.3.0` | 统一声明式路由表，支持登录守卫和底部 Tab shell |
+| 模型 | `freezed`、`freezed_annotation`、`json_serializable`、`json_annotation` | `^3.2.5` / `^3.1.0` / `^6.14.0` / `^4.12.0` | 不可变模型、`copyWith`、JSON 序列化 |
+| 网络 | `dio` | `^5.9.2` | 统一 Dio 实例、请求头注入、错误映射 |
+| 本地存储 | `shared_preferences` | `^2.5.5` | 通过 `LocalStorageService` 封装 token 和用户信息缓存 |
+| UI 组件 | `carousel_slider`、`flutter_staggered_grid_view`、`lottie`、`fl_chart`、`fluttertoast` | `^5.1.2` / `^0.7.0` / `^3.3.3` / `^1.2.0` / `^9.1.0` | 轮播、瀑布流、动画、图表、Toast |
+| WebView | `webview_flutter` | `^4.14.0` | 内嵌 WebView，支持进度监听和 JavaScript |
+| 扫码 | `mobile_scanner` | `^7.2.0` | 二维码 / 条形码扫描 |
+| 二维码生成 | `qr_flutter` | `^4.1.0` | 生成二维码图片 |
+| 图片选择 | `image_picker` | `^1.2.2` | 相册/相机图片选取 |
+| 文件选择 | `file_picker` | `^3.0.4` | 通用文件选取 |
+| 权限 | `permission_handler` | `^12.0.3` | 运行时权限申请封装 |
+| 定位 | `geolocator` | `^14.0.3` | GPS 定位 |
+| 分享 | `share_plus` | `^13.1.0` | 系统分享弹窗 |
+| 路径 | `path_provider` | `^2.1.5` | 获取应用沙盒目录路径 |
+| 本地通知 | `flutter_local_notifications` | `^22.0.1` | 本地推送通知 |
+| 国际化 | `intl` | `^0.20.2` | 日期格式化等 i18n 能力 |
+| 基础规范 | `flutter_lints` | `^6.0.0` | 使用 Flutter 官方 lint 规则保持基础代码质量 |
 
 ## 架构概览
 
@@ -77,9 +88,29 @@ lib/
 │   ├── home/                        # 首页推荐流
 │   ├── discover/                    # 发现页 / 瀑布流
 │   ├── profile/                     # 个人中心
-│   ├── chat/                        # 聊天页
 │   ├── detail/                      # 详情页
-│   └── shell/                       # 底部 Tab 容器
+│   ├── shell/                       # 底部 Tab 容器
+│   ├── public/                      # 公共数据模块（跨页面共享数据）
+│   └── practice/                    # Flutter 能力实践集合
+│       ├── chat/                    # AI 聊天页（MVVM 完整结构）
+│       └── view/                    # 各能力实践页面
+│           ├── practice_page.dart               # 实践入口列表页
+│           ├── dialog_practice_page.dart        # Dialog 实践
+│           ├── bottom_sheet_practice_page.dart  # BottomSheet 实践
+│           ├── date_picker_practice_page.dart   # 日期选择器实践
+│           ├── year_month_day_picker_practice_page.dart # 年月日选择器实践
+│           ├── scan_practice_page.dart          # 扫码实践
+│           ├── image_picker_practice_page.dart  # 图片选择实践
+│           ├── permission_practice_page.dart    # 权限申请实践
+│           ├── location_practice_page.dart      # 定位实践
+│           ├── file_picker_practice_page.dart   # 文件选择实践
+│           ├── share_practice_page.dart         # 系统分享实践
+│           ├── clipboard_practice_page.dart     # 剪切板实践
+│           ├── download_practice_page.dart      # 文件下载实践
+│           ├── notification_practice_page.dart  # 本地通知实践
+│           ├── webview_practice_page.dart       # WebView 实践
+│           ├── qr_code_practice_page.dart       # 二维码生成实践
+│           └── region_picker_practice_page.dart # 地区选择器实践
 └── shared/                          # 跨模块共享能力
     ├── models/                      # 多 feature 复用的数据实体
     ├── utils/                       # 通用工具
@@ -114,9 +145,11 @@ features/home/
 | `home` | 首页推荐视频、轮播图、当前用户信息、分页加载 |
 | `discover` | 发现页数据、瀑布流列表、刷新和加载更多 |
 | `profile` | 个人中心用户信息展示、注销 |
-| `chat` | 聊天消息状态、文本/表格/图表消息展示 |
 | `detail` | 详情页路由承载 |
 | `shell` | `StatefulShellRoute` 的底部 Tab 容器 |
+| `public` | 跨页面共享的公共数据（如公共 service） |
+| `practice` | Flutter 各平台能力的实践与演示集合 |
+| `practice/chat` | AI 聊天页，含完整 MVVM 结构 |
 
 ## Core 基础设施
 
@@ -158,7 +191,24 @@ features/home/
 | `/discover` | 发现页 Tab |
 | `/profile` | 个人中心 Tab |
 | `/detail/:id` | 详情页 |
-| `/chat` | 聊天页 |
+| `/practice` | 实践入口列表页 |
+| `/practice/dialog` | Dialog 实践 |
+| `/practice/bottom-sheet` | BottomSheet 实践 |
+| `/practice/date-picker` | 日期选择器实践 |
+| `/practice/year-month-day-picker` | 年月日选择器实践 |
+| `/practice/scan` | 扫码实践 |
+| `/practice/image-picker` | 图片选择实践 |
+| `/practice/permission` | 权限申请实践 |
+| `/practice/location` | 定位实践 |
+| `/practice/file-picker` | 文件选择实践 |
+| `/practice/share` | 系统分享实践 |
+| `/practice/clipboard` | 剪切板实践 |
+| `/practice/download` | 文件下载实践 |
+| `/practice/notification` | 本地通知实践 |
+| `/practice/webview` | WebView 实践 |
+| `/practice/qr-code` | 二维码生成实践 |
+| `/practice/region-picker` | 地区选择器实践 |
+| `/practice/chat` | AI 聊天页 |
 
 路由使用 `StatefulShellRoute.indexedStack` 管理底部 Tab，登录状态由 `authViewModelProvider` 驱动 `redirect`。
 
@@ -189,8 +239,8 @@ features/home/
 - `home/model/home_state.dart`
 - `discover/model/discover_state.dart`
 - `profile/model/profile_state.dart`
-- `chat/model/chat_state.dart`
-- `chat/model/message_item.dart`
+- `practice/chat/model/chat_state.dart`
+- `practice/chat/model/message_item.dart`
 
 判断标准：如果只服务当前页面或当前 feature，不提前放到 shared。只有发生真实复用时再上移。
 
@@ -251,7 +301,7 @@ HomePage / TabBarViewType1
 - 普通 `flutter pub get` 会优先使用 lock 文件，不会自动漂移到新版本。
 - 需要升级时显式运行 `flutter pub upgrade` 或调整依赖约束。
 
-注意：`freezed 4.0.0-dev.1` 当前需要 `analyzer ^13.0.0`，而 `riverpod_generator 4.0.4` 需要 `analyzer ^12.0.0`，二者暂时不可同时解析。因此项目使用当前可解析的最新 Freezed 版本。
+注意：`freezed 4.0.0-dev.1` 当前需要 `analyzer ^13.0.0`，而 `riverpod_generator 4.0.4` 需要 `analyzer ^12.0.0`，二者暂时不可同时解析。因此项目使用当前可解析的最新 Freezed 版本（`^3.2.5`）。
 
 ## 常用命令
 

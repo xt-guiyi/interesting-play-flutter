@@ -21,9 +21,11 @@ class _WebViewPracticePageState extends State<WebViewPracticePage> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (progress) {
-            setState(() {
-              _progress = progress;
-            });
+            if (mounted) {
+              setState(() {
+                _progress = progress;
+              });
+            }
           },
         ),
       )

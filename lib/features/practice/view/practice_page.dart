@@ -42,11 +42,6 @@ class PracticePage extends StatelessWidget {
       icon: Icons.location_on,
       route: '/practice/location',
     ),
-    _PracticeItem(
-      title: '文件选择',
-      icon: Icons.attach_file,
-      route: '/practice/file-picker',
-    ),
     _PracticeItem(title: '分享', icon: Icons.ios_share, route: '/practice/share'),
     _PracticeItem(
       title: '剪贴板',

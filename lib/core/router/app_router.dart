@@ -11,7 +11,6 @@ import 'package:interesting_play_flutter/features/practice/view/clipboard_practi
 import 'package:interesting_play_flutter/features/practice/view/date_picker_practice_page.dart';
 import 'package:interesting_play_flutter/features/practice/view/dialog_practice_page.dart';
 import 'package:interesting_play_flutter/features/practice/view/download_practice_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/file_picker_practice_page.dart';
 import 'package:interesting_play_flutter/features/practice/view/image_picker_practice_page.dart';
 import 'package:interesting_play_flutter/features/practice/view/location_practice_page.dart';
 import 'package:interesting_play_flutter/features/practice/view/notification_practice_page.dart';
@@ -148,12 +147,6 @@ GoRouter appRouter(Ref ref) {
         path: '/practice/location',
         builder: (BuildContext context, GoRouterState state) {
           return const LocationPracticePage();
-        },
-      ),
-      GoRoute(
-        path: '/practice/file-picker',
-        builder: (BuildContext context, GoRouterState state) {
-          return const FilePickerPracticePage();
         },
       ),
       GoRoute(
