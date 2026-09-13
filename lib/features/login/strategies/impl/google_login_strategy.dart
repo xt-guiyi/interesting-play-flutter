@@ -18,8 +18,14 @@ class GoogleLoginStrategy implements LoginStrategy {
 
   static const _serverClientId = String.fromEnvironment(
     'GOOGLE_SERVER_CLIENT_ID',
+    defaultValue:
+        '516434775620-q890e10bap92ul7ikdoem0375dtpt5g7.apps.googleusercontent.com',
   );
-  static const _iosClientId = String.fromEnvironment('GOOGLE_IOS_CLIENT_ID');
+  static const _iosClientId = String.fromEnvironment(
+    'GOOGLE_IOS_CLIENT_ID',
+    defaultValue:
+        '516434775620-vivq1pimnsiqg9b261haja0o8s9p308k.apps.googleusercontent.com',
+  );
   static final _signIn = GoogleSignIn.instance;
   // Google SDK 是全局单例，策略重新创建时也不能重复初始化。
   static Future<void>? _initialization;

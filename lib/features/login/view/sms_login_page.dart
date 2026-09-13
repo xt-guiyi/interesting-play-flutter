@@ -129,24 +129,26 @@ class _SmsLoginPageState extends ConsumerState<SmsLoginPage> {
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 420),
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(28, 24, 28, 32),
+                  padding: const EdgeInsets.fromLTRB(24, 12, 24, 32),
                   child: AutofillGroup(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
+                        // 头像和标题集中展示，与下方表单保持统一间距。
+                        Center(
                           child: Image.asset(
                             'lib/assets/logo.png',
                             width: 72,
                             height: 72,
                           ),
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 16),
                         const Text(
                           '手机号验证码登录',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 23,
+                            height: 1.4,
                             fontWeight: FontWeight.w600,
                             color: Color(0xFF24282E),
                           ),
@@ -154,7 +156,7 @@ class _SmsLoginPageState extends ConsumerState<SmsLoginPage> {
                         const SizedBox(height: 36),
                         // 手机号只允许数字；修改号码时清空旧验证码。
                         const Text('手机号', style: _labelStyle),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 10),
                         TextField(
                           controller: _phoneController,
                           enabled: !state.isBusy,
@@ -167,29 +169,52 @@ class _SmsLoginPageState extends ConsumerState<SmsLoginPage> {
                             FilteringTextInputFormatter.digitsOnly,
                             LengthLimitingTextInputFormatter(11),
                           ],
-                          style: const TextStyle(fontSize: 18),
+                          style: const TextStyle(
+                            fontSize: 17,
+                            height: 1.4,
+                            color: Color(0xFF24282E),
+                          ),
+                          cursorColor: AppColors.green_300,
+                          textAlignVertical: TextAlignVertical.center,
                           onChanged: (_) => _codeController.clear(),
                           onSubmitted: (_) => _codeFocus.requestFocus(),
+                          onTapOutside: (_) => FocusScope.of(context).unfocus(),
                           decoration: _decoration('请输入手机号').copyWith(
-                            prefixIcon: const Padding(
-                              padding: EdgeInsets.only(right: 16),
-                              child: Text(
-                                '+86',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: Color(0xFF343A40),
-                                ),
+                            prefixIcon: const SizedBox(
+                              width: 80,
+                              child: Row(
+                                children: [
+                                  SizedBox(width: 16),
+                                  Text(
+                                    '+86',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xFF343A40),
+                                    ),
+                                  ),
+                                  SizedBox(width: 12),
+                                  SizedBox(
+                                    height: 18,
+                                    child: VerticalDivider(
+                                      width: 1,
+                                      thickness: 1,
+                                      color: Color(0xFFDDE2E5),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             prefixIconConstraints: const BoxConstraints(
-                              minWidth: 54,
+                              minWidth: 80,
+                              minHeight: 52,
                             ),
                           ),
                         ),
-                        const SizedBox(height: 28),
+                        const SizedBox(height: 22),
                         // 验证码支持系统自动填充，发送按钮随倒计时禁用。
-                        const Text('验证码', style: _labelStyle),
-                        const SizedBox(height: 8),
+                        const Text('短信验证码', style: _labelStyle),
+                        const SizedBox(height: 10),
                         TextField(
                           controller: _codeController,
                           focusNode: _codeFocus,
@@ -201,41 +226,68 @@ class _SmsLoginPageState extends ConsumerState<SmsLoginPage> {
                             FilteringTextInputFormatter.digitsOnly,
                             LengthLimitingTextInputFormatter(6),
                           ],
-                          style: const TextStyle(fontSize: 18),
+                          style: const TextStyle(
+                            fontSize: 17,
+                            height: 1.4,
+                            color: Color(0xFF24282E),
+                          ),
+                          cursorColor: AppColors.green_300,
+                          textAlignVertical: TextAlignVertical.center,
                           onSubmitted: (_) => _login(),
+                          onTapOutside: (_) => FocusScope.of(context).unfocus(),
                           decoration: _decoration('6位验证码').copyWith(
                             suffixIconConstraints: const BoxConstraints(
-                              minWidth: 124,
-                              maxWidth: 124,
-                              minHeight: 48,
+                              minWidth: 112,
+                              maxWidth: 112,
+                              minHeight: 52,
                             ),
-                            suffixIcon: TextButton(
-                              onPressed: state.isBusy || state.resendSeconds > 0
-                                  ? null
-                                  : _sendCode,
-                              style: TextButton.styleFrom(
-                                foregroundColor: AppColors.green_300,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                ),
+                            suffixIcon: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                                vertical: 4,
                               ),
-                              child: state.isSendingCode
-                                  ? const SizedBox.square(
-                                      dimension: 18,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
+                              child: TextButton(
+                                onPressed:
+                                    state.isBusy || state.resendSeconds > 0
+                                    ? null
+                                    : _sendCode,
+                                style: TextButton.styleFrom(
+                                  foregroundColor: const Color(0xFF168461),
+                                  disabledForegroundColor: const Color(
+                                    0xFF939BA4,
+                                  ),
+                                  minimumSize: const Size(104, 44),
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 4,
+                                  ),
+                                  textStyle: const TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                ),
+                                child: state.isSendingCode
+                                    ? const SizedBox.square(
+                                        dimension: 18,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                        ),
+                                      )
+                                    : Text(
+                                        state.resendSeconds > 0
+                                            ? '${state.resendSeconds}s 后重发'
+                                            : '获取验证码',
+                                        textAlign: TextAlign.center,
                                       ),
-                                    )
-                                  : Text(
-                                      state.resendSeconds > 0
-                                          ? '${state.resendSeconds}s 后重发'
-                                          : '获取验证码',
-                                      textAlign: TextAlign.center,
-                                    ),
+                              ),
                             ),
                           ),
                         ),
-                        const SizedBox(height: 36),
+                        const SizedBox(height: 28),
                         // 登录按钮展示提交进度，协议勾选在请求期间锁定。
                         FilledButton(
                           onPressed: state.isBusy ? null : _login,
@@ -264,7 +316,7 @@ class _SmsLoginPageState extends ConsumerState<SmsLoginPage> {
                                 )
                               : const Text('登录'),
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 14),
                         AbsorbPointer(
                           absorbing: state.isBusy,
                           child: LoginAgreement(
@@ -287,21 +339,32 @@ class _SmsLoginPageState extends ConsumerState<SmsLoginPage> {
     );
   }
 
-  static const _labelStyle = TextStyle(fontSize: 13, color: Color(0xFF747C87));
+  static const _labelStyle = TextStyle(
+    fontSize: 13,
+    height: 1.4,
+    fontWeight: FontWeight.w500,
+    color: Color(0xFF555F69),
+  );
 
-  /// 为手机号和验证码输入框提供一致的提示及下划线样式。
+  /// 统一输入框底色、内边距和焦点边框，使两行表单保持对齐。
   InputDecoration _decoration(String hint) => InputDecoration(
     hintText: hint,
-    hintStyle: const TextStyle(fontSize: 16, color: Color(0xFFADB3BC)),
-    contentPadding: const EdgeInsets.symmetric(vertical: 16),
-    enabledBorder: const UnderlineInputBorder(
-      borderSide: BorderSide(color: Color(0xFFE4E7EB)),
+    hintStyle: const TextStyle(fontSize: 16, color: Color(0xFF9AA2AA)),
+    filled: true,
+    fillColor: const Color(0xFFF5F7F8),
+    isDense: true,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      borderSide: const BorderSide(color: Color(0xFFEDF0F2)),
     ),
-    focusedBorder: const UnderlineInputBorder(
-      borderSide: BorderSide(color: AppColors.green_300, width: 1.5),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      borderSide: const BorderSide(color: AppColors.green_300, width: 1.2),
     ),
-    disabledBorder: const UnderlineInputBorder(
-      borderSide: BorderSide(color: Color(0xFFE4E7EB)),
+    disabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      borderSide: const BorderSide(color: Color(0xFFEDF0F2)),
     ),
   );
 }

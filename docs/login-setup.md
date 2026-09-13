@@ -22,7 +22,7 @@ SmsLoginPage -> SmsLoginViewModel ---+           |
 
 ## 公开参数
 
-公开参数直接定义在对应策略类中，仍通过 `dart-define` 注入，不包含客户端密钥：
+公开参数直接定义在对应策略类中，不包含客户端密钥。Google Web、iOS 和 GitHub Client ID 已配置默认值，无需额外传入启动参数，也可通过 `dart-define` 覆盖。GitHub 复用现有网页端对应的 GitHub App，控制台仍需登记移动端回调地址。
 
 - `lib/features/login/strategies/impl/google_login_strategy.dart`：Google Web、iOS Client ID。
 - `lib/features/login/strategies/impl/github_login_strategy.dart`：GitHub Client ID、回调地址和授权端点。
@@ -33,11 +33,11 @@ SmsLoginPage -> SmsLoginViewModel ---+           |
 | `GOOGLE_IOS_CLIENT_ID` | Google Cloud 的 iOS OAuth Client ID，仅 iOS 必填 |
 | `GITHUB_CLIENT_ID` | GitHub App 的 Client ID，不是 App ID，也不是 Client Secret |
 
-示例值不能直接用于登录：
+切换环境时可按以下示例覆盖参数，示例值不能直接用于登录；使用当前客户端配置时省略 `GOOGLE_*` 和 `GITHUB_CLIENT_ID` 参数：
 
 ```bash
 flutter run \
-  --dart-define=APP_API_BASE_URL=http://10.18.10.21:8080 \
+  --dart-define=APP_API_BASE_URL=http://192.168.2.216:8080 \
   --dart-define=GOOGLE_SERVER_CLIENT_ID=YOUR_WEB_ID.apps.googleusercontent.com \
   --dart-define=GOOGLE_IOS_CLIENT_ID=YOUR_IOS_ID.apps.googleusercontent.com \
   --dart-define=GITHUB_CLIENT_ID=YOUR_GITHUB_APP_CLIENT_ID
@@ -57,7 +57,7 @@ flutter run \
 
 1. 注册 iOS OAuth 客户端，Bundle ID 为 `com.xtguiyi.featurecollection`。
 2. 将该客户端 ID 填入 `GOOGLE_IOS_CLIENT_ID`。
-3. 在 `ios/Runner/Info.plist` 的 `CFBundleURLSchemes` 中，将 `com.googleusercontent.apps.unconfigured` 替换为 Google Cloud 的 iOS OAuth 客户端页面显示的 `iOS URL scheme`。例如 `123-abc.apps.googleusercontent.com` 对应 `com.googleusercontent.apps.123-abc`。保留旁边 GitHub 使用的 `com.xtguiyi.featurecollection`。
+3. `ios/Runner/Info.plist` 的 `CFBundleURLSchemes` 已配置当前 iOS 客户端对应的回调 scheme。更换 iOS Client ID 时，需要同步替换为 Google Cloud 对应客户端的 `iOS URL scheme`。例如 `123-abc.apps.googleusercontent.com` 对应 `com.googleusercontent.apps.123-abc`。保留旁边 GitHub 使用的 `com.xtguiyi.featurecollection`。
 4. 按官方支持的 Dart 配置方式，`clientId` 和 `serverClientId` 仍通过 Dart 初始化传入；回调 scheme 直接写在 `Info.plist` 中，不再单独创建配置文件。修改后需要重新编译，热重载不会更新原生配置。
 
 ### Android

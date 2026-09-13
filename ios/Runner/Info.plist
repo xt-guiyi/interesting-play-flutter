@@ -31,8 +31,8 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<!-- TODO: Replace with the iOS URL scheme from your Google Cloud OAuth client. -->
-				<string>com.googleusercontent.apps.unconfigured</string>
+				<!-- Google Sign-In callback for the configured iOS OAuth client. -->
+				<string>com.googleusercontent.apps.516434775620-vivq1pimnsiqg9b261haja0o8s9p308k</string>
 				<string>com.xtguiyi.featurecollection</string>
 			</array>
 		</dict>

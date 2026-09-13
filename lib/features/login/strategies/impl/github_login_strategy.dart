@@ -18,7 +18,10 @@ class GithubLoginStrategy implements LoginStrategy {
   final LoginRepository _repository;
   final FlutterAppAuth _appAuth = const FlutterAppAuth();
 
-  static const _clientId = String.fromEnvironment('GITHUB_CLIENT_ID');
+  static const _clientId = String.fromEnvironment(
+    'GITHUB_CLIENT_ID',
+    defaultValue: 'Iv23liIJod3K635MFhj9',
+  );
   static const _redirectUri = 'com.xtguiyi.featurecollection://oauth/github';
 
   /// 执行 GitHub 授权和后端登录，用户取消授权时返回 null。
