@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'login_dto.dart';
+part of 'login_request.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,22 +12,22 @@ part of 'login_dto.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$LoginDto {
+mixin _$LoginRequest {
 
  String get account; String get code; String get loginType;
-/// Create a copy of LoginDto
+/// Create a copy of LoginRequest
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$LoginDtoCopyWith<LoginDto> get copyWith => _$LoginDtoCopyWithImpl<LoginDto>(this as LoginDto, _$identity);
+$LoginRequestCopyWith<LoginRequest> get copyWith => _$LoginRequestCopyWithImpl<LoginRequest>(this as LoginRequest, _$identity);
 
-  /// Serializes this LoginDto to a JSON map.
+  /// Serializes this LoginRequest to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginDto&&(identical(other.account, account) || other.account == account)&&(identical(other.code, code) || other.code == code)&&(identical(other.loginType, loginType) || other.loginType == loginType));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginRequest&&(identical(other.account, account) || other.account == account)&&(identical(other.code, code) || other.code == code)&&(identical(other.loginType, loginType) || other.loginType == loginType));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -36,15 +36,15 @@ int get hashCode => Object.hash(runtimeType,account,code,loginType);
 
 @override
 String toString() {
-  return 'LoginDto(account: $account, code: $code, loginType: $loginType)';
+  return 'LoginRequest(account: $account, code: $code, loginType: $loginType)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $LoginDtoCopyWith<$Res>  {
-  factory $LoginDtoCopyWith(LoginDto value, $Res Function(LoginDto) _then) = _$LoginDtoCopyWithImpl;
+abstract mixin class $LoginRequestCopyWith<$Res>  {
+  factory $LoginRequestCopyWith(LoginRequest value, $Res Function(LoginRequest) _then) = _$LoginRequestCopyWithImpl;
 @useResult
 $Res call({
  String account, String code, String loginType
@@ -55,14 +55,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$LoginDtoCopyWithImpl<$Res>
-    implements $LoginDtoCopyWith<$Res> {
-  _$LoginDtoCopyWithImpl(this._self, this._then);
+class _$LoginRequestCopyWithImpl<$Res>
+    implements $LoginRequestCopyWith<$Res> {
+  _$LoginRequestCopyWithImpl(this._self, this._then);
 
-  final LoginDto _self;
-  final $Res Function(LoginDto) _then;
+  final LoginRequest _self;
+  final $Res Function(LoginRequest) _then;
 
-/// Create a copy of LoginDto
+/// Create a copy of LoginRequest
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? account = null,Object? code = null,Object? loginType = null,}) {
   return _then(_self.copyWith(
@@ -76,8 +76,8 @@ as String,
 }
 
 
-/// Adds pattern-matching-related methods to [LoginDto].
-extension LoginDtoPatterns on LoginDto {
+/// Adds pattern-matching-related methods to [LoginRequest].
+extension LoginRequestPatterns on LoginRequest {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -90,10 +90,10 @@ extension LoginDtoPatterns on LoginDto {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _LoginDto value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _LoginRequest value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _LoginDto() when $default != null:
+case _LoginRequest() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -112,10 +112,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _LoginDto value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _LoginRequest value)  $default,){
 final _that = this;
 switch (_that) {
-case _LoginDto():
+case _LoginRequest():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -133,10 +133,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _LoginDto value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _LoginRequest value)?  $default,){
 final _that = this;
 switch (_that) {
-case _LoginDto() when $default != null:
+case _LoginRequest() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -156,7 +156,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String account,  String code,  String loginType)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _LoginDto() when $default != null:
+case _LoginRequest() when $default != null:
 return $default(_that.account,_that.code,_that.loginType);case _:
   return orElse();
 
@@ -177,7 +177,7 @@ return $default(_that.account,_that.code,_that.loginType);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String account,  String code,  String loginType)  $default,) {final _that = this;
 switch (_that) {
-case _LoginDto():
+case _LoginRequest():
 return $default(_that.account,_that.code,_that.loginType);case _:
   throw StateError('Unexpected subclass');
 
@@ -197,7 +197,7 @@ return $default(_that.account,_that.code,_that.loginType);case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String account,  String code,  String loginType)?  $default,) {final _that = this;
 switch (_that) {
-case _LoginDto() when $default != null:
+case _LoginRequest() when $default != null:
 return $default(_that.account,_that.code,_that.loginType);case _:
   return null;
 
@@ -209,28 +209,28 @@ return $default(_that.account,_that.code,_that.loginType);case _:
 /// @nodoc
 @JsonSerializable(createFactory: false)
 
-class _LoginDto implements LoginDto {
-  const _LoginDto({required this.account, required this.code, this.loginType = 'SMS_CODE'});
+class _LoginRequest implements LoginRequest {
+  const _LoginRequest({required this.account, required this.code, this.loginType = 'SMS_CODE'});
   
 
 @override final  String account;
 @override final  String code;
 @override@JsonKey() final  String loginType;
 
-/// Create a copy of LoginDto
+/// Create a copy of LoginRequest
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$LoginDtoCopyWith<_LoginDto> get copyWith => __$LoginDtoCopyWithImpl<_LoginDto>(this, _$identity);
+_$LoginRequestCopyWith<_LoginRequest> get copyWith => __$LoginRequestCopyWithImpl<_LoginRequest>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$LoginDtoToJson(this, );
+  return _$LoginRequestToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginDto&&(identical(other.account, account) || other.account == account)&&(identical(other.code, code) || other.code == code)&&(identical(other.loginType, loginType) || other.loginType == loginType));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginRequest&&(identical(other.account, account) || other.account == account)&&(identical(other.code, code) || other.code == code)&&(identical(other.loginType, loginType) || other.loginType == loginType));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -239,15 +239,15 @@ int get hashCode => Object.hash(runtimeType,account,code,loginType);
 
 @override
 String toString() {
-  return 'LoginDto(account: $account, code: $code, loginType: $loginType)';
+  return 'LoginRequest(account: $account, code: $code, loginType: $loginType)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$LoginDtoCopyWith<$Res> implements $LoginDtoCopyWith<$Res> {
-  factory _$LoginDtoCopyWith(_LoginDto value, $Res Function(_LoginDto) _then) = __$LoginDtoCopyWithImpl;
+abstract mixin class _$LoginRequestCopyWith<$Res> implements $LoginRequestCopyWith<$Res> {
+  factory _$LoginRequestCopyWith(_LoginRequest value, $Res Function(_LoginRequest) _then) = __$LoginRequestCopyWithImpl;
 @override @useResult
 $Res call({
  String account, String code, String loginType
@@ -258,17 +258,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$LoginDtoCopyWithImpl<$Res>
-    implements _$LoginDtoCopyWith<$Res> {
-  __$LoginDtoCopyWithImpl(this._self, this._then);
+class __$LoginRequestCopyWithImpl<$Res>
+    implements _$LoginRequestCopyWith<$Res> {
+  __$LoginRequestCopyWithImpl(this._self, this._then);
 
-  final _LoginDto _self;
-  final $Res Function(_LoginDto) _then;
+  final _LoginRequest _self;
+  final $Res Function(_LoginRequest) _then;
 
-/// Create a copy of LoginDto
+/// Create a copy of LoginRequest
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? account = null,Object? code = null,Object? loginType = null,}) {
-  return _then(_LoginDto(
+  return _then(_LoginRequest(
 account: null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
 as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String,loginType: null == loginType ? _self.loginType : loginType // ignore: cast_nullable_to_non_nullable

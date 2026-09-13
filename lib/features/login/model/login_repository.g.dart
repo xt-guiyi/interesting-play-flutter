@@ -8,14 +8,18 @@ part of 'login_repository.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// 注入登录接口服务和本地鉴权存储，提供登录数据访问能力。
 
 @ProviderFor(loginRepository)
 final loginRepositoryProvider = LoginRepositoryProvider._();
+
+/// 注入登录接口服务和本地鉴权存储，提供登录数据访问能力。
 
 final class LoginRepositoryProvider
     extends
         $FunctionalProvider<LoginRepository, LoginRepository, LoginRepository>
     with $Provider<LoginRepository> {
+  /// 注入登录接口服务和本地鉴权存储，提供登录数据访问能力。
   LoginRepositoryProvider._()
     : super(
         from: null,

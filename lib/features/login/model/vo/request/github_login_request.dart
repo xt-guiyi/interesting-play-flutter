@@ -1,7 +1,7 @@
-/// GitHub 授权完成后交给后端的换码参数，不包含客户端密钥或平台 token。
-class GithubLoginCredential {
+/// GitHub 登录接口的请求参数，不包含客户端密钥或平台 token。
+class GithubLoginRequest {
   /// 保存授权码、回调地址和对应的 PKCE 校验值。
-  const GithubLoginCredential({
+  const GithubLoginRequest({
     required this.code,
     required this.redirectUri,
     required this.codeVerifier,

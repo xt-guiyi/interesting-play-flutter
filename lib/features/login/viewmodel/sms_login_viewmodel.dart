@@ -15,6 +15,7 @@ part 'sms_login_viewmodel.g.dart';
 /// 管理短信登录的校验、验证码发送、倒计时和登录结果提交。
 @riverpod
 class SmsLoginViewModel extends _$SmsLoginViewModel {
+  
   static final _phoneRegex = RegExp(r'^1[3-9][0-9]{9}$');
   static final _codeRegex = RegExp(r'^[0-9]{6}$');
   Timer? _resendTimer;

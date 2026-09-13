@@ -8,13 +8,17 @@ part of 'login_service.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// 为登录接口注入应用 HTTP 客户端。
 
 @ProviderFor(loginService)
 final loginServiceProvider = LoginServiceProvider._();
 
+/// 为登录接口注入应用 HTTP 客户端。
+
 final class LoginServiceProvider
     extends $FunctionalProvider<LoginService, LoginService, LoginService>
     with $Provider<LoginService> {
+  /// 为登录接口注入应用 HTTP 客户端。
   LoginServiceProvider._()
     : super(
         from: null,

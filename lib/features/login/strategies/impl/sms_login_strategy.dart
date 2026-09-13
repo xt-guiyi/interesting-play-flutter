@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../../model/login_repository.dart';
 import '../vo/login_command.dart';
-import '../../model/vo/login_response.dart';
+import '../../model/vo/response/login_response.dart';
 import '../login_strategy.dart';
 
 /// 将手机号和验证码提交给后端，不负责发送验证码或管理倒计时。

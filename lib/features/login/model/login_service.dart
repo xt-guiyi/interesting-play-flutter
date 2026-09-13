@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_feature_collection/core/network/providers/api_client_provider.dart';
 import 'package:flutter_feature_collection/core/network/models/api_response.dart';
-import 'package:flutter_feature_collection/features/login/model/vo/login_dto.dart';
-import 'package:flutter_feature_collection/features/login/model/vo/login_response.dart';
-import 'package:flutter_feature_collection/features/login/strategies/vo/github_login_credential.dart';
+import 'package:flutter_feature_collection/features/login/model/vo/request/login_request.dart';
+import 'package:flutter_feature_collection/features/login/model/vo/response/login_response.dart';
+import 'package:flutter_feature_collection/features/login/model/vo/request/github_login_request.dart';
 import 'package:flutter_feature_collection/core/utils/api_json_parser.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -24,12 +24,12 @@ class LoginService {
 
   /// 请求手机号验证码登录接口，错误提示由登录页面处理。
   Future<ApiResponse<LoginResponse>> login(
-    LoginDto loginDto, {
+    LoginRequest loginRequest, {
     CancelToken? cancelToken,
   }) async {
     final response = await _client.post(
       '/api/user/auth/login',
-      data: loginDto.toJson(),
+      data: loginRequest.toJson(),
       cancelToken: cancelToken,
       options: ApiRequestOptions.noGlobalErrorToast(),
     );
@@ -46,7 +46,7 @@ class LoginService {
 
   /// 提交 GitHub 授权码、回调地址和 PKCE 校验参数，由后端完成换码。
   Future<ApiResponse<LoginResponse>> loginWithGithub(
-    GithubLoginCredential credential, {
+    GithubLoginRequest credential, {
     CancelToken? cancelToken,
   }) => _thirdPartyLogin('/api/user/auth/github', {
     'code': credential.code,

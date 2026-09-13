@@ -6,7 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../../../../core/network/exceptions/api_exception.dart';
 import '../../model/login_repository.dart';
 import '../vo/login_command.dart';
-import '../../model/vo/login_response.dart';
+import '../../model/vo/response/login_response.dart';
 import '../login_strategy.dart';
 
 /// 通过 Google SDK 取得身份凭证，再向后端换取应用登录结果。

@@ -17,6 +17,7 @@ LoginStrategyFactory loginStrategyFactory(Ref ref) {
 
 /// 根据登录渠道创建对应策略，不负责执行登录或管理状态。
 class LoginStrategyFactory {
+  
   /// 保存各策略访问后端所需的 Repository。
   LoginStrategyFactory(this._repository);
 

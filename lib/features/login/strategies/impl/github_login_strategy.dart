@@ -5,9 +5,9 @@ import 'package:flutter_appauth/flutter_appauth.dart';
 
 import '../../../../core/network/exceptions/api_exception.dart';
 import '../../model/login_repository.dart';
-import '../vo/github_login_credential.dart';
+import '../../model/vo/request/github_login_request.dart';
 import '../vo/login_command.dart';
-import '../../model/vo/login_response.dart';
+import '../../model/vo/response/login_response.dart';
 import '../login_strategy.dart';
 
 /// 通过系统授权页取得 GitHub 授权码，再由后端完成应用登录。
@@ -34,7 +34,7 @@ class GithubLoginStrategy implements LoginStrategy {
     if (cancelToken.isCancelled) return null;
     _validateConfig();
 
-    final GithubLoginCredential credential;
+    final GithubLoginRequest credential;
     try {
       // AppAuth 管理 state 和 PKCE，只取授权码，平台 token 仍由后端换取。
       final response = await _appAuth.authorize(
@@ -57,7 +57,7 @@ class GithubLoginStrategy implements LoginStrategy {
           verifier.isEmpty) {
         throw const ApiException(message: 'GitHub 未返回完整授权凭证，请重试');
       }
-      credential = GithubLoginCredential(
+      credential = GithubLoginRequest(
         code: code,
         codeVerifier: verifier,
         redirectUri: _redirectUri,

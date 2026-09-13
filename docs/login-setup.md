@@ -11,8 +11,8 @@ SmsLoginPage -> SmsLoginViewModel ---+           |
                                       Repository -> Service
 ```
 
-- `model/`：Repository 和 Service；`vo/` 放接口请求、响应数据类。
-- `strategies/`：登录命令、渠道类型、GitHub 凭证和策略工厂；`impl/` 放各渠道策略实现，包含公开配置、SDK 授权和后端登录调用，返回统一 `LoginResponse`。
+- `model/`：Repository 和 Service；`vo/request/` 放以 `Request` 结尾的接口请求类，`vo/response/` 放以 `Response` 结尾的接口响应类。
+- `strategies/`：登录命令、渠道类型和策略工厂；`impl/` 放各渠道策略实现，包含公开配置、SDK 授权和后端登录调用，返回统一 `LoginResponse`。
 - `viewmodel/`：各页面独立负责登录提交、防重复点击、取消和错误处理，调用 Repository 保存结果后更新 `AuthSession`。Google、GitHub 流程在 `LoginViewModel`；短信登录、发送验证码和 60 秒倒计时在 `SmsLoginViewModel`。
 - `view/`：协议勾选、Toast、焦点和导航。未同意协议不会启动授权；底部弹层关闭后才打开系统授权页。
 

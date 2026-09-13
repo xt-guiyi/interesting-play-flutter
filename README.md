@@ -233,7 +233,7 @@ features/home/
 
 放只属于某个 feature 的状态模型、请求 DTO 或局部数据结构，例如：
 
-- `login/model/vo/login_dto.dart`
+- `login/model/vo/request/login_request.dart`
 - `login/viewmodel/sms_login_state.dart`
 - `home/model/home_state.dart`
 - `discover/model/discover_state.dart`

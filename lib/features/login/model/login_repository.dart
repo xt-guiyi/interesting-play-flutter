@@ -3,9 +3,9 @@ import 'package:flutter_feature_collection/core/network/models/api_response.dart
 import 'package:flutter_feature_collection/core/network/exceptions/api_exception.dart';
 import 'package:flutter_feature_collection/core/auth/auth_storage.dart';
 import 'package:flutter_feature_collection/features/login/model/login_service.dart';
-import 'package:flutter_feature_collection/features/login/model/vo/login_dto.dart';
-import 'package:flutter_feature_collection/features/login/model/vo/login_response.dart';
-import 'package:flutter_feature_collection/features/login/strategies/vo/github_login_credential.dart';
+import 'package:flutter_feature_collection/features/login/model/vo/request/login_request.dart';
+import 'package:flutter_feature_collection/features/login/model/vo/response/login_response.dart';
+import 'package:flutter_feature_collection/features/login/model/vo/request/github_login_request.dart';
 import 'package:flutter_feature_collection/shared/models/user_info.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -58,7 +58,7 @@ class LoginRepository {
     CancelToken? cancelToken,
   }) async {
     final loginResult = await _loginService.login(
-      LoginDto(account: phone, code: code),
+      LoginRequest(account: phone, code: code),
       cancelToken: cancelToken,
     );
     return unwrapApiResponse(loginResult, '登录失败');
@@ -78,7 +78,7 @@ class LoginRepository {
 
   /// 将 GitHub 授权凭证交给后端，校验并返回应用登录结果。
   Future<LoginResponse> loginWithGithub(
-    GithubLoginCredential credential, {
+    GithubLoginRequest credential, {
     CancelToken? cancelToken,
   }) async {
     final result = await _loginService.loginWithGithub(

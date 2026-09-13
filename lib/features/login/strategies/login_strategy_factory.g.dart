@@ -8,9 +8,12 @@ part of 'login_strategy_factory.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// 注入登录 Repository，供各渠道策略复用。
 
 @ProviderFor(loginStrategyFactory)
 final loginStrategyFactoryProvider = LoginStrategyFactoryProvider._();
+
+/// 注入登录 Repository，供各渠道策略复用。
 
 final class LoginStrategyFactoryProvider
     extends
@@ -20,6 +23,7 @@ final class LoginStrategyFactoryProvider
           LoginStrategyFactory
         >
     with $Provider<LoginStrategyFactory> {
+  /// 注入登录 Repository，供各渠道策略复用。
   LoginStrategyFactoryProvider._()
     : super(
         from: null,
