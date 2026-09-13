@@ -1,4 +1,4 @@
-package com.xtguiyi.interesting_play_flutter
+package com.xtguiyi.featurecollection
 
 import io.flutter.embedding.android.FlutterActivity
 

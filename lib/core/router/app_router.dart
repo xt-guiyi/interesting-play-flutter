@@ -35,14 +35,17 @@ GoRouter appRouter(Ref ref) {
     routes: [
       GoRoute(
         path: '/login',
-        builder: (BuildContext context, GoRouterState state) {
-          return const LoginPage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const LoginPage());
         },
       ),
       GoRoute(
         path: '/login/sms',
-        builder: (BuildContext context, GoRouterState state) {
-          return SmsLoginPage(initialAgreement: state.extra == true);
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(
+            state,
+            SmsLoginPage(initialAgreement: state.extra == true),
+          );
         },
       ),
       StatefulShellRoute.indexedStack(
@@ -95,114 +98,151 @@ GoRouter appRouter(Ref ref) {
       ),
       GoRoute(
         path: '/detail/:id',
-        builder: (BuildContext context, GoRouterState state) {
-          return DetailPage(id: state.pathParameters['id'] ?? '');
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(
+            state,
+            DetailPage(id: state.pathParameters['id'] ?? ''),
+          );
         },
       ),
       GoRoute(
         path: '/practice',
-        builder: (BuildContext context, GoRouterState state) {
-          return const PracticePage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const PracticePage());
         },
       ),
       GoRoute(
         path: '/practice/dialog',
-        builder: (BuildContext context, GoRouterState state) {
-          return const DialogPracticePage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const DialogPracticePage());
         },
       ),
       GoRoute(
         path: '/practice/bottom-sheet',
-        builder: (BuildContext context, GoRouterState state) {
-          return const BottomSheetPracticePage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const BottomSheetPracticePage());
         },
       ),
       GoRoute(
         path: '/practice/date-picker',
-        builder: (BuildContext context, GoRouterState state) {
-          return const DatePickerPracticePage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const DatePickerPracticePage());
         },
       ),
       GoRoute(
         path: '/practice/year-month-day-picker',
-        builder: (BuildContext context, GoRouterState state) {
-          return const YearMonthDayPickerPracticePage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const YearMonthDayPickerPracticePage());
         },
       ),
       GoRoute(
         path: '/practice/scan',
-        builder: (BuildContext context, GoRouterState state) {
-          return const ScanPracticePage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const ScanPracticePage());
         },
       ),
       GoRoute(
         path: '/practice/image-picker',
-        builder: (BuildContext context, GoRouterState state) {
-          return const ImagePickerPracticePage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const ImagePickerPracticePage());
         },
       ),
       GoRoute(
         path: '/practice/permission',
-        builder: (BuildContext context, GoRouterState state) {
-          return const PermissionPracticePage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const PermissionPracticePage());
         },
       ),
       GoRoute(
         path: '/practice/location',
-        builder: (BuildContext context, GoRouterState state) {
-          return const LocationPracticePage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const LocationPracticePage());
         },
       ),
       GoRoute(
         path: '/practice/share',
-        builder: (BuildContext context, GoRouterState state) {
-          return const SharePracticePage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const SharePracticePage());
         },
       ),
       GoRoute(
         path: '/practice/clipboard',
-        builder: (BuildContext context, GoRouterState state) {
-          return const ClipboardPracticePage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const ClipboardPracticePage());
         },
       ),
       GoRoute(
         path: '/practice/download',
-        builder: (BuildContext context, GoRouterState state) {
-          return const DownloadPracticePage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const DownloadPracticePage());
         },
       ),
       GoRoute(
         path: '/practice/notification',
-        builder: (BuildContext context, GoRouterState state) {
-          return const NotificationPracticePage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const NotificationPracticePage());
         },
       ),
       GoRoute(
         path: '/practice/webview',
-        builder: (BuildContext context, GoRouterState state) {
-          return const WebViewPracticePage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const WebViewPracticePage());
         },
       ),
       GoRoute(
         path: '/practice/qr-code',
-        builder: (BuildContext context, GoRouterState state) {
-          return const QrCodePracticePage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const QrCodePracticePage());
         },
       ),
       GoRoute(
         path: '/practice/region-picker',
-        builder: (BuildContext context, GoRouterState state) {
-          return const RegionPickerPracticePage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const RegionPickerPracticePage());
         },
       ),
       GoRoute(
         path: '/practice/chat',
-        builder: (BuildContext context, GoRouterState state) {
-          return const ChatPage();
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return _buildSlidePage(state, const ChatPage());
         },
       ),
     ],
   );
   ref.onDispose(router.dispose);
   return router;
+}
+
+CustomTransitionPage<void> _buildSlidePage(GoRouterState state, Widget child) {
+  return CustomTransitionPage<void>(
+    key: state.pageKey,
+    transitionDuration: const Duration(milliseconds: 280),
+    reverseTransitionDuration: const Duration(milliseconds: 240),
+    child: child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      final curvedAnimation = CurvedAnimation(
+        parent: animation,
+        curve: Curves.easeOutCubic,
+        reverseCurve: Curves.easeInCubic,
+      );
+      final curvedSecondaryAnimation = CurvedAnimation(
+        parent: secondaryAnimation,
+        curve: Curves.easeOutCubic,
+        reverseCurve: Curves.easeInCubic,
+      );
+      final pageInOffset = Tween<Offset>(
+        begin: const Offset(1, 0),
+        end: Offset.zero,
+      ).animate(curvedAnimation);
+      final pageBehindOffset = Tween<Offset>(
+        begin: Offset.zero,
+        end: const Offset(-0.24, 0),
+      ).animate(curvedSecondaryAnimation);
+
+      return SlideTransition(
+        position: pageBehindOffset,
+        child: SlideTransition(position: pageInOffset, child: child),
+      );
+    },
+  );
 }
