@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:interesting_play_flutter/core/auth/auth_session.dart';
 import 'package:interesting_play_flutter/features/auth/data/auth_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -11,6 +12,11 @@ class AuthViewModel extends _$AuthViewModel {
   FutureOr<bool> build() async {
     final authRepository = ref.watch(authRepositoryProvider);
     final currentUser = await authRepository.getCurrentUser();
+    if (currentUser == null) {
+      ref.read(authSessionProvider.notifier).loggedOut();
+    } else {
+      ref.read(authSessionProvider.notifier).loggedIn();
+    }
     return currentUser != null;
   }
 
@@ -19,24 +25,20 @@ class AuthViewModel extends _$AuthViewModel {
     String password, {
     bool showGlobalErrorToast = true,
   }) async {
-    state = const AsyncLoading();
-    try {
-      final authRepository = ref.read(authRepositoryProvider);
-      await authRepository.login(
-        username,
-        password,
-        showGlobalErrorToast: showGlobalErrorToast,
-      );
-      state = const AsyncData(true);
-    } catch (error, stackTrace) {
-      state = AsyncError(error, stackTrace);
-      rethrow;
-    }
+    final authRepository = ref.read(authRepositoryProvider);
+    await authRepository.login(
+      username,
+      password,
+      showGlobalErrorToast: showGlobalErrorToast,
+    );
+    ref.read(authSessionProvider.notifier).loggedIn();
+    state = const AsyncData(true);
   }
 
   Future<void> logout() async {
     final authRepository = ref.read(authRepositoryProvider);
     await authRepository.logout();
+    ref.read(authSessionProvider.notifier).loggedOut();
     state = const AsyncData(false);
   }
 }

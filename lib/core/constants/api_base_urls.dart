@@ -1,4 +1,7 @@
 abstract final class ApiBaseUrls {
-  static const app = 'https://interesting-play-service-nest.vercel.app/';
+  static const app = String.fromEnvironment(
+    'APP_API_BASE_URL',
+    defaultValue: 'http://10.18.10.21:3000',
+  );
   static const public = 'https://jsonplaceholder.typicode.com/';
 }

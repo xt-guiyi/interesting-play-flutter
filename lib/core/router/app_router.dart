@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:interesting_play_flutter/core/auth/auth_session.dart';
 import 'package:interesting_play_flutter/features/auth/view/login_page.dart';
-import 'package:interesting_play_flutter/features/auth/viewmodel/auth_viewmodel.dart';
 import 'package:interesting_play_flutter/features/detail/view/detail_page.dart';
 import 'package:interesting_play_flutter/features/discover/view/discover_page.dart';
 import 'package:interesting_play_flutter/features/home/view/home_page.dart';
@@ -30,7 +30,7 @@ part 'app_router.g.dart';
 
 @riverpod
 GoRouter appRouter(Ref ref) {
-  final authState = ref.watch(authViewModelProvider);
+  final authState = ref.watch(authSessionProvider);
 
   return GoRouter(
     initialLocation: '/login',
@@ -200,10 +200,7 @@ GoRouter appRouter(Ref ref) {
     ],
     redirect: (BuildContext context, GoRouterState state) {
       if (authState.isLoading) return null;
-      final isLoggedIn = authState.maybeWhen(
-        data: (value) => value,
-        orElse: () => false,
-      );
+      final isLoggedIn = authState.valueOrNull ?? false;
       final isLoginRoute = state.matchedLocation == '/login';
 
       if (!isLoggedIn && !isLoginRoute) return '/login';

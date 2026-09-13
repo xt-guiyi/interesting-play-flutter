@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_router/go_router.dart';
 import 'package:interesting_play_flutter/core/theme/app_colors.dart';
 import 'package:interesting_play_flutter/features/auth/model/login_state.dart';
 import 'package:interesting_play_flutter/features/auth/viewmodel/login_viewmodel.dart';
@@ -42,7 +41,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     ref.listen<LoginState>(loginViewModelProvider, (previous, next) {
       switch (next) {
         case LoginSuccess():
-          context.go('/');
+          break;
         case LoginError(:final message):
           Fluttertoast.showToast(
             msg: message,
@@ -60,7 +59,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
     // 最外层容器必须为Material，或者Scaffold控件， 才能确保子widget应用material样式，不然Text样式是默认的红色
     return Scaffold(
-      resizeToAvoidBottomInset: true, // 默认就是true，可以不设置
+      resizeToAvoidBottomInset: false, // 默认就是true，可以不设置
       body: Container(
         height: double.infinity,
         color: Colors.white,
@@ -118,6 +117,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           const SizedBox(height: 20),
           TextField(
             controller: passwordController,
+            obscureText: true,
             keyboardType: TextInputType.text,
             cursorColor: AppColors.green_300, // 直接设置光标颜色
             style: const TextStyle(
@@ -170,13 +170,22 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               borderRadius: BorderRadius.circular(6.0),
             ),
             child: isLoading
-                ? const SizedBox(
-                    width: 22,
-                    height: 22,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Colors.white,
-                    ),
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "登录中",
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   )
                 : const Text(
                     "登录",

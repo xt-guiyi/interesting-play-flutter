@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:interesting_play_flutter/core/auth/auth_session.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../constants/api_base_urls.dart';
@@ -13,10 +14,16 @@ part 'api_client.g.dart';
 @riverpod
 Dio dio(Ref ref) {
   final localStorage = ref.watch(localStorageServiceProvider);
-  return createAppDio(localStorage);
+  return createAppDio(
+    localStorage,
+    onUnauthorized: () => ref.read(authSessionProvider.notifier).loggedOut(),
+  );
 }
 
-Dio createAppDio(LocalStorageService localStorage) {
+Dio createAppDio(
+  LocalStorageService localStorage, {
+  void Function()? onUnauthorized,
+}) {
   final dio = Dio(
     BaseOptions(
       baseUrl: ApiBaseUrls.app,
@@ -26,7 +33,9 @@ Dio createAppDio(LocalStorageService localStorage) {
   );
 
   dio.interceptors.add(AuthInterceptor(localStorage));
-  dio.interceptors.add(ErrorInterceptor(localStorage));
+  dio.interceptors.add(
+    ErrorInterceptor(localStorage, onUnauthorized: onUnauthorized),
+  );
   return dio;
 }
 
@@ -77,9 +86,10 @@ class AuthInterceptor extends Interceptor {
 }
 
 class ErrorInterceptor extends Interceptor {
-  ErrorInterceptor(this._localStorage);
+  ErrorInterceptor(this._localStorage, {this.onUnauthorized});
 
   final LocalStorageService _localStorage;
+  final void Function()? onUnauthorized;
 
   @override
   Future<void> onError(
@@ -99,6 +109,7 @@ class ErrorInterceptor extends Interceptor {
 
       if (statusCode == 401) {
         await _localStorage.clearAuthState();
+        onUnauthorized?.call();
       }
     } else if (err.type == DioExceptionType.connectionTimeout) {
       if (shouldShowToast) {

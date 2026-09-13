@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_viewmodel.dart';
+part of 'auth_session.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -8,34 +8,39 @@ part of 'auth_viewmodel.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// 应用级登录会话状态，供路由和网络层共享。
 
-@ProviderFor(AuthViewModel)
-final authViewModelProvider = AuthViewModelProvider._();
+@ProviderFor(AuthSession)
+final authSessionProvider = AuthSessionProvider._();
 
-final class AuthViewModelProvider
-    extends $AsyncNotifierProvider<AuthViewModel, bool> {
-  AuthViewModelProvider._()
+/// 应用级登录会话状态，供路由和网络层共享。
+final class AuthSessionProvider
+    extends $AsyncNotifierProvider<AuthSession, bool> {
+  /// 应用级登录会话状态，供路由和网络层共享。
+  AuthSessionProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'authViewModelProvider',
+        name: r'authSessionProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$authViewModelHash();
+  String debugGetCreateSourceHash() => _$authSessionHash();
 
   @$internal
   @override
-  AuthViewModel create() => AuthViewModel();
+  AuthSession create() => AuthSession();
 }
 
-String _$authViewModelHash() => r'd0db8c9e0cdfd14e95cc18081b4ece8bd0270519';
+String _$authSessionHash() => r'f7dcb4825ecd52ec18b221531d32406774b37b85';
 
-abstract class _$AuthViewModel extends $AsyncNotifier<bool> {
+/// 应用级登录会话状态，供路由和网络层共享。
+
+abstract class _$AuthSession extends $AsyncNotifier<bool> {
   FutureOr<bool> build();
   @$mustCallSuper
   @override

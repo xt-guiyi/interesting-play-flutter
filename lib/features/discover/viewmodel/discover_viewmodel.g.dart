@@ -41,7 +41,7 @@ final class DiscoverViewModelProvider
   }
 }
 
-String _$discoverViewModelHash() => r'b765d5baceb3ad28c8936ba1c50890f10d963dd6';
+String _$discoverViewModelHash() => r'31dfb0335718b34f437b9e43a13ddf9e8d348097';
 
 abstract class _$DiscoverViewModel extends $Notifier<DiscoverState> {
   DiscoverState build();

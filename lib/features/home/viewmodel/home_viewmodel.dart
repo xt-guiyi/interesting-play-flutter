@@ -9,6 +9,7 @@ part 'home_viewmodel.g.dart';
 @riverpod
 class HomeViewModel extends _$HomeViewModel {
   final _random = Random();
+  int _requestGeneration = 0;
 
   @override
   HomeState build() {
@@ -25,6 +26,7 @@ class HomeViewModel extends _$HomeViewModel {
 
   Future<void> refresh() async {
     if (state.isRefreshing) return;
+    final generation = ++_requestGeneration;
 
     state = state.copyWith(
       isRefreshing: true,
@@ -35,9 +37,9 @@ class HomeViewModel extends _$HomeViewModel {
     );
     try {
       await Future.wait<void>([
-        _loadCurrentUser(),
-        _loadBanners(),
-        _loadFirstPageVideos(),
+        _loadCurrentUser(generation),
+        _loadBanners(generation),
+        _loadFirstPageVideos(generation),
       ]);
     } finally {
       state = state.copyWith(isRefreshing: false);
@@ -48,10 +50,15 @@ class HomeViewModel extends _$HomeViewModel {
     if (!state.canLoadMoreVideos) return;
 
     final nextPage = state.page;
+    final generation = _requestGeneration;
     state = state.copyWith(isLoadingMore: true, loadMoreError: null);
     try {
       final repository = ref.read(homeRepositoryProvider);
       final videoPage = await repository.getVideoList(nextPage, state.pageSize);
+      if (generation != _requestGeneration) {
+        state = state.copyWith(isLoadingMore: false);
+        return;
+      }
       final videos = [...state.videos, ...videoPage.data];
       state = state.copyWith(
         videos: videos,
@@ -68,11 +75,11 @@ class HomeViewModel extends _$HomeViewModel {
   }
 
   Future<void> retryVideos() {
-    return _loadFirstPageVideos();
+    return _loadFirstPageVideos(_requestGeneration);
   }
 
   Future<void> retryBanners() {
-    return _loadBanners();
+    return _loadBanners(_requestGeneration);
   }
 
   Future<void> retryLoadMore() {
@@ -80,30 +87,35 @@ class HomeViewModel extends _$HomeViewModel {
     return loadMore();
   }
 
-  Future<void> _loadCurrentUser() async {
+  Future<void> _loadCurrentUser(int generation) async {
     try {
       final repository = ref.read(homeRepositoryProvider);
       final user = await repository.getCurrentUser();
+      if (generation != _requestGeneration) return;
       state = state.copyWith(currentUser: user, userError: null);
     } catch (error) {
+      if (generation != _requestGeneration) return;
       state = state.copyWith(userError: _errorMessage(error));
     }
   }
 
-  Future<void> _loadBanners() async {
+  Future<void> _loadBanners(int generation) async {
     try {
       final repository = ref.read(homeRepositoryProvider);
       final banners = await repository.getBanners();
+      if (generation != _requestGeneration) return;
       state = state.copyWith(banners: banners, bannerError: null);
     } catch (error) {
+      if (generation != _requestGeneration) return;
       state = state.copyWith(bannerError: _errorMessage(error));
     }
   }
 
-  Future<void> _loadFirstPageVideos() async {
+  Future<void> _loadFirstPageVideos(int generation) async {
     try {
       final repository = ref.read(homeRepositoryProvider);
       final videoPage = await repository.getVideoList(1, state.pageSize);
+      if (generation != _requestGeneration) return;
       state = state.copyWith(
         videos: videoPage.data,
         page: 2,
@@ -112,6 +124,7 @@ class HomeViewModel extends _$HomeViewModel {
         loadMoreError: null,
       );
     } catch (error) {
+      if (generation != _requestGeneration) return;
       state = state.copyWith(videoError: _errorMessage(error));
     }
   }

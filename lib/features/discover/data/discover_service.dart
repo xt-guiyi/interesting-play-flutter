@@ -24,7 +24,8 @@ class DiscoverService {
     bool showGlobalErrorToast = true,
   }) async {
     final response = await _dio.get(
-      '/mock/getDiscoverList?page=$page&pageSize=$pageSize',
+      '/mock/getDiscoverList',
+      queryParameters: {'page': page, 'pageSize': pageSize},
       options: ApiRequestOptions.globalErrorToast(
         enabled: showGlobalErrorToast,
       ),

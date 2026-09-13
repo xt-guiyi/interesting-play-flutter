@@ -15,21 +15,33 @@ class LoginViewModel extends _$LoginViewModel {
 
   Future<void> login(String phone, String password) async {
     if (!_phoneRegex.hasMatch(phone)) {
-      state = LoginState.error('手机号格式错误');
+      _emitError('手机号格式错误');
       return;
     }
 
     if (password.isEmpty) {
-      state = LoginState.error('请输入密码');
+      _emitError('请输入密码');
       return;
     }
 
     state = const LoginState.loading();
     try {
-      await ref.read(authViewModelProvider.notifier).login(phone, password);
+      await ref
+          .read(authViewModelProvider.notifier)
+          .login(phone, password, showGlobalErrorToast: false);
       state = const LoginState.success();
     } catch (error) {
-      state = LoginState.error(error.toString());
+      _emitError(error.toString());
     }
+  }
+
+  void _emitError(String message) {
+    if (state case LoginError(
+      message: final currentMessage,
+    ) when currentMessage == message) {
+      state = const LoginState.idle();
+    }
+
+    state = LoginState.error(message);
   }
 }

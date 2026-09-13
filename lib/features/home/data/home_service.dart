@@ -26,7 +26,8 @@ class HomeService {
     bool showGlobalErrorToast = true,
   }) async {
     final response = await _dio.get(
-      '/mock/getVideoList?page=$page&pageSize=$pageSize',
+      '/mock/getVideoList',
+      queryParameters: {'page': page, 'pageSize': pageSize},
       options: ApiRequestOptions.globalErrorToast(
         enabled: showGlobalErrorToast,
       ),
@@ -41,7 +42,8 @@ class HomeService {
     bool showGlobalErrorToast = true,
   }) async {
     final response = await _dio.get(
-      '/mock/getCommentList?page=$page&pageSize=$pageSize',
+      '/mock/getCommentList',
+      queryParameters: {'page': page, 'pageSize': pageSize},
       options: ApiRequestOptions.globalErrorToast(
         enabled: showGlobalErrorToast,
       ),

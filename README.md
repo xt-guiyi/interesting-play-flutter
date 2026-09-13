@@ -23,7 +23,6 @@
 | 扫码 | `mobile_scanner` | `^7.2.0` | 二维码 / 条形码扫描 |
 | 二维码生成 | `qr_flutter` | `^4.1.0` | 生成二维码图片 |
 | 图片选择 | `image_picker` | `^1.2.2` | 相册/相机图片选取 |
-| 文件选择 | `file_picker` | `^3.0.4` | 通用文件选取 |
 | 权限 | `permission_handler` | `^12.0.3` | 运行时权限申请封装 |
 | 定位 | `geolocator` | `^14.0.3` | GPS 定位 |
 | 分享 | `share_plus` | `^13.1.0` | 系统分享弹窗 |
@@ -75,7 +74,7 @@ lib/
 │   ├── network/
 │   │   ├── api_client.dart          # dioProvider、Dio 创建、拦截器
 │   │   ├── api_exception.dart       # HTTP / 业务异常映射
-│   │   └── response_result.dart     # 通用响应结构，Freezed 泛型模型
+│   │   └── api_response.dart        # 通用响应结构，Freezed 泛型模型
 │   ├── router/
 │   │   └── app_router.dart          # appRouterProvider、GoRouter 路由表
 │   ├── storage/
@@ -103,7 +102,6 @@ lib/
 │           ├── image_picker_practice_page.dart  # 图片选择实践
 │           ├── permission_practice_page.dart    # 权限申请实践
 │           ├── location_practice_page.dart      # 定位实践
-│           ├── file_picker_practice_page.dart   # 文件选择实践
 │           ├── share_practice_page.dart         # 系统分享实践
 │           ├── clipboard_practice_page.dart     # 剪切板实践
 │           ├── download_practice_page.dart      # 文件下载实践
@@ -160,10 +158,11 @@ features/home/
 网络层包含：
 
 - `BaseOptions`：配置 `baseUrl`、超时时间等。
+- `ApiBaseUrls.app` 支持通过 `--dart-define=APP_API_BASE_URL=...` 覆盖默认地址，避免为切换环境修改源码。
 - `AuthInterceptor` 请求阶段：读取本地 token 并注入请求头。
 - `AuthInterceptor` 响应阶段：读取 refresh token 并更新本地 token。
-- `ErrorInterceptor`：统一把 Dio 异常转换为 `ApiException`。
-- 401 处理：只清理本地登录态，不在拦截器中直接做页面跳转，跳转交给路由守卫和鉴权状态处理。
+- `ErrorInterceptor`：处理 HTTP 错误提示、401 会话失效和网络日志；业务层通过 `unwrapApiResponse` 将业务错误转换为 `ApiException`。
+- 401 处理：清理本地登录态并更新 `AuthSession`，不在拦截器中直接做页面跳转，跳转交给路由守卫处理。
 
 ### 本地存储
 
@@ -200,7 +199,6 @@ features/home/
 | `/practice/image-picker` | 图片选择实践 |
 | `/practice/permission` | 权限申请实践 |
 | `/practice/location` | 定位实践 |
-| `/practice/file-picker` | 文件选择实践 |
 | `/practice/share` | 系统分享实践 |
 | `/practice/clipboard` | 剪切板实践 |
 | `/practice/download` | 文件下载实践 |
@@ -341,14 +339,6 @@ flutter test
 flutter pub outdated
 ```
 
-## 验证状态
+## 验证建议
 
-当前已通过：
-
-- `dart run build_runner build --delete-conflicting-outputs`
-- `dart format lib test`
-- `flutter analyze`
-- `flutter test`
-- `git diff --check`
-
-Flutter 命令可能提示 iOS CocoaPods / Swift Package Manager 集成信息，这是 Flutter 对 iOS 工程配置的提示，不代表 Dart/Flutter 代码分析失败。
+代码生成使用 `dart run build_runner build --delete-conflicting-outputs`。提交前建议执行 `dart format lib test`、`flutter analyze` 和 `git diff --check`。

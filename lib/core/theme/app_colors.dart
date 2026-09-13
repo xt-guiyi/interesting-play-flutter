@@ -15,5 +15,5 @@ abstract final class AppColors {
   static const Color sliver_600 = Color(0xff222020);
   static const Color yellow_100 = Color(0xffFFF1E1);
   static const Color yellow_200 = Color(0xffFF8B00);
-  static const Color transparent = Color(0xff000000);
+  static const Color transparent = Color(0x00000000);
 }

@@ -6,16 +6,19 @@ part 'discover_viewmodel.g.dart';
 
 @riverpod
 class DiscoverViewModel extends _$DiscoverViewModel {
+  int _requestGeneration = 0;
   @override
   DiscoverState build() {
     return const DiscoverState();
   }
 
   Future<void> loadInitial() async {
+    final generation = ++_requestGeneration;
     state = state.copyWith(isLoading: true, error: null, page: 1);
     try {
       final repository = ref.read(discoverRepositoryProvider);
       final pageData = await repository.getDiscoverList(1, state.pageSize);
+      if (generation != _requestGeneration) return;
       state = state.copyWith(
         items: pageData.data,
         page: 2,
@@ -23,6 +26,7 @@ class DiscoverViewModel extends _$DiscoverViewModel {
         isLoading: false,
       );
     } catch (error) {
+      if (generation != _requestGeneration) return;
       state = state.copyWith(isLoading: false, error: error.toString());
     }
   }
@@ -34,12 +38,14 @@ class DiscoverViewModel extends _$DiscoverViewModel {
   Future<void> loadMore() async {
     if (state.isLoading || !state.hasMore) return;
     state = state.copyWith(isLoading: true, error: null);
+    final generation = _requestGeneration;
     try {
       final repository = ref.read(discoverRepositoryProvider);
       final pageData = await repository.getDiscoverList(
         state.page,
         state.pageSize,
       );
+      if (generation != _requestGeneration) return;
       final items = [...state.items, ...pageData.data];
       state = state.copyWith(
         items: items,
@@ -48,6 +54,7 @@ class DiscoverViewModel extends _$DiscoverViewModel {
         isLoading: false,
       );
     } catch (error) {
+      if (generation != _requestGeneration) return;
       state = state.copyWith(isLoading: false, error: error.toString());
     }
   }
