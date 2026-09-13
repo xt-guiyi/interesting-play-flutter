@@ -1,31 +1,31 @@
 import 'package:dio/dio.dart';
-import 'package:interesting_play_flutter/core/network/api_client.dart';
-import 'package:interesting_play_flutter/core/network/api_response.dart';
-import 'package:interesting_play_flutter/shared/models/banner_info.dart';
-import 'package:interesting_play_flutter/shared/models/comment_info.dart';
-import 'package:interesting_play_flutter/shared/models/page_data.dart';
-import 'package:interesting_play_flutter/shared/models/video_info.dart';
-import 'package:interesting_play_flutter/shared/utils/api_json_parser.dart';
+import 'package:flutter_feature_collection/core/network/providers/api_client_provider.dart';
+import 'package:flutter_feature_collection/core/network/models/api_response.dart';
+import 'package:flutter_feature_collection/shared/models/banner_info.dart';
+import 'package:flutter_feature_collection/shared/models/comment_info.dart';
+import 'package:flutter_feature_collection/shared/models/page_data.dart';
+import 'package:flutter_feature_collection/shared/models/video_info.dart';
+import 'package:flutter_feature_collection/core/utils/api_json_parser.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_service.g.dart';
 
 @riverpod
 HomeService homeService(Ref ref) {
-  return HomeService(ref.watch(dioProvider));
+  return HomeService(ref.watch(apiClientProvider));
 }
 
 class HomeService {
-  HomeService(this._dio);
+  HomeService(this._client);
 
-  final Dio _dio;
+  final Dio _client;
 
   Future<ApiResponse<PageData<List<VideoInfo>>>> getVideoList(
     int page,
     int pageSize, {
     bool showGlobalErrorToast = true,
   }) async {
-    final response = await _dio.get(
+    final response = await _client.get(
       '/mock/getVideoList',
       queryParameters: {'page': page, 'pageSize': pageSize},
       options: ApiRequestOptions.globalErrorToast(
@@ -41,7 +41,7 @@ class HomeService {
     int pageSize, {
     bool showGlobalErrorToast = true,
   }) async {
-    final response = await _dio.get(
+    final response = await _client.get(
       '/mock/getCommentList',
       queryParameters: {'page': page, 'pageSize': pageSize},
       options: ApiRequestOptions.globalErrorToast(
@@ -54,7 +54,7 @@ class HomeService {
   Future<ApiResponse<List<BannerInfo>>> getBanners({
     bool showGlobalErrorToast = true,
   }) async {
-    final response = await _dio.get(
+    final response = await _client.get(
       '/mock/getBanners',
       options: ApiRequestOptions.globalErrorToast(
         enabled: showGlobalErrorToast,

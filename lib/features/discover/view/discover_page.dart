@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:interesting_play_flutter/core/theme/app_colors.dart';
-import 'package:interesting_play_flutter/shared/widgets/dropdown_menu/dropdown_menu_controller.dart';
+import 'package:flutter_feature_collection/core/theme/app_colors.dart';
+import 'package:flutter_feature_collection/shared/widgets/dropdown_menu/dropdown_menu_controller.dart';
 import 'components/tab_bar_view_type_1.dart';
 import 'components/tab_bar_view_type_2.dart';
 import 'components/tab_bar_view_type_3.dart';

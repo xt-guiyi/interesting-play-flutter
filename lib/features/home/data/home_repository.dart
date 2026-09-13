@@ -1,11 +1,11 @@
-import 'package:interesting_play_flutter/core/network/api_response.dart';
-import 'package:interesting_play_flutter/features/auth/data/auth_repository.dart';
-import 'package:interesting_play_flutter/features/home/data/home_service.dart';
-import 'package:interesting_play_flutter/shared/models/banner_info.dart';
-import 'package:interesting_play_flutter/shared/models/comment_info.dart';
-import 'package:interesting_play_flutter/shared/models/page_data.dart';
-import 'package:interesting_play_flutter/shared/models/user_info.dart';
-import 'package:interesting_play_flutter/shared/models/video_info.dart';
+import 'package:flutter_feature_collection/core/network/models/api_response.dart';
+import 'package:flutter_feature_collection/features/login/data/login_repository.dart';
+import 'package:flutter_feature_collection/features/home/data/home_service.dart';
+import 'package:flutter_feature_collection/shared/models/banner_info.dart';
+import 'package:flutter_feature_collection/shared/models/comment_info.dart';
+import 'package:flutter_feature_collection/shared/models/page_data.dart';
+import 'package:flutter_feature_collection/shared/models/user_info.dart';
+import 'package:flutter_feature_collection/shared/models/video_info.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_repository.g.dart';
@@ -14,22 +14,22 @@ part 'home_repository.g.dart';
 HomeRepository homeRepository(Ref ref) {
   return HomeRepository(
     homeService: ref.watch(homeServiceProvider),
-    authRepository: ref.watch(authRepositoryProvider),
+    loginRepository: ref.watch(loginRepositoryProvider),
   );
 }
 
 class HomeRepository {
   HomeRepository({
     required HomeService homeService,
-    required AuthRepository authRepository,
+    required LoginRepository loginRepository,
   }) : _homeService = homeService,
-       _authRepository = authRepository;
+       _loginRepository = loginRepository;
 
   final HomeService _homeService;
-  final AuthRepository _authRepository;
+  final LoginRepository _loginRepository;
 
   Future<UserInfo?> getCurrentUser() {
-    return _authRepository.getCurrentUser();
+    return _loginRepository.getCurrentUser();
   }
 
   Future<List<BannerInfo>> getBanners({

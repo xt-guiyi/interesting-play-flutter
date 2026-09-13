@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:interesting_play_flutter/core/network/api_exception.dart';
-import 'package:interesting_play_flutter/core/network/api_response.dart';
+import 'package:flutter_feature_collection/core/network/exceptions/api_exception.dart';
+import 'package:flutter_feature_collection/core/network/models/api_response.dart';
 
 void main() {
   test('unwrapApiResponse returns data for successful business response', () {

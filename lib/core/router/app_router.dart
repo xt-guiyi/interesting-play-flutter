@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:interesting_play_flutter/core/auth/auth_session.dart';
-import 'package:interesting_play_flutter/features/auth/view/login_page.dart';
-import 'package:interesting_play_flutter/features/detail/view/detail_page.dart';
-import 'package:interesting_play_flutter/features/discover/view/discover_page.dart';
-import 'package:interesting_play_flutter/features/home/view/home_page.dart';
-import 'package:interesting_play_flutter/features/practice/chat/view/chat_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/bottom_sheet_practice_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/clipboard_practice_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/date_picker_practice_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/dialog_practice_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/download_practice_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/image_picker_practice_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/location_practice_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/notification_practice_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/permission_practice_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/practice_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/qr_code_practice_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/region_picker_practice_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/scan_practice_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/share_practice_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/webview_practice_page.dart';
-import 'package:interesting_play_flutter/features/practice/view/year_month_day_picker_practice_page.dart';
-import 'package:interesting_play_flutter/features/profile/view/profile_page.dart';
-import 'package:interesting_play_flutter/features/shell/view/tab_page.dart';
+import 'package:flutter_feature_collection/core/auth/auth_session.dart';
+import 'package:flutter_feature_collection/features/login/view/login_page.dart';
+import 'package:flutter_feature_collection/features/detail/view/detail_page.dart';
+import 'package:flutter_feature_collection/features/discover/view/discover_page.dart';
+import 'package:flutter_feature_collection/features/home/view/home_page.dart';
+import 'package:flutter_feature_collection/features/practice/chat/view/chat_page.dart';
+import 'package:flutter_feature_collection/features/practice/view/bottom_sheet_practice_page.dart';
+import 'package:flutter_feature_collection/features/practice/view/clipboard_practice_page.dart';
+import 'package:flutter_feature_collection/features/practice/view/date_picker_practice_page.dart';
+import 'package:flutter_feature_collection/features/practice/view/dialog_practice_page.dart';
+import 'package:flutter_feature_collection/features/practice/view/download_practice_page.dart';
+import 'package:flutter_feature_collection/features/practice/view/image_picker_practice_page.dart';
+import 'package:flutter_feature_collection/features/practice/view/location_practice_page.dart';
+import 'package:flutter_feature_collection/features/practice/view/notification_practice_page.dart';
+import 'package:flutter_feature_collection/features/practice/view/permission_practice_page.dart';
+import 'package:flutter_feature_collection/features/practice/view/practice_page.dart';
+import 'package:flutter_feature_collection/features/practice/view/qr_code_practice_page.dart';
+import 'package:flutter_feature_collection/features/practice/view/region_picker_practice_page.dart';
+import 'package:flutter_feature_collection/features/practice/view/scan_practice_page.dart';
+import 'package:flutter_feature_collection/features/practice/view/share_practice_page.dart';
+import 'package:flutter_feature_collection/features/practice/view/webview_practice_page.dart';
+import 'package:flutter_feature_collection/features/practice/view/year_month_day_picker_practice_page.dart';
+import 'package:flutter_feature_collection/features/profile/view/profile_page.dart';
+import 'package:flutter_feature_collection/features/shell/view/tab_page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
@@ -200,7 +200,7 @@ GoRouter appRouter(Ref ref) {
     ],
     redirect: (BuildContext context, GoRouterState state) {
       if (authState.isLoading) return null;
-      final isLoggedIn = authState.valueOrNull ?? false;
+      final isLoggedIn = authState.value ?? false;
       final isLoginRoute = state.matchedLocation == '/login';
 
       if (!isLoggedIn && !isLoginRoute) return '/login';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:interesting_play_flutter/core/theme/app_colors.dart';
+import 'package:flutter_feature_collection/core/theme/app_colors.dart';
 
 class LocationPracticePage extends StatefulWidget {
   const LocationPracticePage({super.key});

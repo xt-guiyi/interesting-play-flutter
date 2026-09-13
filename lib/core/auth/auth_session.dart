@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../storage/local_storage.dart';
+import 'auth_storage.dart';
 
 part 'auth_session.g.dart';
 
@@ -11,7 +11,7 @@ part 'auth_session.g.dart';
 class AuthSession extends _$AuthSession {
   @override
   FutureOr<bool> build() async {
-    final user = await ref.watch(localStorageServiceProvider).getUserInfo();
+    final user = await ref.watch(authStorageServiceProvider).getUserInfo();
     return user != null;
   }
 

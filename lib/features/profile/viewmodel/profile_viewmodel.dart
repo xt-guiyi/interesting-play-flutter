@@ -1,6 +1,7 @@
-import 'package:interesting_play_flutter/features/auth/viewmodel/auth_viewmodel.dart';
-import 'package:interesting_play_flutter/features/profile/data/profile_repository.dart';
-import 'package:interesting_play_flutter/features/profile/model/profile_state.dart';
+import 'package:flutter_feature_collection/core/auth/auth_session.dart';
+import 'package:flutter_feature_collection/features/login/data/login_repository.dart';
+import 'package:flutter_feature_collection/features/profile/data/profile_repository.dart';
+import 'package:flutter_feature_collection/features/profile/model/profile_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'profile_viewmodel.g.dart';
@@ -24,7 +25,9 @@ class ProfileViewModel extends _$ProfileViewModel {
   }
 
   Future<void> logout() async {
-    await ref.read(authViewModelProvider.notifier).logout();
-    state = const ProfileState();
+    final session = ref.read(authSessionProvider.notifier);
+    await ref.read(loginRepositoryProvider).logout();
+    if (ref.mounted) state = const ProfileState();
+    session.loggedOut();
   }
 }

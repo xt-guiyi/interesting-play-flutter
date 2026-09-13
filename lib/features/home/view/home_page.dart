@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:interesting_play_flutter/core/theme/app_colors.dart';
-import 'package:interesting_play_flutter/features/home/viewmodel/home_viewmodel.dart';
-import 'package:interesting_play_flutter/features/home/view/components/tab_bar_view_type_1.dart';
+import 'package:flutter_feature_collection/core/theme/app_colors.dart';
+import 'package:flutter_feature_collection/features/home/viewmodel/home_viewmodel.dart';
+import 'package:flutter_feature_collection/features/home/view/components/tab_bar_view_type_1.dart';
 
 import 'components/tab_bar_view_type_2.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:interesting_play_flutter/core/theme/app_colors.dart';
+import 'package:flutter_feature_collection/core/theme/app_colors.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewPracticePage extends StatefulWidget {

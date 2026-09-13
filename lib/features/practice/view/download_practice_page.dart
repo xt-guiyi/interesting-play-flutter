@@ -1,8 +1,9 @@
 import 'dart:io';
 
+import 'package:flutter_feature_collection/core/network/factory/api_client_factory.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:interesting_play_flutter/core/theme/app_colors.dart';
+import 'package:flutter_feature_collection/core/theme/app_colors.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DownloadPracticePage extends StatefulWidget {
@@ -15,12 +16,18 @@ class DownloadPracticePage extends StatefulWidget {
 class _DownloadPracticePageState extends State<DownloadPracticePage> {
   static const _downloadUrl = 'https://picsum.photos/1200/800';
 
-  final Dio _dio = Dio();
+  final Dio _client = ApiClientFactory.public(baseUrl: '');
 
   double _progress = 0;
   String? _filePath;
   String? _message;
   bool _isDownloading = false;
+
+  @override
+  void dispose() {
+    _client.close(force: true);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +81,7 @@ class _DownloadPracticePageState extends State<DownloadPracticePage> {
       final dir = await getTemporaryDirectory();
       final savePath =
           '${dir.path}/practice_download_${DateTime.now().millisecondsSinceEpoch}.jpg';
-      await _dio.download(
+      await _client.download(
         _downloadUrl,
         savePath,
         onReceiveProgress: (received, total) {

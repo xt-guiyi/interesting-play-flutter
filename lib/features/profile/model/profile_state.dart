@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:interesting_play_flutter/shared/models/user_info.dart';
+import 'package:flutter_feature_collection/shared/models/user_info.dart';
 
 part 'profile_state.freezed.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:interesting_play_flutter/shared/models/public_post.dart';
+import 'package:flutter_feature_collection/shared/models/public_post.dart';
 
 void main() {
   test('PublicPost parses JSONPlaceholder post json', () {

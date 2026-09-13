@@ -1,8 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:interesting_play_flutter/shared/models/banner_info.dart';
-import 'package:interesting_play_flutter/shared/models/comment_info.dart';
-import 'package:interesting_play_flutter/shared/models/user_info.dart';
-import 'package:interesting_play_flutter/shared/models/video_info.dart';
+import 'package:flutter_feature_collection/shared/models/banner_info.dart';
+import 'package:flutter_feature_collection/shared/models/comment_info.dart';
+import 'package:flutter_feature_collection/shared/models/user_info.dart';
+import 'package:flutter_feature_collection/shared/models/video_info.dart';
 
 part 'home_state.freezed.dart';
 

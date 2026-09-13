@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:interesting_play_flutter/shared/utils/api_json_parser.dart';
+import 'package:flutter_feature_collection/core/utils/api_json_parser.dart';
 
 class TestItem {
   const TestItem({required this.id, required this.name});

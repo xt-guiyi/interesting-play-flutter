@@ -1,7 +1,7 @@
-import 'package:interesting_play_flutter/core/network/api_response.dart';
-import 'package:interesting_play_flutter/features/discover/data/discover_service.dart';
-import 'package:interesting_play_flutter/shared/models/discover_info.dart';
-import 'package:interesting_play_flutter/shared/models/page_data.dart';
+import 'package:flutter_feature_collection/core/network/models/api_response.dart';
+import 'package:flutter_feature_collection/features/discover/data/discover_service.dart';
+import 'package:flutter_feature_collection/shared/models/discover_info.dart';
+import 'package:flutter_feature_collection/shared/models/page_data.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'discover_repository.g.dart';

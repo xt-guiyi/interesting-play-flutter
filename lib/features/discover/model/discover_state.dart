@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:interesting_play_flutter/shared/models/discover_info.dart';
+import 'package:flutter_feature_collection/shared/models/discover_info.dart';
 
 part 'discover_state.freezed.dart';
 

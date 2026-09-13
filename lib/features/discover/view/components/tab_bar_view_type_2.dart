@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:interesting_play_flutter/core/theme/app_colors.dart';
-import 'package:interesting_play_flutter/shared/widgets/dropdown_menu/dropdown_menu.dart';
-import 'package:interesting_play_flutter/shared/widgets/dropdown_menu/dropdown_menu_controller.dart';
-import 'package:interesting_play_flutter/shared/widgets/dropdown_menu/dropdown_menu_header.dart';
+import 'package:flutter_feature_collection/core/theme/app_colors.dart';
+import 'package:flutter_feature_collection/shared/widgets/dropdown_menu/dropdown_menu.dart';
+import 'package:flutter_feature_collection/shared/widgets/dropdown_menu/dropdown_menu_controller.dart';
+import 'package:flutter_feature_collection/shared/widgets/dropdown_menu/dropdown_menu_header.dart';
 
 class TabBarViewType2 extends StatefulWidget {
   const TabBarViewType2({

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:interesting_play_flutter/shared/widgets/dropdown_menu/dropdown_menu.dart';
-import 'package:interesting_play_flutter/shared/widgets/dropdown_menu/dropdown_menu_controller.dart';
-import 'package:interesting_play_flutter/shared/widgets/dropdown_menu/dropdown_menu_header.dart';
+import 'package:flutter_feature_collection/shared/widgets/dropdown_menu/dropdown_menu.dart';
+import 'package:flutter_feature_collection/shared/widgets/dropdown_menu/dropdown_menu_controller.dart';
+import 'package:flutter_feature_collection/shared/widgets/dropdown_menu/dropdown_menu_header.dart';
 
 void main() {
   testWidgets('DropdownMenu toggles overlay from header taps', (tester) async {

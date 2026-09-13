@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:interesting_play_flutter/features/home/data/home_repository.dart';
-import 'package:interesting_play_flutter/features/home/model/home_state.dart';
+import 'package:flutter_feature_collection/features/home/data/home_repository.dart';
+import 'package:flutter_feature_collection/features/home/model/home_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_viewmodel.g.dart';

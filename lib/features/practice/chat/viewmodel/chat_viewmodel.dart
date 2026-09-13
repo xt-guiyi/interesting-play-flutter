@@ -1,5 +1,5 @@
-import 'package:interesting_play_flutter/features/practice/chat/model/chat_state.dart';
-import 'package:interesting_play_flutter/features/practice/chat/model/message_item.dart';
+import 'package:flutter_feature_collection/features/practice/chat/model/chat_state.dart';
+import 'package:flutter_feature_collection/features/practice/chat/model/message_item.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'chat_viewmodel.g.dart';

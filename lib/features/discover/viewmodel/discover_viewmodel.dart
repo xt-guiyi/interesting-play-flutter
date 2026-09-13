@@ -1,5 +1,5 @@
-import 'package:interesting_play_flutter/features/discover/data/discover_repository.dart';
-import 'package:interesting_play_flutter/features/discover/model/discover_state.dart';
+import 'package:flutter_feature_collection/features/discover/data/discover_repository.dart';
+import 'package:flutter_feature_collection/features/discover/model/discover_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'discover_viewmodel.g.dart';

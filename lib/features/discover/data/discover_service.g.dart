@@ -49,4 +49,4 @@ final class DiscoverServiceProvider
   }
 }
 
-String _$discoverServiceHash() => r'9dcb36e7d831825eb01d3dac74698b64e4395dd3';
+String _$discoverServiceHash() => r'0c7512155fd27b6e90f0cdd5b71da9abf67d44b1';

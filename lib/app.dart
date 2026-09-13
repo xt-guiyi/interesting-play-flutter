@@ -21,7 +21,7 @@ class MyApp extends ConsumerWidget {
     final router = ref.watch(appRouterProvider);
 
     return MaterialApp.router(
-      title: '趣玩Flutter版本',
+      title: '工具合集',
       theme: AppTheme.light,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

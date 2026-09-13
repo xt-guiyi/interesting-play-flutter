@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:interesting_play_flutter/core/theme/app_colors.dart';
-import 'package:interesting_play_flutter/features/discover/viewmodel/discover_viewmodel.dart';
-import 'package:interesting_play_flutter/shared/models/discover_info.dart';
-import 'package:interesting_play_flutter/shared/utils/common_util.dart';
+import 'package:flutter_feature_collection/core/theme/app_colors.dart';
+import 'package:flutter_feature_collection/features/discover/viewmodel/discover_viewmodel.dart';
+import 'package:flutter_feature_collection/shared/models/discover_info.dart';
+import 'package:flutter_feature_collection/core/utils/common_util.dart';
 
 class TabBarViewType1 extends ConsumerStatefulWidget {
   final String type; // tab类型

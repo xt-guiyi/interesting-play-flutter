@@ -10,8 +10,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:interesting_play_flutter/core/theme/app_colors.dart';
-import 'package:interesting_play_flutter/features/practice/chat/viewmodel/chat_viewmodel.dart';
+import 'package:flutter_feature_collection/core/theme/app_colors.dart';
+import 'package:flutter_feature_collection/features/practice/chat/viewmodel/chat_viewmodel.dart';
 
 import 'components/chat_item_1.dart';
 import 'components/chat_item_2.dart';

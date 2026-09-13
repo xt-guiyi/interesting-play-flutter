@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:interesting_play_flutter/core/theme/app_colors.dart';
+import 'package:flutter_feature_collection/core/theme/app_colors.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionPracticePage extends StatefulWidget {

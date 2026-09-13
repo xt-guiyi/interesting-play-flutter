@@ -36,7 +36,7 @@ final class AuthSessionProvider
   AuthSession create() => AuthSession();
 }
 
-String _$authSessionHash() => r'f7dcb4825ecd52ec18b221531d32406774b37b85';
+String _$authSessionHash() => r'd5b356e52b272d2a5aaa33c48c44246b4188754f';
 
 /// 应用级登录会话状态，供路由和网络层共享。
 

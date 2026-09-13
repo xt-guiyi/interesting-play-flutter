@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:interesting_play_flutter/core/theme/app_colors.dart';
+import 'package:flutter_feature_collection/core/theme/app_colors.dart';
 import 'package:share_plus/share_plus.dart';
 
 class SharePracticePage extends StatefulWidget {

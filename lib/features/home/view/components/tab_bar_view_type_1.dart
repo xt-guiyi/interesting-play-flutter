@@ -2,13 +2,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:interesting_play_flutter/features/home/model/home_state.dart';
-import 'package:interesting_play_flutter/core/theme/app_colors.dart';
-import 'package:interesting_play_flutter/features/home/viewmodel/home_viewmodel.dart';
-import 'package:interesting_play_flutter/shared/models/banner_info.dart';
-import 'package:interesting_play_flutter/shared/models/video_info.dart';
-import 'package:interesting_play_flutter/shared/utils/common_util.dart';
-import 'package:interesting_play_flutter/shared/utils/time_util.dart';
+import 'package:flutter_feature_collection/features/home/model/home_state.dart';
+import 'package:flutter_feature_collection/core/theme/app_colors.dart';
+import 'package:flutter_feature_collection/features/home/viewmodel/home_viewmodel.dart';
+import 'package:flutter_feature_collection/shared/models/banner_info.dart';
+import 'package:flutter_feature_collection/shared/models/video_info.dart';
+import 'package:flutter_feature_collection/core/utils/common_util.dart';
+import 'package:flutter_feature_collection/core/utils/time_util.dart';
 
 class TabBarViewType1 extends ConsumerStatefulWidget {
   const TabBarViewType1({super.key, required this.tabTitle});

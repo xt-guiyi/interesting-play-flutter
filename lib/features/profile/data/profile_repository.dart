@@ -1,20 +1,20 @@
-import 'package:interesting_play_flutter/features/auth/data/auth_repository.dart';
-import 'package:interesting_play_flutter/shared/models/user_info.dart';
+import 'package:flutter_feature_collection/features/login/data/login_repository.dart';
+import 'package:flutter_feature_collection/shared/models/user_info.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'profile_repository.g.dart';
 
 @riverpod
 ProfileRepository profileRepository(Ref ref) {
-  return ProfileRepository(ref.watch(authRepositoryProvider));
+  return ProfileRepository(ref.watch(loginRepositoryProvider));
 }
 
 class ProfileRepository {
-  ProfileRepository(this._authRepository);
+  ProfileRepository(this._loginRepository);
 
-  final AuthRepository _authRepository;
+  final LoginRepository _loginRepository;
 
   Future<UserInfo?> getCurrentUser() {
-    return _authRepository.getCurrentUser();
+    return _loginRepository.getCurrentUser();
   }
 }
