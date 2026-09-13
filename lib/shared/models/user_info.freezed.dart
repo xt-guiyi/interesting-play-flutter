@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserInfo {
 
- String get username; int? get age; String? get avatar; String? get introduction;
+ String get username; String? get id; String? get nickname; int? get age; String? get avatar; String? get introduction;
 /// Create a copy of UserInfo
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserInfoCopyWith<UserInfo> get copyWith => _$UserInfoCopyWithImpl<UserInfo>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserInfo&&(identical(other.username, username) || other.username == username)&&(identical(other.age, age) || other.age == age)&&(identical(other.avatar, avatar) || other.avatar == avatar)&&(identical(other.introduction, introduction) || other.introduction == introduction));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserInfo&&(identical(other.username, username) || other.username == username)&&(identical(other.id, id) || other.id == id)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.age, age) || other.age == age)&&(identical(other.avatar, avatar) || other.avatar == avatar)&&(identical(other.introduction, introduction) || other.introduction == introduction));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,username,age,avatar,introduction);
+int get hashCode => Object.hash(runtimeType,username,id,nickname,age,avatar,introduction);
 
 @override
 String toString() {
-  return 'UserInfo(username: $username, age: $age, avatar: $avatar, introduction: $introduction)';
+  return 'UserInfo(username: $username, id: $id, nickname: $nickname, age: $age, avatar: $avatar, introduction: $introduction)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserInfoCopyWith<$Res>  {
   factory $UserInfoCopyWith(UserInfo value, $Res Function(UserInfo) _then) = _$UserInfoCopyWithImpl;
 @useResult
 $Res call({
- String username, int? age, String? avatar, String? introduction
+ String username, String? id, String? nickname, int? age, String? avatar, String? introduction
 });
 
 
@@ -65,10 +65,12 @@ class _$UserInfoCopyWithImpl<$Res>
 
 /// Create a copy of UserInfo
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? username = null,Object? age = freezed,Object? avatar = freezed,Object? introduction = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? username = null,Object? id = freezed,Object? nickname = freezed,Object? age = freezed,Object? avatar = freezed,Object? introduction = freezed,}) {
   return _then(_self.copyWith(
 username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
-as String,age: freezed == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
+as String,id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String?,nickname: freezed == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
+as String?,age: freezed == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
 as int?,avatar: freezed == avatar ? _self.avatar : avatar // ignore: cast_nullable_to_non_nullable
 as String?,introduction: freezed == introduction ? _self.introduction : introduction // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -156,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String username,  int? age,  String? avatar,  String? introduction)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String username,  String? id,  String? nickname,  int? age,  String? avatar,  String? introduction)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserInfo() when $default != null:
-return $default(_that.username,_that.age,_that.avatar,_that.introduction);case _:
+return $default(_that.username,_that.id,_that.nickname,_that.age,_that.avatar,_that.introduction);case _:
   return orElse();
 
 }
@@ -177,10 +179,10 @@ return $default(_that.username,_that.age,_that.avatar,_that.introduction);case _
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String username,  int? age,  String? avatar,  String? introduction)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String username,  String? id,  String? nickname,  int? age,  String? avatar,  String? introduction)  $default,) {final _that = this;
 switch (_that) {
 case _UserInfo():
-return $default(_that.username,_that.age,_that.avatar,_that.introduction);case _:
+return $default(_that.username,_that.id,_that.nickname,_that.age,_that.avatar,_that.introduction);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +199,10 @@ return $default(_that.username,_that.age,_that.avatar,_that.introduction);case _
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String username,  int? age,  String? avatar,  String? introduction)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String username,  String? id,  String? nickname,  int? age,  String? avatar,  String? introduction)?  $default,) {final _that = this;
 switch (_that) {
 case _UserInfo() when $default != null:
-return $default(_that.username,_that.age,_that.avatar,_that.introduction);case _:
+return $default(_that.username,_that.id,_that.nickname,_that.age,_that.avatar,_that.introduction);case _:
   return null;
 
 }
@@ -211,11 +213,13 @@ return $default(_that.username,_that.age,_that.avatar,_that.introduction);case _
 /// @nodoc
 @JsonSerializable()
 
-class _UserInfo implements UserInfo {
-  const _UserInfo({required this.username, this.age, this.avatar, this.introduction});
+class _UserInfo extends UserInfo {
+  const _UserInfo({required this.username, this.id, this.nickname, this.age, this.avatar, this.introduction}): super._();
   factory _UserInfo.fromJson(Map<String, dynamic> json) => _$UserInfoFromJson(json);
 
 @override final  String username;
+@override final  String? id;
+@override final  String? nickname;
 @override final  int? age;
 @override final  String? avatar;
 @override final  String? introduction;
@@ -233,16 +237,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserInfo&&(identical(other.username, username) || other.username == username)&&(identical(other.age, age) || other.age == age)&&(identical(other.avatar, avatar) || other.avatar == avatar)&&(identical(other.introduction, introduction) || other.introduction == introduction));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserInfo&&(identical(other.username, username) || other.username == username)&&(identical(other.id, id) || other.id == id)&&(identical(other.nickname, nickname) || other.nickname == nickname)&&(identical(other.age, age) || other.age == age)&&(identical(other.avatar, avatar) || other.avatar == avatar)&&(identical(other.introduction, introduction) || other.introduction == introduction));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,username,age,avatar,introduction);
+int get hashCode => Object.hash(runtimeType,username,id,nickname,age,avatar,introduction);
 
 @override
 String toString() {
-  return 'UserInfo(username: $username, age: $age, avatar: $avatar, introduction: $introduction)';
+  return 'UserInfo(username: $username, id: $id, nickname: $nickname, age: $age, avatar: $avatar, introduction: $introduction)';
 }
 
 
@@ -253,7 +257,7 @@ abstract mixin class _$UserInfoCopyWith<$Res> implements $UserInfoCopyWith<$Res>
   factory _$UserInfoCopyWith(_UserInfo value, $Res Function(_UserInfo) _then) = __$UserInfoCopyWithImpl;
 @override @useResult
 $Res call({
- String username, int? age, String? avatar, String? introduction
+ String username, String? id, String? nickname, int? age, String? avatar, String? introduction
 });
 
 
@@ -270,10 +274,12 @@ class __$UserInfoCopyWithImpl<$Res>
 
 /// Create a copy of UserInfo
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? username = null,Object? age = freezed,Object? avatar = freezed,Object? introduction = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? username = null,Object? id = freezed,Object? nickname = freezed,Object? age = freezed,Object? avatar = freezed,Object? introduction = freezed,}) {
   return _then(_UserInfo(
 username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
-as String,age: freezed == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
+as String,id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String?,nickname: freezed == nickname ? _self.nickname : nickname // ignore: cast_nullable_to_non_nullable
+as String?,age: freezed == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
 as int?,avatar: freezed == avatar ? _self.avatar : avatar // ignore: cast_nullable_to_non_nullable
 as String?,introduction: freezed == introduction ? _self.introduction : introduction // ignore: cast_nullable_to_non_nullable
 as String?,

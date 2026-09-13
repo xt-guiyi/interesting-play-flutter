@@ -11,11 +11,10 @@ part of 'login_dto.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
 mixin _$LoginDto {
 
- String get username; String get password;
+ String get account; String get code; String get loginType;
 /// Create a copy of LoginDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +27,16 @@ $LoginDtoCopyWith<LoginDto> get copyWith => _$LoginDtoCopyWithImpl<LoginDto>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginDto&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginDto&&(identical(other.account, account) || other.account == account)&&(identical(other.code, code) || other.code == code)&&(identical(other.loginType, loginType) || other.loginType == loginType));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,username,password);
+int get hashCode => Object.hash(runtimeType,account,code,loginType);
 
 @override
 String toString() {
-  return 'LoginDto(username: $username, password: $password)';
+  return 'LoginDto(account: $account, code: $code, loginType: $loginType)';
 }
 
 
@@ -48,7 +47,7 @@ abstract mixin class $LoginDtoCopyWith<$Res>  {
   factory $LoginDtoCopyWith(LoginDto value, $Res Function(LoginDto) _then) = _$LoginDtoCopyWithImpl;
 @useResult
 $Res call({
- String username, String password
+ String account, String code, String loginType
 });
 
 
@@ -65,10 +64,11 @@ class _$LoginDtoCopyWithImpl<$Res>
 
 /// Create a copy of LoginDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? username = null,Object? password = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? account = null,Object? code = null,Object? loginType = null,}) {
   return _then(_self.copyWith(
-username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
-as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+account: null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
+as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
+as String,loginType: null == loginType ? _self.loginType : loginType // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -154,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String username,  String password)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String account,  String code,  String loginType)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LoginDto() when $default != null:
-return $default(_that.username,_that.password);case _:
+return $default(_that.account,_that.code,_that.loginType);case _:
   return orElse();
 
 }
@@ -175,10 +175,10 @@ return $default(_that.username,_that.password);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String username,  String password)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String account,  String code,  String loginType)  $default,) {final _that = this;
 switch (_that) {
 case _LoginDto():
-return $default(_that.username,_that.password);case _:
+return $default(_that.account,_that.code,_that.loginType);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +195,10 @@ return $default(_that.username,_that.password);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String username,  String password)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String account,  String code,  String loginType)?  $default,) {final _that = this;
 switch (_that) {
 case _LoginDto() when $default != null:
-return $default(_that.username,_that.password);case _:
+return $default(_that.account,_that.code,_that.loginType);case _:
   return null;
 
 }
@@ -207,14 +207,15 @@ return $default(_that.username,_that.password);case _:
 }
 
 /// @nodoc
-@JsonSerializable()
+@JsonSerializable(createFactory: false)
 
 class _LoginDto implements LoginDto {
-  const _LoginDto({required this.username, required this.password});
-  factory _LoginDto.fromJson(Map<String, dynamic> json) => _$LoginDtoFromJson(json);
+  const _LoginDto({required this.account, required this.code, this.loginType = 'SMS_CODE'});
+  
 
-@override final  String username;
-@override final  String password;
+@override final  String account;
+@override final  String code;
+@override@JsonKey() final  String loginType;
 
 /// Create a copy of LoginDto
 /// with the given fields replaced by the non-null parameter values.
@@ -229,16 +230,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginDto&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginDto&&(identical(other.account, account) || other.account == account)&&(identical(other.code, code) || other.code == code)&&(identical(other.loginType, loginType) || other.loginType == loginType));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,username,password);
+int get hashCode => Object.hash(runtimeType,account,code,loginType);
 
 @override
 String toString() {
-  return 'LoginDto(username: $username, password: $password)';
+  return 'LoginDto(account: $account, code: $code, loginType: $loginType)';
 }
 
 
@@ -249,7 +250,7 @@ abstract mixin class _$LoginDtoCopyWith<$Res> implements $LoginDtoCopyWith<$Res>
   factory _$LoginDtoCopyWith(_LoginDto value, $Res Function(_LoginDto) _then) = __$LoginDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String username, String password
+ String account, String code, String loginType
 });
 
 
@@ -266,10 +267,11 @@ class __$LoginDtoCopyWithImpl<$Res>
 
 /// Create a copy of LoginDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? username = null,Object? password = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? account = null,Object? code = null,Object? loginType = null,}) {
   return _then(_LoginDto(
-username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
-as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+account: null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
+as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
+as String,loginType: null == loginType ? _self.loginType : loginType // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

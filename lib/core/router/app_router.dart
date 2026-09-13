@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_feature_collection/core/auth/auth_session.dart';
 import 'package:flutter_feature_collection/features/login/view/login_page.dart';
+import 'package:flutter_feature_collection/features/login/view/sms_login_page.dart';
 import 'package:flutter_feature_collection/features/detail/view/detail_page.dart';
 import 'package:flutter_feature_collection/features/discover/view/discover_page.dart';
 import 'package:flutter_feature_collection/features/home/view/home_page.dart';
@@ -30,15 +30,19 @@ part 'app_router.g.dart';
 
 @riverpod
 GoRouter appRouter(Ref ref) {
-  final authState = ref.watch(authSessionProvider);
-
-  return GoRouter(
-    initialLocation: '/login',
+  final router = GoRouter(
+    initialLocation: '/',
     routes: [
       GoRoute(
         path: '/login',
         builder: (BuildContext context, GoRouterState state) {
           return const LoginPage();
+        },
+      ),
+      GoRoute(
+        path: '/login/sms',
+        builder: (BuildContext context, GoRouterState state) {
+          return SmsLoginPage(initialAgreement: state.extra == true);
         },
       ),
       StatefulShellRoute.indexedStack(
@@ -198,14 +202,7 @@ GoRouter appRouter(Ref ref) {
         },
       ),
     ],
-    redirect: (BuildContext context, GoRouterState state) {
-      if (authState.isLoading) return null;
-      final isLoggedIn = authState.value ?? false;
-      final isLoginRoute = state.matchedLocation == '/login';
-
-      if (!isLoggedIn && !isLoginRoute) return '/login';
-      if (isLoggedIn && isLoginRoute) return '/';
-      return null;
-    },
   );
+  ref.onDispose(router.dispose);
+  return router;
 }

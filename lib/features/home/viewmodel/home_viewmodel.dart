@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter_feature_collection/core/auth/auth_session.dart';
 import 'package:flutter_feature_collection/features/home/data/home_repository.dart';
 import 'package:flutter_feature_collection/features/home/model/home_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -10,6 +11,7 @@ part 'home_viewmodel.g.dart';
 class HomeViewModel extends _$HomeViewModel {
   final _random = Random();
   int _requestGeneration = 0;
+  int _userRequestGeneration = 0;
 
   @override
   HomeState build() {
@@ -37,7 +39,7 @@ class HomeViewModel extends _$HomeViewModel {
     );
     try {
       await Future.wait<void>([
-        _loadCurrentUser(generation),
+        syncCurrentUser(),
         _loadBanners(generation),
         _loadFirstPageVideos(generation),
       ]);
@@ -87,14 +89,20 @@ class HomeViewModel extends _$HomeViewModel {
     return loadMore();
   }
 
-  Future<void> _loadCurrentUser(int generation) async {
+  Future<void> syncCurrentUser() async {
+    final generation = ++_userRequestGeneration;
+    final session = ref.read(authSessionProvider);
+    if (session.isLoading || session.hasError || session.value != true) {
+      state = state.copyWith(currentUser: null, userError: null);
+      return;
+    }
     try {
       final repository = ref.read(homeRepositoryProvider);
       final user = await repository.getCurrentUser();
-      if (generation != _requestGeneration) return;
+      if (!ref.mounted || generation != _userRequestGeneration) return;
       state = state.copyWith(currentUser: user, userError: null);
     } catch (error) {
-      if (generation != _requestGeneration) return;
+      if (!ref.mounted || generation != _userRequestGeneration) return;
       state = state.copyWith(userError: _errorMessage(error));
     }
   }

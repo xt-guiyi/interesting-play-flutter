@@ -5,8 +5,12 @@ part 'user_info.g.dart';
 
 @freezed
 abstract class UserInfo with _$UserInfo {
+  const UserInfo._();
+
   const factory UserInfo({
     required String username,
+    String? id,
+    String? nickname,
     int? age,
     String? avatar,
     String? introduction,
@@ -14,4 +18,7 @@ abstract class UserInfo with _$UserInfo {
 
   factory UserInfo.fromJson(Map<String, dynamic> json) =>
       _$UserInfoFromJson(json);
+
+  String get displayName =>
+      nickname?.trim().isNotEmpty == true ? nickname! : username;
 }

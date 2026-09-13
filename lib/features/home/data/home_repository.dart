@@ -1,5 +1,5 @@
 import 'package:flutter_feature_collection/core/network/models/api_response.dart';
-import 'package:flutter_feature_collection/features/login/data/login_repository.dart';
+import 'package:flutter_feature_collection/features/login/model/login_repository.dart';
 import 'package:flutter_feature_collection/features/home/data/home_service.dart';
 import 'package:flutter_feature_collection/shared/models/banner_info.dart';
 import 'package:flutter_feature_collection/shared/models/comment_info.dart';

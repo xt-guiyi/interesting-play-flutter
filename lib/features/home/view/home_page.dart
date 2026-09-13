@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_feature_collection/core/auth/auth_session.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_feature_collection/core/theme/app_colors.dart';
 import 'package:flutter_feature_collection/features/home/viewmodel/home_viewmodel.dart';
@@ -37,6 +38,12 @@ class _MyHomePageState extends ConsumerState<HomePage>
       ref.read(homeViewModelProvider.notifier).rotateSearchText();
     });
     _tabController = TabController(vsync: this, length: tabItems.length);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      ref.listenManual(authSessionProvider, (_, next) {
+        ref.read(homeViewModelProvider.notifier).syncCurrentUser();
+      }, fireImmediately: true);
+    });
   }
 
   @override

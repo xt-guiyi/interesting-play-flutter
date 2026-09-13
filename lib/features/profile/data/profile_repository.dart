@@ -1,4 +1,4 @@
-import 'package:flutter_feature_collection/features/login/data/login_repository.dart';
+import 'package:flutter_feature_collection/features/login/model/login_repository.dart';
 import 'package:flutter_feature_collection/shared/models/user_info.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

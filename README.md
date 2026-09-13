@@ -83,7 +83,7 @@ lib/
 │       ├── app_colors.dart          # 颜色常量
 │       └── app_theme.dart           # ThemeData
 ├── features/                        # 功能模块
-│   ├── auth/                        # 登录与鉴权
+│   ├── login/                       # 登录入口、短信表单与登录策略
 │   ├── home/                        # 首页推荐流
 │   ├── discover/                    # 发现页 / 瀑布流
 │   ├── profile/                     # 个人中心
@@ -139,7 +139,7 @@ features/home/
 
 | 模块 | 职责 |
 | --- | --- |
-| `auth` | 登录、token 保存、用户信息获取、鉴权状态 |
+| `login` | Google、GitHub、短信登录策略，登录结果保存与页面状态 |
 | `home` | 首页推荐视频、轮播图、当前用户信息、分页加载 |
 | `discover` | 发现页数据、瀑布流列表、刷新和加载更多 |
 | `profile` | 个人中心用户信息展示、注销 |
@@ -185,6 +185,7 @@ features/home/
 | 路径 | 页面 |
 | --- | --- |
 | `/login` | 登录页 |
+| `/login/sms` | 手机号验证码登录页 |
 | `/` | 首页 Tab |
 | `/home` | 首页别名 |
 | `/discover` | 发现页 Tab |
@@ -208,7 +209,7 @@ features/home/
 | `/practice/region-picker` | 地区选择器实践 |
 | `/practice/chat` | AI 聊天页 |
 
-路由使用 `StatefulShellRoute.indexedStack` 管理底部 Tab，登录状态由 `authViewModelProvider` 驱动 `redirect`。
+路由使用 `StatefulShellRoute.indexedStack` 管理底部 Tab，游客默认进入首页。登录入口页负责选择登录方式，验证码登录成功后返回“我的”。
 
 ## Model 放置规则
 
@@ -232,8 +233,8 @@ features/home/
 
 放只属于某个 feature 的状态模型、请求 DTO 或局部数据结构，例如：
 
-- `auth/model/login_dto.dart`
-- `auth/model/login_state.dart`
+- `login/model/vo/login_dto.dart`
+- `login/viewmodel/sms_login_state.dart`
 - `home/model/home_state.dart`
 - `discover/model/discover_state.dart`
 - `profile/model/profile_state.dart`
@@ -259,21 +260,25 @@ user_info.g.dart
 
 ## 数据流示例
 
-以登录为例：
+以手机号验证码登录为例：
 
 ```text
-LoginPage
-  -> ref.read(loginViewModelProvider.notifier).login(phone, password)
-  -> LoginViewModel
-  -> AuthRepository
-  -> AuthService.login()
+LoginPage（选择登录方式）
+  -> SmsLoginPage
+  -> ref.read(smsLoginViewModelProvider.notifier).loginWithSms(phone, code)
+  -> SmsLoginViewModel（管理 SmsLoginState）
+  -> SmsLoginStrategy
+  -> LoginRepository.loginWithSms()
+  -> LoginService.login()
   -> Dio
-  -> 保存 token
-  -> 拉取 UserInfo
-  -> LocalStorageService 缓存用户信息
-  -> AuthViewModel 刷新鉴权状态
-  -> GoRouter redirect 进入首页
+  -> SmsLoginViewModel 调用 Repository 保存 token 和用户信息
+  -> AuthSession.loggedIn() 更新全局登录状态
+  -> SmsLoginPage 返回“我的”
 ```
+
+`SmsLoginViewModel` 只服务验证码登录页，负责验证码发送、倒计时、校验和登录提交。初始 `LoginPage` 使用自己的 `LoginViewModel` 处理 Google、GitHub 登录。两个 ViewModel 各自调用策略、保存登录结果并更新会话，不再经过中间协调层。
+
+Google 使用 `google_sign_in`，GitHub 使用 `flutter_appauth.authorize()`；平台参数、回调配置和后端配合见 [登录接入说明](docs/login-setup.md)。第三方客户端 ID 需要自行填写，尚未进行真实授权验证。
 
 以首页加载为例：
 

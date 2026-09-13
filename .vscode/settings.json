@@ -1,3 +1,8 @@
 {
-  "dart.flutterSdkPath": "/Users/xiongtao/workspace/flutter"
+  "dart.flutterSdkPath": "/Users/xiongtao/workspace/flutter",
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "*.dart": "${capture}.g.dart, ${capture}.freezed.dart"
+  }
 }

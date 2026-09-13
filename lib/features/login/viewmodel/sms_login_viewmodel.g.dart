@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'home_viewmodel.dart';
+part of 'sms_login_viewmodel.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,51 +9,51 @@ part of 'home_viewmodel.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(HomeViewModel)
-final homeViewModelProvider = HomeViewModelProvider._();
+@ProviderFor(SmsLoginViewModel)
+final smsLoginViewModelProvider = SmsLoginViewModelProvider._();
 
-final class HomeViewModelProvider
-    extends $NotifierProvider<HomeViewModel, HomeState> {
-  HomeViewModelProvider._()
+final class SmsLoginViewModelProvider
+    extends $NotifierProvider<SmsLoginViewModel, SmsLoginState> {
+  SmsLoginViewModelProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'homeViewModelProvider',
+        name: r'smsLoginViewModelProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$homeViewModelHash();
+  String debugGetCreateSourceHash() => _$smsLoginViewModelHash();
 
   @$internal
   @override
-  HomeViewModel create() => HomeViewModel();
+  SmsLoginViewModel create() => SmsLoginViewModel();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(HomeState value) {
+  Override overrideWithValue(SmsLoginState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<HomeState>(value),
+      providerOverride: $SyncValueProvider<SmsLoginState>(value),
     );
   }
 }
 
-String _$homeViewModelHash() => r'39c5a8e9e75db37747499597f6d4441c0d945826';
+String _$smsLoginViewModelHash() => r'aab55d02675f060afac2fd06538eca48ada97c7f';
 
-abstract class _$HomeViewModel extends $Notifier<HomeState> {
-  HomeState build();
+abstract class _$SmsLoginViewModel extends $Notifier<SmsLoginState> {
+  SmsLoginState build();
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
-    final ref = this.ref as $Ref<HomeState, HomeState>;
+    final ref = this.ref as $Ref<SmsLoginState, SmsLoginState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<HomeState, HomeState>,
-              HomeState,
+              AnyNotifier<SmsLoginState, SmsLoginState>,
+              SmsLoginState,
               Object?,
               Object?
             >;

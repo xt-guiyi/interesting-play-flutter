@@ -1,5 +1,6 @@
 abstract final class App {
   static const authorization = 'authorization';
+  static const tokenHeader = 'Authorization';
   static const refreshToken = 'refresh_token';
   static const userInfo = 'user_info';
 }

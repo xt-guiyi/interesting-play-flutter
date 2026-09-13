@@ -24,6 +24,19 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<!-- TODO: Replace with the iOS URL scheme from your Google Cloud OAuth client. -->
+				<string>com.googleusercontent.apps.unconfigured</string>
+				<string>com.xtguiyi.featurecollection</string>
+			</array>
+		</dict>
+	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>用于扫一扫和拍照选择图片。</string>
 	<key>NSPhotoLibraryUsageDescription</key>
